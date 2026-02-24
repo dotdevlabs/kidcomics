@@ -25,6 +25,9 @@ gem "bcrypt", "~> 3.1.7"
 # AI service integration
 gem "anthropic", "~> 0.3"
 
+# Email delivery via Postmark
+gem "postmark-rails"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

@@ -8,6 +8,9 @@ class DrawingsController < ApplicationController
 
   def new
     @drawing = @book.drawings.build
+    @is_onboarding_book = @book.is_onboarding_book?
+    @page_limit = @is_onboarding_book ? 5 : nil
+    @current_page_count = @book.drawings.count
   end
 
   def create
@@ -18,6 +21,24 @@ class DrawingsController < ApplicationController
       @drawing = @book.drawings.build
       render :new, status: :unprocessable_entity
       return
+    end
+
+    # Check page limit for onboarding books
+    if @book.is_onboarding_book?
+      current_count = @book.drawings.count
+      remaining = 5 - current_count
+
+      if remaining <= 0
+        flash[:alert] = "This book has reached the 5-page limit for onboarding. Please complete your account setup to create unlimited books."
+        redirect_to child_profile_book_drawings_path(@child_profile, @book)
+        return
+      end
+
+      if uploaded_images.count > remaining
+        flash[:alert] = "You can only add #{remaining} more page(s) to this onboarding book (5-page limit)."
+        redirect_to child_profile_book_drawings_path(@child_profile, @book)
+        return
+      end
     end
 
     saved_count = 0
@@ -31,8 +52,15 @@ class DrawingsController < ApplicationController
     end
 
     if saved_count > 0
+      notice_message = "#{saved_count} drawing(s) uploaded successfully."
+
+      # If this book now has drawings and user hasn't completed onboarding, prompt to complete
+      if @book.is_onboarding_book? && @book.drawings.count > 0
+        notice_message += " When you're ready, complete your account setup to unlock unlimited books!"
+      end
+
       redirect_to child_profile_book_drawings_path(@child_profile, @book),
-                  notice: "#{saved_count} drawing(s) uploaded successfully."
+                  notice: notice_message
     else
       flash.now[:alert] = "Failed to upload drawings. Please check file size and format."
       @drawing = @book.drawings.build

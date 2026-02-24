@@ -1,6 +1,7 @@
 class BooksController < ApplicationController
   before_action :set_child_profile
   before_action :set_book, only: [ :show, :edit, :update, :destroy, :toggle_favorite ]
+  before_action :check_onboarding_status, only: [ :new, :create ]
 
   def index
     @books = @child_profile.books
@@ -28,14 +29,29 @@ class BooksController < ApplicationController
 
   def new
     @book = @child_profile.books.build
+    @is_onboarding = current_user&.onboarding_completed? == false
+    @page_limit = @is_onboarding ? 5 : nil
   end
 
   def create
     @book = @child_profile.books.build(book_params)
 
+    # Mark as onboarding book if user hasn't completed onboarding
+    if current_user&.onboarding_completed? == false
+      @book.is_onboarding_book = true
+    end
+
     if @book.save
-      redirect_to child_profile_book_path(@child_profile, @book), notice: "Book was successfully created."
+      # If this is an onboarding book, redirect to complete onboarding after creation
+      if @book.is_onboarding_book?
+        redirect_to child_profile_book_path(@child_profile, @book),
+          notice: "Book created! Add up to 5 pages, then we'll help you complete your account setup."
+      else
+        redirect_to child_profile_book_path(@child_profile, @book), notice: "Book was successfully created."
+      end
     else
+      @is_onboarding = current_user&.onboarding_completed? == false
+      @page_limit = @is_onboarding ? 5 : nil
       render :new, status: :unprocessable_entity
     end
   end
@@ -112,5 +128,10 @@ class BooksController < ApplicationController
     else
       books.recent
     end
+  end
+
+  def check_onboarding_status
+    # Set instance variable for views to check
+    @is_onboarding = current_user&.onboarding_completed? == false
   end
 end
