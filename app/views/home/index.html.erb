@@ -1,0 +1,20 @@
+<!-- Header Navigation -->
+<%= render "ui/header" %>
+
+<!-- Hero Section -->
+<%= render "ui/hero" %>
+
+<!-- Filter Bar -->
+<%= render "ui/filter_bar" %>
+
+<!-- Main Content -->
+<div class="bg-white py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Club Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      <% @clubs.each do |club| %>
+        <%= render "ui/club_card", club: club %>
+      <% end %>
+    </div>
+  </div>
+</div>

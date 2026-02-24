@@ -1,0 +1,67 @@
+<%# Expects a local variable 'club' with properties:
+  name, image, rating, location, division, members, founded, tags %>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200" data-controller="lucide">
+  <!-- Club Image -->
+  <div class="relative h-48 bg-gray-200 overflow-hidden">
+    <img
+      src="<%= club[:image] %>"
+      alt="<%= club[:name] %>"
+      class="w-full h-full object-cover"
+      loading="lazy"
+    />
+  </div>
+
+  <!-- Card Content -->
+  <div class="p-4">
+    <!-- Name and Rating -->
+    <div class="flex items-start justify-between mb-3">
+      <h3 class="text-lg font-semibold text-gray-900 flex-1">
+        <%= club[:name] %>
+      </h3>
+      <div class="flex items-center gap-1 ml-2">
+        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+        <span class="text-sm font-medium text-gray-900"><%= club[:rating] %></span>
+      </div>
+    </div>
+
+    <!-- Info Items -->
+    <div class="space-y-2 mb-4">
+      <!-- Location -->
+      <div class="flex items-center text-sm text-gray-600">
+        <i data-lucide="map-pin" class="w-4 h-4 mr-2 flex-shrink-0"></i>
+        <span><%= club[:location] %></span>
+      </div>
+
+      <!-- Division -->
+      <div class="flex items-center text-sm text-gray-600">
+        <i data-lucide="star" class="w-4 h-4 mr-2 flex-shrink-0"></i>
+        <span><%= club[:division] %></span>
+      </div>
+
+      <!-- Members -->
+      <div class="flex items-center text-sm text-gray-600">
+        <i data-lucide="users" class="w-4 h-4 mr-2 flex-shrink-0"></i>
+        <span><%= club[:members] %></span>
+      </div>
+
+      <!-- Founded -->
+      <div class="flex items-center text-sm text-gray-600">
+        <i data-lucide="calendar" class="w-4 h-4 mr-2 flex-shrink-0"></i>
+        <span><%= club[:founded] %></span>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="flex gap-2 mb-4">
+      <% club[:tags].each do |tag| %>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          <%= tag %>
+        </span>
+      <% end %>
+    </div>
+
+    <!-- View Details Button -->
+    <%= link_to "View Details", "#", class: "block w-full text-center bg-gray-900 text-white font-medium py-2.5 px-4 rounded-lg hover:bg-gray-800 transition duration-200" %>
+  </div>
+</div>

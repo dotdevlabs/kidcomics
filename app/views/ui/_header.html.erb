@@ -1,0 +1,44 @@
+<header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50" data-controller="lucide">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <span class="text-xl font-bold text-gray-900">CLUBLIN</span>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="hidden md:ml-10 md:flex md:space-x-8">
+          <%= link_to "Clubs", "#", class: "text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium" %>
+          <%= link_to "Tournaments", "#", class: "text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium" %>
+          <%= link_to "Training", "#", class: "text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium" %>
+          <%= link_to "Contact", "#", class: "text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium" %>
+        </nav>
+      </div>
+
+      <!-- Right side - Search and User -->
+      <div class="flex items-center space-x-4">
+        <!-- Search Icon -->
+        <button class="p-2 text-gray-600 hover:text-gray-900">
+          <i data-lucide="search" class="w-5 h-5"></i>
+        </button>
+
+        <!-- User Dropdown -->
+        <div class="relative">
+          <button class="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+            <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+              <i data-lucide="user" class="w-5 h-5"></i>
+            </div>
+            <span class="hidden md:block text-sm font-medium">John Smith</span>
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button class="md:hidden p-2 text-gray-600 hover:text-gray-900">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
