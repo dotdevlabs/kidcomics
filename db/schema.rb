@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_24_170721) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_24_172105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -66,7 +66,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_170721) do
     t.bigint "book_id", null: false
     t.text "caption"
     t.datetime "created_at", null: false
-    t.integer "position", default: 0, null: false
+    t.integer "position", null: false
     t.string "tag"
     t.datetime "updated_at", null: false
     t.index ["book_id", "position"], name: "index_drawings_on_book_id_and_position"

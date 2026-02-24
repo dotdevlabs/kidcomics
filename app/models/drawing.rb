@@ -22,7 +22,8 @@ class Drawing < ApplicationRecord
 
   def set_position
     return if position.present?
-    self.position = book.drawings.maximum(:position).to_i + 1
+    max_position = Drawing.where(book: book).maximum(:position)
+    self.position = (max_position || -1) + 1
   end
 
   def image_validation
