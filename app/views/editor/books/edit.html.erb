@@ -1,0 +1,151 @@
+<div data-controller="book-editor" data-book-editor-auto-save-url-value="<%= auto_save_editor_child_profile_book_path(@child_profile, @book) %>" class="min-h-screen bg-gray-50 pb-20">
+  <!-- Header Section -->
+  <div class="bg-white border-b border-gray-200 sticky top-0 z-10">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-4">
+          <%= link_to child_profile_book_path(@child_profile, @book), class: "text-gray-600 hover:text-gray-900" do %>
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+          <% end %>
+          <h1 class="text-2xl font-bold text-gray-900">Book Editor</h1>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Auto-save Indicator -->
+          <span data-book-editor-target="autoSaveIndicator" class="text-sm text-gray-500">
+            <i data-lucide="save" class="w-4 h-4 inline"></i>
+            <span data-book-editor-target="saveStatus">Saved</span>
+          </span>
+
+          <!-- Preview Button -->
+          <%= link_to preview_editor_child_profile_book_path(@child_profile, @book),
+                      class: "btn btn-secondary flex items-center gap-2",
+                      target: "_blank" do %>
+            <i data-lucide="eye" class="w-4 h-4"></i>
+            <span>Preview</span>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Book Details Form -->
+      <%= form_with model: @book, url: editor_child_profile_book_path(@child_profile, @book),
+                    method: :patch,
+                    data: { book_editor_target: "form" },
+                    class: "space-y-4" do |f| %>
+
+        <!-- Title Input -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Book Title</label>
+          <%= f.text_field :title,
+                          data: { book_editor_target: "title", action: "input->book-editor#markDirty" },
+                          class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                          placeholder: "Enter book title..." %>
+        </div>
+
+        <!-- Dedication Input -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Dedication (optional)</label>
+          <%= f.text_area :dedication,
+                         data: { book_editor_target: "dedication", action: "input->book-editor#markDirty" },
+                         rows: 2,
+                         class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                         placeholder: "For my amazing child..." %>
+        </div>
+
+        <!-- Edit Mode Toggle -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Who can edit this book?</label>
+          <div class="flex gap-4">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <%= f.radio_button :edit_mode, "shared",
+                                data: { book_editor_target: "editMode", action: "change->book-editor#markDirty" },
+                                class: "w-4 h-4 text-blue-600" %>
+              <span class="flex items-center gap-1">
+                <i data-lucide="users" class="w-4 h-4"></i>
+                Everyone (Shared)
+              </span>
+            </label>
+
+            <label class="flex items-center gap-2 cursor-pointer">
+              <%= f.radio_button :edit_mode, "parent_only",
+                                data: { book_editor_target: "editMode", action: "change->book-editor#markDirty" },
+                                class: "w-4 h-4 text-blue-600" %>
+              <span class="flex items-center gap-1">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+                Parents Only
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div>
+          <%= f.submit "Save Book Details", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Cover Section -->
+  <div class="container mx-auto px-4 py-6">
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <i data-lucide="image" class="w-5 h-5"></i>
+        Cover Image
+      </h2>
+
+      <%= render "editor/books/cover_editor", book: @book, child_profile: @child_profile %>
+    </div>
+  </div>
+
+  <!-- Pages Section -->
+  <div class="container mx-auto px-4 py-6">
+    <div class="bg-white rounded-lg shadow-sm p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <i data-lucide="book-open" class="w-5 h-5"></i>
+          Pages (<%= @drawings.count %>)
+        </h2>
+
+        <% if @can_add_pages %>
+          <%= link_to editor_child_profile_book_pages_path(@child_profile, @book),
+                      method: :post,
+                      data: { turbo_method: :post },
+                      class: "btn btn-primary flex items-center gap-2" do %>
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>Add Page</span>
+          <% end %>
+        <% else %>
+          <span class="text-sm text-gray-500">Onboarding books are limited to 5 pages</span>
+        <% end %>
+      </div>
+
+      <!-- Pages Grid -->
+      <div data-controller="pages-reorder"
+           data-pages-reorder-url-value="<%= editor_child_profile_book_path(@child_profile, @book) %>"
+           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @drawings.each_with_index do |drawing, index| %>
+          <%= render "editor/books/page_card",
+                     drawing: drawing,
+                     book: @book,
+                     child_profile: @child_profile,
+                     index: index %>
+        <% end %>
+      </div>
+
+      <% if @drawings.empty? %>
+        <div class="text-center py-12">
+          <i data-lucide="book-open" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
+          <p class="text-gray-500 mb-4">No pages yet. Add your first page to get started!</p>
+          <%= link_to "Add Page", editor_child_profile_book_pages_path(@child_profile, @book),
+                      method: :post,
+                      data: { turbo_method: :post },
+                      class: "btn btn-primary inline-flex items-center gap-2" do %>
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>Add First Page</span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

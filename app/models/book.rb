@@ -3,9 +3,11 @@ class Book < ApplicationRecord
   has_many :drawings, -> { order(position: :asc) }, dependent: :destroy
   has_many :story_generations, dependent: :destroy
   has_many :page_generations, dependent: :destroy
+  has_one_attached :cover_image
 
   validates :title, presence: true
   validates :status, presence: true, inclusion: { in: %w[draft published] }
+  validates :edit_mode, presence: true, inclusion: { in: %w[parent_only shared] }
 
   enum :status, { draft: "draft", published: "published" }, default: :draft
   enum :moderation_status, { pending_review: 0, approved: 1, flagged: 2, rejected: 3 }, default: :pending_review, prefix: :moderation
@@ -26,6 +28,9 @@ class Book < ApplicationRecord
   }
   scope :created_after, ->(date) { where("created_at >= ?", date.beginning_of_day) if date.present? }
   scope :created_before, ->(date) { where("created_at <= ?", date.end_of_day) if date.present? }
+  scope :recently_edited, -> { where.not(last_edited_at: nil).order(last_edited_at: :desc) }
+  scope :parent_only_edit, -> { where(edit_mode: "parent_only") }
+  scope :shared_edit, -> { where(edit_mode: "shared") }
 
   # AI Generation methods
   def current_story_generation
@@ -47,5 +52,25 @@ class Book < ApplicationRecord
 
   def toggle_favorite!
     update!(favorited: !favorited)
+  end
+
+  # Editor methods
+  def editable_by?(user)
+    return true if edit_mode == "shared"
+    return true if edit_mode == "parent_only" && child_profile.family_account.owner == user
+
+    false
+  end
+
+  def update_last_edited!
+    update!(last_edited_at: Time.current)
+  end
+
+  def pages
+    drawings
+  end
+
+  def cover_page
+    drawings.find_by(is_cover: true)
   end
 end
