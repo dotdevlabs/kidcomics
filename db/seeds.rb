@@ -76,7 +76,7 @@ unless test_user.family_account.present?
     moderation_status: :flagged
   )
 
-  puts "✅ Created test family with #{family.child_profiles.count} children and #{Book.where(child_profile: [child1, child2]).count} books"
+  puts "✅ Created test family with #{family.child_profiles.count} children and #{Book.where(child_profile: [ child1, child2 ]).count} books"
 end
 
 puts "\n🎉 Seed data created successfully!"
