@@ -15,7 +15,7 @@ class HomeController < ApplicationController
         division: "Premier League",
         members: "750+ members",
         founded: "Est. 1878",
-        tags: ["Professional", "Men's"]
+        tags: [ "Professional", "Men's" ]
       },
       {
         name: "Barcelona FC",
@@ -25,7 +25,7 @@ class HomeController < ApplicationController
         division: "La Liga",
         members: "800+ members",
         founded: "Est. 1899",
-        tags: ["Professional", "Men's"]
+        tags: [ "Professional", "Men's" ]
       },
       {
         name: "Bayern Munich",
@@ -35,7 +35,7 @@ class HomeController < ApplicationController
         division: "Bundesliga",
         members: "650+ members",
         founded: "Est. 1900",
-        tags: ["Professional", "Men's"]
+        tags: [ "Professional", "Men's" ]
       },
       {
         name: "Juventus FC",
@@ -45,7 +45,7 @@ class HomeController < ApplicationController
         division: "Serie A",
         members: "600+ members",
         founded: "Est. 1897",
-        tags: ["Professional", "Men's"]
+        tags: [ "Professional", "Men's" ]
       },
       {
         name: "Arsenal FC",
@@ -55,7 +55,7 @@ class HomeController < ApplicationController
         division: "Premier League",
         members: "700+ members",
         founded: "Est. 1886",
-        tags: ["Professional", "Men's"]
+        tags: [ "Professional", "Men's" ]
       },
       {
         name: "Chelsea FC",
@@ -65,7 +65,7 @@ class HomeController < ApplicationController
         division: "Premier League",
         members: "680+ members",
         founded: "Est. 1905",
-        tags: ["Professional", "Men's"]
+        tags: [ "Professional", "Men's" ]
       },
       {
         name: "Paris Saint-Germain",
@@ -75,7 +75,7 @@ class HomeController < ApplicationController
         division: "Ligue 1",
         members: "720+ members",
         founded: "Est. 1970",
-        tags: ["Professional", "Men's"]
+        tags: [ "Professional", "Men's" ]
       },
       {
         name: "Liverpool FC",
@@ -85,7 +85,7 @@ class HomeController < ApplicationController
         division: "Premier League",
         members: "750+ members",
         founded: "Est. 1892",
-        tags: ["Professional", "Men's"]
+        tags: [ "Professional", "Men's" ]
       }
     ]
   end
