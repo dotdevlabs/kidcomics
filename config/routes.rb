@@ -27,6 +27,25 @@ Rails.application.routes.draw do
     end
   end
 
+  # AI Story Generation (nested under child profiles and books)
+  namespace :ai do
+    resources :child_profiles, only: [] do
+      resources :books, only: [] do
+        resources :story_generations, only: [ :new, :create, :show ] do
+          member do
+            post :retry
+          end
+
+          resources :page_generations, only: [ :show, :update ] do
+            member do
+              post :regenerate
+            end
+          end
+        end
+      end
+    end
+  end
+
   # Profile Selection
   get  "select_profile", to: "profile_selections#index"
   post "select_profile/:id", to: "profile_selections#create", as: :create_profile_selection

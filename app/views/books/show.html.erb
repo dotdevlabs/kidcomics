@@ -18,6 +18,12 @@
           <% end %>
         </div>
         <div class="flex space-x-3">
+          <% if @book.ready_for_ai_generation? %>
+            <%= link_to new_ai_child_profile_book_story_generation_path(@child_profile, @book), class: "bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200 inline-flex items-center" do %>
+              <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
+              Generate AI Story
+            <% end %>
+          <% end %>
           <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
             <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
             Upload Drawings

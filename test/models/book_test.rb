@@ -65,7 +65,9 @@ class BookTest < ActiveSupport::TestCase
     book1 = Book.create!(title: "First Book", child_profile: @child_profile, created_at: 2.days.ago)
     book2 = Book.create!(title: "Second Book", child_profile: @child_profile, created_at: 1.day.ago)
 
-    assert_equal [ book2, book1 ], Book.recent.to_a
+    # Only check books for this child profile
+    recent_books = Book.where(child_profile: @child_profile).recent.to_a
+    assert_equal [ book2, book1 ], recent_books
   end
 
   test "published scope returns only published books" do
@@ -79,6 +81,8 @@ class BookTest < ActiveSupport::TestCase
     draft_book = Book.create!(title: "Draft Book", status: "draft", child_profile: @child_profile)
     published_book = Book.create!(title: "Published Book", status: "published", child_profile: @child_profile)
 
-    assert_equal [ draft_book ], Book.drafts.to_a
+    # Only check books for this child profile
+    draft_books = Book.where(child_profile: @child_profile).drafts.to_a
+    assert_equal [ draft_book ], draft_books
   end
 end

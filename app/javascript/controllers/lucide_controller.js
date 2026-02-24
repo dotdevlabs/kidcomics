@@ -11,7 +11,11 @@ import {
   Tag,
   ArrowLeft,
   BookOpen,
-  Info
+  Info,
+  Sparkles,
+  AlertCircle,
+  Loader,
+  CheckCircle
 } from "lucide"
 
 export default class extends Controller {
@@ -28,7 +32,11 @@ export default class extends Controller {
         Tag,
         ArrowLeft,
         BookOpen,
-        Info
+        Info,
+        Sparkles,
+        AlertCircle,
+        Loader,
+        CheckCircle
       }
     })
   }
