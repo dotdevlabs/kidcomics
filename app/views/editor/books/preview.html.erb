@@ -1,0 +1,130 @@
+<div data-controller="book-preview" class="min-h-screen bg-gray-900">
+  <!-- Preview Header -->
+  <div class="bg-gray-800 border-b border-gray-700 sticky top-0 z-10">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <%= link_to edit_editor_child_profile_book_path(@child_profile, @book),
+                    class: "text-gray-300 hover:text-white flex items-center gap-2" do %>
+          <i data-lucide="x" class="w-5 h-5"></i>
+          <span>Close</span>
+        <% end %>
+      </div>
+
+      <h1 class="text-white text-lg font-semibold"><%= @book.title %></h1>
+
+      <div class="flex items-center gap-2 text-gray-300">
+        <span class="text-sm">Page</span>
+        <span data-book-preview-target="currentPage" class="font-semibold">1</span>
+        <span class="text-sm">of</span>
+        <span data-book-preview-target="totalPages" class="font-semibold"><%= @drawings.count + (@book.dedication.present? ? 1 : 0) %></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview Content -->
+  <div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Cover Page -->
+      <% if @book.cover_image.attached? %>
+        <div data-book-preview-target="page"
+             data-page-number="0"
+             class="bg-white rounded-lg shadow-xl overflow-hidden mb-8">
+          <div class="aspect-[3/4] relative">
+            <%= image_tag @book.cover_image.variant(resize_to_limit: [1200, 1600]),
+                          alt: @book.title,
+                          class: "w-full h-full object-cover" %>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+              <div class="p-8 text-white">
+                <h2 class="text-4xl font-bold mb-2"><%= @book.title %></h2>
+                <% if @book.dedication.present? %>
+                  <p class="text-lg italic"><%= @book.dedication %></p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Dedication Page (if no cover image but dedication exists) -->
+      <% if !@book.cover_image.attached? && @book.dedication.present? %>
+        <div data-book-preview-target="page"
+             data-page-number="0"
+             class="bg-white rounded-lg shadow-xl p-12 mb-8">
+          <div class="text-center">
+            <h2 class="text-3xl font-bold mb-8"><%= @book.title %></h2>
+            <div class="border-t-2 border-b-2 border-gray-200 py-8">
+              <p class="text-xl italic text-gray-700"><%= @book.dedication %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Story Pages -->
+      <% @drawings.each_with_index do |drawing, index| %>
+        <div data-book-preview-target="page"
+             data-page-number="<%= index + 1 %>"
+             class="bg-white rounded-lg shadow-xl overflow-hidden mb-8 <%= 'hidden' unless index == 0 %>">
+
+          <!-- Page Image -->
+          <% if drawing.image.attached? %>
+            <div class="aspect-video bg-gray-100">
+              <%= image_tag drawing.image.variant(:large),
+                            alt: "Page #{index + 1}",
+                            class: "w-full h-full object-contain" %>
+            </div>
+          <% end %>
+
+          <!-- Page Text Content -->
+          <% if drawing.has_text? || drawing.caption.present? %>
+            <div class="p-8 space-y-4">
+              <% if drawing.narration_text.present? %>
+                <div class="prose prose-lg max-w-none">
+                  <%= simple_format(drawing.narration_text, class: "text-gray-800 leading-relaxed") %>
+                </div>
+              <% end %>
+
+              <% if drawing.dialogue_text.present? %>
+                <div class="prose prose-lg max-w-none border-l-4 border-blue-500 pl-4">
+                  <%= simple_format(drawing.dialogue_text, class: "text-gray-700 italic") %>
+                </div>
+              <% end %>
+
+              <% if drawing.caption.present? %>
+                <div class="text-sm text-gray-500 italic text-center pt-4 border-t border-gray-200">
+                  <%= drawing.caption %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <!-- Page Number -->
+          <div class="px-8 pb-4 text-center text-sm text-gray-400">
+            Page <%= index + 1 %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Navigation Controls -->
+  <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-800 rounded-full shadow-xl px-6 py-3 flex items-center gap-4">
+    <button data-action="click->book-preview#previousPage"
+            data-book-preview-target="prevButton"
+            class="text-white hover:text-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled>
+      <i data-lucide="chevron-left" class="w-6 h-6"></i>
+    </button>
+
+    <div class="text-white text-sm font-medium">
+      <span data-book-preview-target="currentPageDisplay">1</span>
+      /
+      <span data-book-preview-target="totalPagesDisplay"><%= @drawings.count %></span>
+    </div>
+
+    <button data-action="click->book-preview#nextPage"
+            data-book-preview-target="nextButton"
+            class="text-white hover:text-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+      <i data-lucide="chevron-right" class="w-6 h-6"></i>
+    </button>
+  </div>
+</div>

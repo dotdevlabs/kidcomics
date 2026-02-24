@@ -48,6 +48,28 @@ Rails.application.routes.draw do
   # Family Library (books across all child profiles)
   get "library", to: "library#index", as: :library
 
+  # Book Editor (nested under child profiles and books)
+  namespace :editor do
+    resources :child_profiles, only: [] do
+      resources :books, only: [] do
+        member do
+          get :edit
+          patch :update
+          patch :auto_save
+          get :preview
+          patch :update_cover
+        end
+
+        resources :pages, only: [ :create, :update, :destroy ] do
+          member do
+            post :regenerate
+            patch :reorder
+          end
+        end
+      end
+    end
+  end
+
   # AI Story Generation (nested under child profiles and books)
   namespace :ai do
     resources :child_profiles, only: [] do

@@ -6,7 +6,7 @@
         <div>
           <div class="flex items-center mb-2">
             <%= link_to child_profile_books_path(@child_profile), class: "text-gray-600 hover:text-gray-800 mr-3" do %>
-              <%= icon "arrow-left", class: "w-5 h-5" %>
+              <i data-lucide="arrow-left" class="w-5 h-5"></i>
             <% end %>
             <h1 class="text-3xl font-bold text-gray-800"><%= @book.title %></h1>
             <span class="ml-3 px-3 py-1 text-sm font-semibold rounded-full <%= @book.status == 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
@@ -20,17 +20,21 @@
         <div class="flex space-x-3">
           <% if @book.ready_for_ai_generation? %>
             <%= link_to new_ai_child_profile_book_story_generation_path(@child_profile, @book), class: "bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200 inline-flex items-center" do %>
-              <%= icon "sparkles", class: "w-5 h-5 mr-2" %>
+              <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
               Generate AI Story
             <% end %>
           <% end %>
+          <%= link_to edit_editor_child_profile_book_path(@child_profile, @book), class: "bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 inline-flex items-center" do %>
+            <i data-lucide="edit-3" class="w-5 h-5 mr-2"></i>
+            Open Editor
+          <% end %>
           <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-            <%= icon "upload", class: "w-5 h-5 mr-2" %>
+            <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
             Upload Drawings
           <% end %>
           <%= link_to edit_child_profile_book_path(@child_profile, @book), class: "bg-gray-200 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-300 transition duration-200 inline-flex items-center" do %>
-            <%= icon "pencil", class: "w-5 h-5 mr-2" %>
-            Edit Book
+            <i data-lucide="pencil" class="w-5 h-5 mr-2"></i>
+            Edit Details
           <% end %>
         </div>
       </div>
@@ -58,11 +62,11 @@
             </p>
             <%= button_to "Complete Account Setup", complete_onboarding_path, method: :post,
                 class: "bg-white text-purple-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-100 transition inline-flex items-center" do %>
-              <%= icon "circle-check", class: "w-5 h-5 mr-2" %>
+              <i data-lucide="check-circle" class="w-5 h-5 mr-2"></i>
               Complete Setup
             <% end %>
           </div>
-          <%= icon "sparkles", class: "w-16 h-16 ml-4 text-white/30" %>
+          <i data-lucide="sparkles" class="w-16 h-16 ml-4 text-white/30"></i>
         </div>
       </div>
     <% end %>
@@ -86,7 +90,7 @@
         </h2>
         <% if @drawings.any? %>
           <%= link_to child_profile_book_drawings_path(@child_profile, @book), class: "text-purple-600 hover:text-purple-700 inline-flex items-center" do %>
-            <%= icon "grip-vertical", class: "w-5 h-5 mr-2" %>
+            <i data-lucide="grip-vertical" class="w-5 h-5 mr-2"></i>
             Manage & Reorder
           <% end %>
         <% end %>
@@ -115,12 +119,12 @@
       <% else %>
         <div class="text-center py-12">
           <div class="mb-4">
-            <%= icon "image", class: "w-16 h-16 mx-auto text-gray-400" %>
+            <i data-lucide="image" class="w-16 h-16 mx-auto text-gray-400"></i>
           </div>
           <h3 class="text-xl font-bold text-gray-800 mb-2">No drawings yet</h3>
           <p class="text-gray-600 mb-6">Upload your drawings to start building your book!</p>
           <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-            <%= icon "upload", class: "w-5 h-5 mr-2" %>
+            <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
             Upload Your First Drawing
           <% end %>
         </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_24_195700) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_24_220406) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -61,9 +61,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_195700) do
     t.boolean "ai_generation_enabled", default: true, null: false
     t.bigint "child_profile_id", null: false
     t.datetime "created_at", null: false
+    t.text "dedication"
     t.text "description"
+    t.string "edit_mode", default: "shared", null: false
     t.boolean "favorited", default: false, null: false
     t.boolean "is_onboarding_book", default: false, null: false
+    t.datetime "last_edited_at"
     t.datetime "last_generated_at"
     t.integer "moderation_status", default: 0, null: false
     t.string "preferred_style"
@@ -74,7 +77,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_195700) do
     t.integer "view_count", default: 0, null: false
     t.index ["child_profile_id", "created_at"], name: "index_books_on_child_profile_id_and_created_at"
     t.index ["child_profile_id"], name: "index_books_on_child_profile_id"
+    t.index ["edit_mode"], name: "index_books_on_edit_mode"
     t.index ["favorited"], name: "index_books_on_favorited"
+    t.index ["last_edited_at"], name: "index_books_on_last_edited_at"
     t.index ["last_generated_at"], name: "index_books_on_last_generated_at"
     t.index ["moderation_status"], name: "index_books_on_moderation_status"
     t.index ["status"], name: "index_books_on_status"
@@ -112,9 +117,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_195700) do
     t.bigint "book_id", null: false
     t.text "caption"
     t.datetime "created_at", null: false
+    t.text "dialogue_text"
     t.datetime "extracted_at"
     t.boolean "is_background", default: false
     t.boolean "is_character", default: false
+    t.boolean "is_cover", default: false, null: false
+    t.text "narration_text"
     t.integer "position", null: false
     t.string "tag"
     t.datetime "updated_at", null: false
@@ -123,6 +131,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_195700) do
     t.index ["book_id"], name: "index_drawings_on_book_id"
     t.index ["is_background"], name: "index_drawings_on_is_background"
     t.index ["is_character"], name: "index_drawings_on_is_character"
+    t.index ["is_cover"], name: "index_drawings_on_is_cover"
   end
 
   create_table "family_accounts", force: :cascade do |t|

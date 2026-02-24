@@ -188,4 +188,70 @@ class BookTest < ActiveSupport::TestCase
     assert_includes filtered_books, old_book
     assert_not_includes filtered_books, recent_book
   end
+
+  # Editor feature tests
+  test "edit_mode defaults to shared" do
+    book = Book.create!(title: "Test Book", child_profile: @child_profile)
+    assert_equal "shared", book.edit_mode
+  end
+
+  test "edit_mode can be set to parent_only" do
+    book = Book.create!(title: "Test Book", child_profile: @child_profile, edit_mode: "parent_only")
+    assert_equal "parent_only", book.edit_mode
+  end
+
+  test "edit_mode must be valid" do
+    book = Book.new(title: "Test Book", child_profile: @child_profile, edit_mode: "invalid_mode")
+    assert_not book.valid?
+    assert_includes book.errors[:edit_mode], "is not included in the list"
+  end
+
+  test "dedication can be set" do
+    book = Book.create!(title: "Test Book", child_profile: @child_profile, dedication: "For my wonderful child")
+    assert_equal "For my wonderful child", book.dedication
+  end
+
+  test "has_one_attached cover_image" do
+    book = Book.create!(title: "Test Book", child_profile: @child_profile)
+    assert_respond_to book, :cover_image
+  end
+
+  test "update_last_edited! sets last_edited_at" do
+    book = Book.create!(title: "Test Book", child_profile: @child_profile)
+    assert_nil book.last_edited_at
+
+    book.update_last_edited!
+    assert_not_nil book.last_edited_at
+  end
+
+  test "editable_by? returns true for shared mode" do
+    book = Book.create!(title: "Test Book", child_profile: @child_profile, edit_mode: "shared")
+    other_user = User.create!(name: "Other User", email: "other@example.com", password: "password123")
+
+    assert book.editable_by?(@user)
+    assert book.editable_by?(other_user)
+  end
+
+  test "editable_by? returns true for owner in parent_only mode" do
+    book = Book.create!(title: "Test Book", child_profile: @child_profile, edit_mode: "parent_only")
+    assert book.editable_by?(@user)
+  end
+
+  test "editable_by? returns false for non-owner in parent_only mode" do
+    book = Book.create!(title: "Test Book", child_profile: @child_profile, edit_mode: "parent_only")
+    other_user = User.create!(name: "Other User", email: "other@example.com", password: "password123")
+
+    assert_not book.editable_by?(other_user)
+  end
+
+  test "recently_edited scope returns books with last_edited_at set" do
+    book1 = Book.create!(title: "Edited Book", child_profile: @child_profile)
+    book1.update_last_edited!
+
+    book2 = Book.create!(title: "Unedited Book", child_profile: @child_profile)
+
+    edited_books = Book.recently_edited.to_a
+    assert_includes edited_books, book1
+    assert_not_includes edited_books, book2
+  end
 end

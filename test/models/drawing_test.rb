@@ -103,4 +103,86 @@ class DrawingTest < ActiveSupport::TestCase
     drawing.update(caption: "A cool drawing")
     assert_equal "A cool drawing", drawing.caption
   end
+
+  # Editor feature tests
+  test "narration_text is optional" do
+    drawing = Drawing.create!(book: @book, position: 0)
+    drawing.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "test.jpg", content_type: "image/jpeg")
+    assert_nil drawing.narration_text
+
+    drawing.update(narration_text: "Once upon a time...")
+    assert_equal "Once upon a time...", drawing.narration_text
+  end
+
+  test "dialogue_text is optional" do
+    drawing = Drawing.create!(book: @book, position: 0)
+    drawing.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "test.jpg", content_type: "image/jpeg")
+    assert_nil drawing.dialogue_text
+
+    drawing.update(dialogue_text: "\"Hello!\" said the hero.")
+    assert_equal "\"Hello!\" said the hero.", drawing.dialogue_text
+  end
+
+  test "is_cover defaults to false" do
+    drawing = Drawing.create!(book: @book, position: 0)
+    drawing.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "test.jpg", content_type: "image/jpeg")
+    assert_equal false, drawing.is_cover
+  end
+
+  test "is_cover can be set to true" do
+    drawing = Drawing.create!(book: @book, position: 0, is_cover: true)
+    drawing.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "test.jpg", content_type: "image/jpeg")
+    assert_equal true, drawing.is_cover
+  end
+
+  test "has_text? returns true when narration_text is present" do
+    drawing = Drawing.create!(book: @book, position: 0, narration_text: "Some text")
+    drawing.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "test.jpg", content_type: "image/jpeg")
+    assert drawing.has_text?
+  end
+
+  test "has_text? returns true when dialogue_text is present" do
+    drawing = Drawing.create!(book: @book, position: 0, dialogue_text: "Some dialogue")
+    drawing.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "test.jpg", content_type: "image/jpeg")
+    assert drawing.has_text?
+  end
+
+  test "has_text? returns false when no text is present" do
+    drawing = Drawing.create!(book: @book, position: 0)
+    drawing.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "test.jpg", content_type: "image/jpeg")
+    assert_not drawing.has_text?
+  end
+
+  test "combined_text returns both narration and dialogue" do
+    drawing = Drawing.create!(
+      book: @book,
+      position: 0,
+      narration_text: "Once upon a time...",
+      dialogue_text: "\"Hello!\" said the hero."
+    )
+    drawing.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "test.jpg", content_type: "image/jpeg")
+
+    expected = "Once upon a time...\n\n\"Hello!\" said the hero."
+    assert_equal expected, drawing.combined_text
+  end
+
+  test "covers scope returns only cover drawings" do
+    cover = Drawing.create!(book: @book, position: 0, is_cover: true)
+    cover.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "cover.jpg", content_type: "image/jpeg")
+
+    page = Drawing.create!(book: @book, position: 1, is_cover: false)
+    page.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "page.jpg", content_type: "image/jpeg")
+
+    assert_equal [ cover ], Drawing.covers.to_a
+  end
+
+  test "pages scope returns only non-cover drawings" do
+    cover = Drawing.create!(book: @book, position: 0, is_cover: true)
+    cover.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "cover.jpg", content_type: "image/jpeg")
+
+    page = Drawing.create!(book: @book, position: 1, is_cover: false)
+    page.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "page.jpg", content_type: "image/jpeg")
+
+    assert_equal [ page ], Drawing.pages.to_a
+  end
 end

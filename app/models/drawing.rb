@@ -28,6 +28,17 @@ class Drawing < ApplicationRecord
   scope :characters, -> { where(is_character: true) }
   scope :backgrounds, -> { where(is_background: true) }
   scope :analyzed, -> { analysis_status_completed }
+  scope :covers, -> { where(is_cover: true) }
+  scope :pages, -> { where(is_cover: false) }
+
+  # Text content methods
+  def has_text?
+    narration_text.present? || dialogue_text.present?
+  end
+
+  def combined_text
+    [ narration_text, dialogue_text ].compact.join("\n\n")
+  end
 
   private
 
