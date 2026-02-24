@@ -15,7 +15,20 @@ import {
   Sparkles,
   AlertCircle,
   Loader,
-  CheckCircle
+  CheckCircle,
+  Search,
+  Filter,
+  Star,
+  Heart,
+  Grid,
+  List,
+  SlidersHorizontal,
+  Calendar,
+  Eye,
+  ChevronDown,
+  X,
+  Share2,
+  MoreVertical
 } from "lucide"
 
 export default class extends Controller {
@@ -36,7 +49,20 @@ export default class extends Controller {
         Sparkles,
         AlertCircle,
         Loader,
-        CheckCircle
+        CheckCircle,
+        Search,
+        Filter,
+        Star,
+        Heart,
+        Grid,
+        List,
+        SlidersHorizontal,
+        Calendar,
+        Eye,
+        ChevronDown,
+        X,
+        Share2,
+        MoreVertical
       }
     })
   }

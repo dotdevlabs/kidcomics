@@ -19,6 +19,10 @@ Rails.application.routes.draw do
   # Books and Drawings (nested under child profiles)
   resources :child_profiles, only: [] do
     resources :books do
+      member do
+        patch :toggle_favorite
+      end
+
       resources :drawings do
         member do
           patch :reorder
@@ -26,6 +30,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # Family Library (books across all child profiles)
+  get "library", to: "library#index", as: :library
 
   # AI Story Generation (nested under child profiles and books)
   namespace :ai do

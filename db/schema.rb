@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_24_174301) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_24_182820) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -47,15 +47,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_174301) do
     t.bigint "child_profile_id", null: false
     t.datetime "created_at", null: false
     t.text "description"
+    t.boolean "favorited", default: false, null: false
     t.datetime "last_generated_at"
     t.string "preferred_style"
     t.string "status", default: "draft", null: false
     t.text "story_prompt"
     t.string "title", null: false
     t.datetime "updated_at", null: false
+    t.integer "view_count", default: 0, null: false
     t.index ["child_profile_id", "created_at"], name: "index_books_on_child_profile_id_and_created_at"
     t.index ["child_profile_id"], name: "index_books_on_child_profile_id"
+    t.index ["favorited"], name: "index_books_on_favorited"
     t.index ["last_generated_at"], name: "index_books_on_last_generated_at"
+    t.index ["status"], name: "index_books_on_status"
+    t.index ["view_count"], name: "index_books_on_view_count"
   end
 
   create_table "character_extractions", force: :cascade do |t|
