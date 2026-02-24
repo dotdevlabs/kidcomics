@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   post  "onboarding/start", to: "onboarding#start", as: :onboarding_start
   get   "onboarding/name", to: "onboarding#name"
   patch "onboarding/name", to: "onboarding#update_name"
-  get   "onboarding/child", to: "onboarding#child_profile"
+  get   "onboarding/child", to: "onboarding#child_profile", as: :onboarding_child_profile
   post  "onboarding/child", to: "onboarding#create_child", as: :onboarding_child
   post  "onboarding/complete", to: "onboarding#complete", as: :complete_onboarding
 
