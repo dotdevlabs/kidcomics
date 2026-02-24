@@ -1,7 +1,7 @@
 class OnboardingController < ApplicationController
   skip_before_action :require_login
-  before_action :set_onboarding_user, except: [:start]
-  before_action :redirect_if_completed, except: [:complete]
+  before_action :set_onboarding_user, except: [ :start ]
+  before_action :redirect_if_completed, except: [ :complete ]
 
   # POST /onboarding/start - Create user with email only
   def start

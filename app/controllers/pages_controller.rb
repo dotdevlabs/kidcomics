@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :require_login, only: [:home]
+  skip_before_action :require_login, only: [ :home ]
 
   def home
     # Redirect to dashboard if already logged in
