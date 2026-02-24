@@ -12,10 +12,10 @@ class BookTest < ActiveSupport::TestCase
     assert book.valid?
   end
 
-  test "requires title" do
-    book = Book.new(child_profile: @child_profile)
-    assert_not book.valid?
-    assert_includes book.errors[:title], "can't be blank"
+  test "auto-generates title when not provided" do
+    book = Book.create!(child_profile: @child_profile)
+    assert book.valid?
+    assert_equal "Test Child's Story", book.title
   end
 
   test "requires child profile" do
