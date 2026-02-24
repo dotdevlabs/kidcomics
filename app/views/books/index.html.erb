@@ -12,16 +12,16 @@
           <div class="flex items-center bg-gray-100 rounded-lg p-1">
             <%= link_to child_profile_books_path(@child_profile, params.permit(:search, :status, :favorited, :date_from, :date_to, :sort).merge(view_mode: 'grid')),
                 class: "px-3 py-2 rounded transition #{@view_mode == 'grid' ? 'bg-white shadow-sm' : 'text-gray-600 hover:text-gray-800'}" do %>
-              <i data-lucide="grid" class="w-4 h-4"></i>
+              <%= icon "layout-grid", class: "w-4 h-4" %>
             <% end %>
             <%= link_to child_profile_books_path(@child_profile, params.permit(:search, :status, :favorited, :date_from, :date_to, :sort).merge(view_mode: 'list')),
                 class: "px-3 py-2 rounded transition #{@view_mode == 'list' ? 'bg-white shadow-sm' : 'text-gray-600 hover:text-gray-800'}" do %>
-              <i data-lucide="list" class="w-4 h-4"></i>
+              <%= icon "list", class: "w-4 h-4" %>
             <% end %>
           </div>
 
           <%= link_to new_child_profile_book_path(@child_profile), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-            <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
+            <%= icon "plus", class: "w-5 h-5 mr-2" %>
             Create New Book
           <% end %>
         </div>
@@ -60,19 +60,19 @@
       <% else %>
         <div class="bg-white rounded-lg shadow-md p-12 text-center">
           <div class="mb-4">
-            <i data-lucide="book-open" class="w-16 h-16 mx-auto text-gray-400"></i>
+            <%= icon "book-open", class: "w-16 h-16 mx-auto text-gray-400" %>
           </div>
           <h3 class="text-xl font-bold text-gray-800 mb-2">No books found</h3>
           <% if params[:search].present? || params[:status].present? || params[:favorited].present? || params[:date_from].present? || params[:date_to].present? %>
             <p class="text-gray-600 mb-6">Try adjusting your filters to see more results.</p>
             <%= link_to child_profile_books_path(@child_profile), class: "bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition duration-200 inline-flex items-center" do %>
-              <i data-lucide="x" class="w-5 h-5 mr-2"></i>
+              <%= icon "x", class: "w-5 h-5 mr-2" %>
               Clear Filters
             <% end %>
           <% else %>
             <p class="text-gray-600 mb-6">Start creating your first comic book!</p>
             <%= link_to new_child_profile_book_path(@child_profile), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-              <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
+              <%= icon "plus", class: "w-5 h-5 mr-2" %>
               Create Your First Book
             <% end %>
           <% end %>

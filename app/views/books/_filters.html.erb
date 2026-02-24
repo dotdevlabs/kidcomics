@@ -7,11 +7,11 @@
 <div class="bg-white rounded-lg shadow-md p-6 mb-6" data-controller="filter">
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-xl font-bold text-gray-800 flex items-center">
-      <i data-lucide="sliders-horizontal" class="w-5 h-5 mr-2"></i>
+      <%= icon "sliders-horizontal", class: "w-5 h-5 mr-2" %>
       Filters
     </h2>
     <%= link_to request.path, class: "text-sm text-gray-600 hover:text-gray-800 flex items-center" do %>
-      <i data-lucide="x" class="w-4 h-4 mr-1"></i>
+      <%= icon "x", class: "w-4 h-4 mr-1" %>
       Clear All
     <% end %>
   </div>
@@ -20,7 +20,7 @@
     <!-- Search -->
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-2">
-        <i data-lucide="search" class="w-4 h-4 inline mr-1"></i>
+        <%= icon "search", class: "w-4 h-4 inline mr-1" %>
         Search by Title
       </label>
       <%= f.text_field :search, value: params[:search], placeholder: "Enter book title...", class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent", data: { action: "input->filter#debounceSubmit" } %>
@@ -50,7 +50,7 @@
       <!-- Favorites Filter -->
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">
-          <i data-lucide="star" class="w-4 h-4 inline mr-1"></i>
+          <%= icon "star", class: "w-4 h-4 inline mr-1" %>
           Favorites
         </label>
         <%= f.select :favorited,
@@ -73,14 +73,14 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">
-          <i data-lucide="calendar" class="w-4 h-4 inline mr-1"></i>
+          <%= icon "calendar", class: "w-4 h-4 inline mr-1" %>
           From Date
         </label>
         <%= f.date_field :date_from, value: params[:date_from], class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" %>
       </div>
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-2">
-          <i data-lucide="calendar" class="w-4 h-4 inline mr-1"></i>
+          <%= icon "calendar", class: "w-4 h-4 inline mr-1" %>
           To Date
         </label>
         <%= f.date_field :date_to, value: params[:date_to], class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" %>

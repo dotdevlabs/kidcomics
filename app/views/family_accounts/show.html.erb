@@ -7,7 +7,7 @@
         <div class="flex items-center space-x-4">
           <span class="text-gray-600">Welcome, <%= current_user.name %></span>
           <%= link_to library_path, class: "bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-            <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
+            <%= icon "book-open", class: "w-5 h-5 mr-2" %>
             Library
           <% end %>
           <%= button_to "Logout", logout_path, method: :delete, class: "bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-200" %>
@@ -35,7 +35,7 @@
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800">Child Profiles</h2>
         <%= link_to new_family_account_child_profile_path(@family_account), class: "bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-          <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
+          <%= icon "plus", class: "w-5 h-5 mr-2" %>
           Add Child
         <% end %>
       </div>
@@ -58,16 +58,16 @@
 
                 <div class="flex flex-col gap-2 w-full">
                   <%= link_to child_profile_books_path(child_profile), class: "bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-200 inline-flex items-center justify-center" do %>
-                    <i data-lucide="book-open" class="w-4 h-4 mr-2"></i>
+                    <%= icon "book-open", class: "w-4 h-4 mr-2" %>
                     View Books
                   <% end %>
                   <div class="flex gap-2">
                     <%= link_to edit_family_account_child_profile_path(@family_account, child_profile), class: "flex-1 bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600 transition duration-200 inline-flex items-center justify-center" do %>
-                      <i data-lucide="pencil" class="w-4 h-4 mr-1"></i>
+                      <%= icon "pencil", class: "w-4 h-4 mr-1" %>
                       Edit
                     <% end %>
                     <%= button_to family_account_child_profile_path(@family_account, child_profile), method: :delete, data: { turbo_confirm: "Are you sure you want to delete #{child_profile.name}'s profile?" }, class: "flex-1 bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 transition duration-200 inline-flex items-center justify-center" do %>
-                      <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
+                      <%= icon "trash-2", class: "w-4 h-4 mr-1" %>
                       Delete
                     <% end %>
                   </div>
