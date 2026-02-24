@@ -6,10 +6,13 @@ class RegistrationsController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    # Mark as completed onboarding for direct signups (not through onboarding flow)
+    @user.onboarding_completed = true
 
     if @user.save
-      # Create family account for the new user
-      family_account = @user.build_family_account(name: family_account_params[:name])
+      # Create family account for the new user with auto-generated name
+      family_name = "#{@user.name}'s Family"
+      family_account = @user.build_family_account(name: family_name)
 
       if family_account.save
         reset_session
@@ -31,9 +34,5 @@ class RegistrationsController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
-  end
-
-  def family_account_params
-    params.require(:user).permit(:family_name).transform_keys { |key| key == "family_name" ? "name" : key }
   end
 end

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Landing page
+  root "pages#home"
+
   # Authentication routes
   get    "login",  to: "sessions#new"
   post   "login",  to: "sessions#create"
@@ -7,6 +10,17 @@ Rails.application.routes.draw do
   # Registration routes
   get  "signup", to: "registrations#new"
   post "signup", to: "registrations#create"
+
+  # Onboarding routes
+  post  "onboarding/start", to: "onboarding#start", as: :onboarding_start
+  get   "onboarding/name", to: "onboarding#name"
+  patch "onboarding/name", to: "onboarding#update_name"
+  get   "onboarding/child", to: "onboarding#child_profile", as: :onboarding_child_profile
+  post  "onboarding/child", to: "onboarding#create_child", as: :onboarding_child
+  post  "onboarding/complete", to: "onboarding#complete", as: :complete_onboarding
+
+  # Email verification
+  get "verify_email/:token", to: "email_verifications#show", as: :verify_email
 
   # Family Dashboard
   get "dashboard", to: "family_accounts#show", as: :dashboard
@@ -80,6 +94,12 @@ Rails.application.routes.draw do
 
     resources :ai_usage, only: [ :index ]
     resources :audit_logs, only: [ :index, :show ]
+
+    resources :settings, only: [ :index, :update ] do
+      collection do
+        post :test_email
+      end
+    end
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -89,7 +109,4 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Root path - profile selection or dashboard
-  root "profile_selections#index"
 end

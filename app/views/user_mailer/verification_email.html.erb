@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      background: linear-gradient(135deg, #9333ea 0%, #3b82f6 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 10px 10px 0 0;
+    }
+    .content {
+      background: #f9fafb;
+      padding: 30px;
+      border-radius: 0 0 10px 10px;
+    }
+    .button {
+      display: inline-block;
+      background: linear-gradient(135deg, #9333ea 0%, #3b82f6 100%);
+      color: white;
+      padding: 15px 40px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    .footer {
+      text-align: center;
+      color: #6b7280;
+      font-size: 14px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 style="margin: 0;">Welcome to KidComics!</h1>
+  </div>
+
+  <div class="content">
+    <p>Hi <%= @user.name %>,</p>
+
+    <p>Thanks for creating your first book with KidComics! We hope you and your family enjoyed bringing those stories to life.</p>
+
+    <p>To complete your account setup and continue creating amazing stories, please verify your email address by clicking the button below:</p>
+
+    <div style="text-align: center;">
+      <a href="<%= @verification_url %>" class="button">Verify My Email</a>
+    </div>
+
+    <p style="color: #6b7280; font-size: 14px;">Or copy and paste this link into your browser:<br>
+    <%= @verification_url %></p>
+
+    <p>Once verified, you'll be able to:</p>
+    <ul>
+      <li>Set your own password</li>
+      <li>Create unlimited books</li>
+      <li>Access your digital library anytime</li>
+      <li>Manage your family account</li>
+    </ul>
+
+    <p>Happy storytelling!</p>
+    <p>The KidComics Team</p>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2026 KidComics. All rights reserved.</p>
+  </div>
+</body>
+</html>

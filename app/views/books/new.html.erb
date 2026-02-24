@@ -9,6 +9,22 @@
 
     <div class="bg-white rounded-lg shadow-md p-8">
       <h1 class="text-3xl font-bold text-gray-800 mb-6">Create New Book</h1>
+
+      <% if @is_onboarding && @page_limit %>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div class="flex items-start">
+            <%= icon "info", class: "w-5 h-5 text-blue-600 mr-3 flex-shrink-0 mt-0.5" %>
+            <div>
+              <h3 class="text-sm font-semibold text-blue-900 mb-1">First Book - 5 Page Limit</h3>
+              <p class="text-sm text-blue-800">
+                This is your first book! You can add up to <%= @page_limit %> pages.
+                Complete your account setup afterwards to create unlimited books.
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
       <%= render "form", book: @book %>
     </div>
   </div>

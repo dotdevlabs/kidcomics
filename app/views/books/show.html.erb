@@ -39,6 +39,34 @@
 
   <!-- Main Content -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Onboarding Banner -->
+    <% if @book.is_onboarding_book? && current_user&.onboarding_completed? == false %>
+      <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg shadow-lg p-6 mb-6">
+        <div class="flex items-start justify-between">
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-2">Great job creating your first book!</h3>
+            <p class="mb-4 text-blue-100">
+              You've created a book with <%= @book.drawings.count %> page(s).
+              <% if @book.drawings.count < 5 %>
+                You can add up to <%= 5 - @book.drawings.count %> more page(s) to this onboarding book.
+              <% else %>
+                Your onboarding book is complete!
+              <% end %>
+            </p>
+            <p class="mb-4">
+              Ready to unlock unlimited books and features? Complete your account setup now!
+            </p>
+            <%= button_to "Complete Account Setup", complete_onboarding_path, method: :post,
+                class: "bg-white text-purple-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-100 transition inline-flex items-center" do %>
+              <%= icon "check-circle", class: "w-5 h-5 mr-2" %>
+              Complete Setup
+            <% end %>
+          </div>
+          <%= icon "sparkles", class: "w-16 h-16 ml-4 text-white/30" %>
+        </div>
+      </div>
+    <% end %>
+
     <% if flash[:notice] %>
       <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
         <%= flash[:notice] %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_24_185453) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_24_195700) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -63,6 +63,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_185453) do
     t.datetime "created_at", null: false
     t.text "description"
     t.boolean "favorited", default: false, null: false
+    t.boolean "is_onboarding_book", default: false, null: false
     t.datetime "last_generated_at"
     t.integer "moderation_status", default: 0, null: false
     t.string "preferred_style"
@@ -156,6 +157,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_185453) do
     t.index ["story_generation_id"], name: "index_page_generations_on_story_generation_id"
   end
 
+  create_table "settings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "key", null: false
+    t.datetime "updated_at", null: false
+    t.text "value"
+    t.string "value_type", default: "string"
+    t.index ["key"], name: "index_settings_on_key", unique: true
+  end
+
   create_table "story_generations", force: :cascade do |t|
     t.bigint "book_id", null: false
     t.jsonb "character_data", default: {}
@@ -177,12 +188,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_185453) do
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
+    t.boolean "email_verified", default: false, null: false
     t.string "name"
+    t.boolean "onboarding_completed", default: false, null: false
     t.string "password_digest"
     t.integer "role", default: 0, null: false
     t.datetime "updated_at", null: false
+    t.datetime "verification_sent_at"
+    t.string "verification_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role"], name: "index_users_on_role"
+    t.index ["verification_token"], name: "index_users_on_verification_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
