@@ -24,9 +24,10 @@ class Admin::DashboardControllerTest < ActionDispatch::IntegrationTest
     get admin_root_url
 
     assert_response :success
-    assert_not_nil assigns(:stats)
-    assert_includes assigns(:stats).keys, :total_users
-    assert_includes assigns(:stats).keys, :total_families
+    assert_select "p", text: "Total Users"
+    assert_select "p", text: "Families"
+    assert_select "p", text: "Total Books"
+    assert_select "p", text: "Pending Moderation"
   end
 
   private
