@@ -1,0 +1,60 @@
+<% if logged_in? && @family_account %>
+  <div class="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center p-4">
+    <div class="max-w-4xl w-full">
+      <div class="text-center mb-12">
+        <h1 class="text-5xl font-bold text-white mb-4">Who's Reading Today?</h1>
+        <p class="text-xl text-white opacity-90"><%= @family_account.name %></p>
+      </div>
+
+      <% if flash[:notice] %>
+        <div class="bg-white border border-green-400 text-green-700 px-4 py-3 rounded mb-6 text-center">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+
+      <% if @child_profiles.any? %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <% @child_profiles.each do |child_profile| %>
+            <%= button_to create_profile_selection_path(child_profile), method: :post, class: "group" do %>
+              <div class="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer">
+                <div class="flex flex-col items-center">
+                  <% if child_profile.avatar.attached? %>
+                    <%= image_tag child_profile.avatar, class: "w-32 h-32 rounded-full object-cover mb-4 border-4 border-purple-300 group-hover:border-purple-500 transition-colors" %>
+                  <% else %>
+                    <div class="w-32 h-32 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center mb-4 border-4 border-purple-300 group-hover:border-purple-500 transition-colors">
+                      <span class="text-white text-5xl font-bold"><%= child_profile.name[0].upcase %></span>
+                    </div>
+                  <% end %>
+
+                  <h2 class="text-2xl font-bold text-gray-800 mb-2"><%= child_profile.name %></h2>
+                  <p class="text-gray-600">Age <%= child_profile.age %></p>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="bg-white rounded-2xl p-12 text-center shadow-xl">
+          <p class="text-xl text-gray-600 mb-6">No child profiles yet. Add your first child to get started!</p>
+          <%= link_to "Go to Dashboard", dashboard_path, class: "bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-block" %>
+        </div>
+      <% end %>
+
+      <div class="text-center">
+        <%= link_to "Parent Dashboard", dashboard_path, class: "text-white hover:text-gray-200 underline text-lg" %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-12 max-w-md w-full text-center shadow-2xl">
+      <h1 class="text-4xl font-bold text-gray-800 mb-6">Welcome to KidComics</h1>
+      <p class="text-gray-600 mb-8">Create comics for your kids with age-appropriate content!</p>
+
+      <div class="space-y-4">
+        <%= link_to "Sign Up", signup_path, class: "block w-full bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-200" %>
+        <%= link_to "Log In", login_path, class: "block w-full bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-gray-300 transition duration-200" %>
+      </div>
+    </div>
+  </div>
+<% end %>
