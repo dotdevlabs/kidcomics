@@ -1,2 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-# Empty - tests create their own books
+
+one:
+  child_profile: one
+  title: Test Book One
+  description: A test book for Alice
+  status: draft
+  ai_generation_enabled: true
+
+two:
+  child_profile: two
+  title: Test Book Two
+  description: A test book for Bobby
+  status: draft
+  ai_generation_enabled: true

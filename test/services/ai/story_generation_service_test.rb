@@ -4,6 +4,7 @@ require "test_helper"
 
 module AI
   class StoryGenerationServiceTest < ActiveSupport::TestCase
+    include ActiveJob::TestHelper
     def setup
       @book = books(:one)
       @book.update!(ai_generation_enabled: true)
@@ -12,8 +13,13 @@ module AI
 
     test "should create story generation and enqueue job" do
       drawing = @book.drawings.create!(
-        title: "Test Drawing",
-        image: fixture_file_upload("test_image.jpg", "image/jpeg")
+        caption: "Test Drawing",
+        position: 1
+      )
+      drawing.image.attach(
+        io: StringIO.new("fake image data"),
+        filename: "test_image.jpg",
+        content_type: "image/jpeg"
       )
 
       assert_difference "StoryGeneration.count", 1 do
@@ -41,8 +47,13 @@ module AI
 
     test "should raise validation error when AI generation is disabled" do
       drawing = @book.drawings.create!(
-        title: "Test Drawing",
-        image: fixture_file_upload("test_image.jpg", "image/jpeg")
+        caption: "Test Drawing",
+        position: 1
+      )
+      drawing.image.attach(
+        io: StringIO.new("fake image data"),
+        filename: "test_image.jpg",
+        content_type: "image/jpeg"
       )
       @book.update!(ai_generation_enabled: false)
 
@@ -55,8 +66,13 @@ module AI
 
     test "should raise validation error when prompt is blank" do
       drawing = @book.drawings.create!(
-        title: "Test Drawing",
-        image: fixture_file_upload("test_image.jpg", "image/jpeg")
+        caption: "Test Drawing",
+        position: 1
+      )
+      drawing.image.attach(
+        io: StringIO.new("fake image data"),
+        filename: "test_image.jpg",
+        content_type: "image/jpeg"
       )
 
       service = StoryGenerationService.new(book: @book, user_prompt: "")

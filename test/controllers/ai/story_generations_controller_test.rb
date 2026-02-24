@@ -15,12 +15,18 @@ module AI
       @book.update!(ai_generation_enabled: true)
 
       # Create a drawing for the book
-      @book.drawings.create!(
-        title: "Test Drawing",
-        image: fixture_file_upload("test_image.jpg", "image/jpeg")
+      drawing = @book.drawings.create!(
+        caption: "Test Drawing",
+        position: 1
+      )
+      drawing.image.attach(
+        io: StringIO.new("fake image data"),
+        filename: "test_image.jpg",
+        content_type: "image/jpeg"
       )
 
-      post session_path, params: { email: @user.email, password: "password" }
+      post login_path, params: { email: @user.email, password: "password123" }
+      assert_equal @user.id, session[:user_id], "User should be logged in"
     end
 
     test "should get new" do
@@ -93,7 +99,7 @@ module AI
     end
 
     test "should require login" do
-      delete session_path
+      delete logout_path
 
       get new_ai_child_profile_book_story_generation_path(@child_profile, @book)
       assert_redirected_to login_path
