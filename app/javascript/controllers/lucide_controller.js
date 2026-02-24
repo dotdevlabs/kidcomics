@@ -28,7 +28,15 @@ import {
   ChevronDown,
   X,
   Share2,
-  MoreVertical
+  MoreVertical,
+  LayoutDashboard,
+  Users,
+  Home,
+  FileText,
+  BarChart,
+  Shield,
+  LogOut,
+  Book
 } from "lucide"
 
 export default class extends Controller {
@@ -62,7 +70,15 @@ export default class extends Controller {
         ChevronDown,
         X,
         Share2,
-        MoreVertical
+        MoreVertical,
+        LayoutDashboard,
+        Users,
+        Home,
+        FileText,
+        BarChart,
+        Shield,
+        LogOut,
+        Book
       }
     })
   }

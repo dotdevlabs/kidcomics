@@ -1,0 +1,146 @@
+<% content_for :title, "Dashboard" %>
+
+<h1 class="text-3xl font-bold mb-8">Admin Dashboard</h1>
+
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+  <!-- Users -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-600">Total Users</p>
+        <p class="text-3xl font-bold"><%= @stats[:total_users] %></p>
+        <p class="text-xs text-gray-500 mt-1">
+          +<%= @stats[:new_users_7_days] %> this week
+        </p>
+      </div>
+      <i data-lucide="users" class="w-12 h-12 text-blue-500"></i>
+    </div>
+  </div>
+
+  <!-- Families -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-600">Families</p>
+        <p class="text-3xl font-bold"><%= @stats[:total_families] %></p>
+        <p class="text-xs text-gray-500 mt-1">
+          <%= @stats[:total_child_profiles] %> child profiles
+        </p>
+      </div>
+      <i data-lucide="home" class="w-12 h-12 text-green-500"></i>
+    </div>
+  </div>
+
+  <!-- Books -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-600">Total Books</p>
+        <p class="text-3xl font-bold"><%= @stats[:total_books] %></p>
+        <p class="text-xs text-gray-500 mt-1">
+          +<%= @stats[:books_this_week] %> this week
+        </p>
+      </div>
+      <i data-lucide="book" class="w-12 h-12 text-purple-500"></i>
+    </div>
+  </div>
+
+  <!-- Content Moderation -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-600">Pending Moderation</p>
+        <p class="text-3xl font-bold <%= @content_pending_moderation > 0 ? 'text-red-600' : '' %>">
+          <%= @content_pending_moderation %>
+        </p>
+        <% if @content_pending_moderation > 0 %>
+          <p class="text-xs text-red-500 mt-1">Needs attention</p>
+        <% else %>
+          <p class="text-xs text-gray-500 mt-1">All clear</p>
+        <% end %>
+      </div>
+      <i data-lucide="alert-circle" class="w-12 h-12 text-yellow-500"></i>
+    </div>
+  </div>
+</div>
+
+<!-- AI Usage Stats -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">AI Generation Stats</h2>
+    <div class="space-y-3">
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">Story Generations (7 days)</span>
+        <span class="font-bold"><%= @stats[:story_generations_this_week] %></span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">Page Generations (7 days)</span>
+        <span class="font-bold"><%= @stats[:page_generations_this_week] %></span>
+      </div>
+      <hr>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">Total Story Generations</span>
+        <span class="font-bold"><%= @stats[:total_story_generations] %></span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">Total Page Generations</span>
+        <span class="font-bold"><%= @stats[:total_page_generations] %></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">AI Costs</h2>
+    <div class="space-y-3">
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">Last 7 Days</span>
+        <span class="font-bold text-green-600">$<%= sprintf("%.2f", @stats[:ai_cost_7_days]) %></span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">Last 30 Days</span>
+        <span class="font-bold text-green-600">$<%= sprintf("%.2f", @stats[:ai_cost_30_days]) %></span>
+      </div>
+    </div>
+    <div class="mt-4">
+      <%= link_to "View Detailed AI Usage", admin_ai_usage_index_path, class: "text-blue-600 hover:underline text-sm" %>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <!-- Recent Users -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">Recent Users</h2>
+    <div class="space-y-2">
+      <% @recent_users.each do |user| %>
+        <div class="flex justify-between items-center py-2 border-b">
+          <div>
+            <p class="font-medium"><%= user.name %></p>
+            <p class="text-sm text-gray-500"><%= user.email %></p>
+          </div>
+          <span class="text-xs text-gray-500"><%= time_ago_in_words(user.created_at) %> ago</span>
+        </div>
+      <% end %>
+    </div>
+    <%= link_to "View All Users", admin_users_path, class: "text-blue-600 hover:underline text-sm mt-4 inline-block" %>
+  </div>
+
+  <!-- Recent Admin Actions -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">Recent Admin Actions</h2>
+    <div class="space-y-2">
+      <% @recent_admin_actions.each do |action| %>
+        <div class="py-2 border-b">
+          <p class="text-sm">
+            <span class="font-medium"><%= action.admin_user.name %></span>
+            <span class="text-gray-600"><%= action.action_type.humanize.downcase %></span>
+          </p>
+          <p class="text-xs text-gray-500"><%= time_ago_in_words(action.created_at) %> ago</p>
+        </div>
+      <% end %>
+    </div>
+    <%= link_to "View Audit Log", admin_audit_logs_path, class: "text-blue-600 hover:underline text-sm mt-4 inline-block" %>
+  </div>
+</div>

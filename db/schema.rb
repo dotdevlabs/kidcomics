@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_24_182820) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_24_185453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,6 +42,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_182820) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "admin_actions", force: :cascade do |t|
+    t.string "action_type", null: false
+    t.bigint "admin_user_id", null: false
+    t.datetime "created_at", null: false
+    t.jsonb "details", default: {}
+    t.string "ip_address"
+    t.bigint "target_id"
+    t.string "target_type"
+    t.datetime "updated_at", null: false
+    t.index ["action_type"], name: "index_admin_actions_on_action_type"
+    t.index ["admin_user_id"], name: "index_admin_actions_on_admin_user_id"
+    t.index ["created_at"], name: "index_admin_actions_on_created_at"
+    t.index ["target_type", "target_id"], name: "index_admin_actions_on_target_type_and_target_id"
+  end
+
   create_table "books", force: :cascade do |t|
     t.boolean "ai_generation_enabled", default: true, null: false
     t.bigint "child_profile_id", null: false
@@ -49,6 +64,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_182820) do
     t.text "description"
     t.boolean "favorited", default: false, null: false
     t.datetime "last_generated_at"
+    t.integer "moderation_status", default: 0, null: false
     t.string "preferred_style"
     t.string "status", default: "draft", null: false
     t.text "story_prompt"
@@ -59,6 +75,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_182820) do
     t.index ["child_profile_id"], name: "index_books_on_child_profile_id"
     t.index ["favorited"], name: "index_books_on_favorited"
     t.index ["last_generated_at"], name: "index_books_on_last_generated_at"
+    t.index ["moderation_status"], name: "index_books_on_moderation_status"
     t.index ["status"], name: "index_books_on_status"
     t.index ["view_count"], name: "index_books_on_view_count"
   end
@@ -162,12 +179,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_182820) do
     t.string "email"
     t.string "name"
     t.string "password_digest"
+    t.integer "role", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["role"], name: "index_users_on_role"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "admin_actions", "users", column: "admin_user_id"
   add_foreign_key "books", "child_profiles"
   add_foreign_key "character_extractions", "drawings"
   add_foreign_key "character_extractions", "story_generations"

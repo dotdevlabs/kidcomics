@@ -1,0 +1,30 @@
+<% content_for :title, "Families" %>
+
+<h1 class="text-3xl font-bold mb-6">Family Accounts</h1>
+
+<div class="bg-white rounded-lg shadow overflow-hidden">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Family Name</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Owner</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Child Profiles</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Created</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <% @families.each do |family| %>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap font-medium"><%= family.name || "Family #{family.id}" %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= family.owner.name %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= family.child_profiles.count %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= time_ago_in_words(family.created_at) %> ago</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <%= link_to "View", admin_family_path(family), class: "text-blue-600 hover:underline" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
