@@ -8,6 +8,7 @@ class Book < ApplicationRecord
   validates :status, presence: true, inclusion: { in: %w[draft published] }
 
   enum :status, { draft: "draft", published: "published" }, default: :draft
+  enum :moderation_status, { pending_review: 0, approved: 1, flagged: 2, rejected: 3 }, default: :pending_review, prefix: :moderation
 
   # Scopes
   scope :recent, -> { order(created_at: :desc) }
@@ -18,6 +19,7 @@ class Book < ApplicationRecord
   scope :drafts, -> { where(status: "draft") }
   scope :favorited, -> { where(favorited: true) }
   scope :ai_enabled, -> { where(ai_generation_enabled: true) }
+  scope :needs_moderation, -> { where(moderation_status: [ :pending_review, :flagged ]) }
   scope :search_by_title, ->(query) { where("title ILIKE ?", "%#{sanitize_sql_like(query)}%") if query.present? }
   scope :created_between, ->(start_date, end_date) {
     where(created_at: start_date.beginning_of_day..end_date.end_of_day) if start_date.present? && end_date.present?

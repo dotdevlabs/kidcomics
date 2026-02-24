@@ -1,0 +1,96 @@
+<% content_for :title, "AI Usage" %>
+
+<h1 class="text-3xl font-bold mb-6">AI Usage & Costs</h1>
+
+<!-- Time Range Selector -->
+<div class="bg-white rounded-lg shadow p-4 mb-6">
+  <div class="flex gap-4">
+    <%= link_to "Last 7 Days", admin_ai_usage_index_path(days: 7), class: "px-4 py-2 rounded #{@date_range == 7 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}" %>
+    <%= link_to "Last 30 Days", admin_ai_usage_index_path(days: 30), class: "px-4 py-2 rounded #{@date_range == 30 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}" %>
+    <%= link_to "Last 90 Days", admin_ai_usage_index_path(days: 90), class: "px-4 py-2 rounded #{@date_range == 90 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}" %>
+  </div>
+</div>
+
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-sm text-gray-600 mb-2">Total Cost</h3>
+    <p class="text-3xl font-bold text-green-600">$<%= sprintf("%.2f", @stats[:total_cost]) %></p>
+  </div>
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-sm text-gray-600 mb-2">Story Generations</h3>
+    <p class="text-3xl font-bold"><%= @stats[:total_story_generations] %></p>
+    <p class="text-sm text-gray-500">$<%= sprintf("%.2f", @stats[:story_cost]) %></p>
+  </div>
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-sm text-gray-600 mb-2">Page Generations</h3>
+    <p class="text-3xl font-bold"><%= @stats[:total_page_generations] %></p>
+    <p class="text-sm text-gray-500">$<%= sprintf("%.2f", @stats[:page_cost]) %></p>
+  </div>
+</div>
+
+<!-- Top Families -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">Most Active Families</h2>
+    <% if @top_families.any? %>
+      <div class="space-y-2">
+        <% @top_families.each do |family| %>
+          <div class="flex justify-between items-center py-2 border-b">
+            <div>
+              <%= link_to family.name || "Family #{family.id}", admin_family_path(family.id), class: "font-medium text-blue-600 hover:underline" %>
+            </div>
+            <span class="text-gray-600"><%= family.generation_count %> generations</span>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500">No usage data available.</p>
+    <% end %>
+  </div>
+
+  <!-- Failed Generations -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">Recent Failed Generations</h2>
+    <% if @failed_story_generations.any? || @failed_page_generations.any? %>
+      <div class="space-y-2">
+        <% (@failed_story_generations + @failed_page_generations).first(10).each do |gen| %>
+          <div class="py-2 border-b">
+            <p class="text-sm font-medium text-red-600"><%= gen.class.name.humanize %></p>
+            <p class="text-xs text-gray-600 truncate"><%= gen.error_message %></p>
+            <p class="text-xs text-gray-500"><%= time_ago_in_words(gen.created_at) %> ago</p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500">No failed generations.</p>
+    <% end %>
+  </div>
+</div>
+
+<!-- Daily Usage -->
+<% if @daily_usage.any? %>
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">Daily Usage</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Generations</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cost</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @daily_usage.each do |usage| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm"><%= usage.date.strftime("%B %d, %Y") %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm"><%= usage.count %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">$<%= sprintf("%.2f", usage.cost.to_f / 100) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

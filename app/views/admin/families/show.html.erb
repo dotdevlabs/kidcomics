@@ -1,0 +1,55 @@
+<% content_for :title, @family.name || "Family" %>
+
+<div class="mb-6">
+  <%= link_to admin_families_path, class: "text-blue-600 hover:underline" do %>
+    <i data-lucide="arrow-left" class="inline w-4 h-4"></i> Back to Families
+  <% end %>
+</div>
+
+<h1 class="text-3xl font-bold mb-6"><%= @family.name || "Family #{@family.id}" %></h1>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">Family Information</h2>
+    <div class="space-y-2">
+      <p><strong>Owner:</strong> <%= link_to @family.owner.name, admin_user_path(@family.owner), class: "text-blue-600 hover:underline" %></p>
+      <p><strong>Email:</strong> <%= @family.owner.email %></p>
+      <p><strong>Created:</strong> <%= @family.created_at.strftime("%B %d, %Y") %></p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">Child Profiles (<%= @child_profiles.count %>)</h2>
+    <% if @child_profiles.any? %>
+      <div class="space-y-2">
+        <% @child_profiles.each do |profile| %>
+          <div class="py-2 border-b">
+            <p class="font-medium"><%= profile.name %></p>
+            <p class="text-sm text-gray-500">Age: <%= profile.age %></p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500">No child profiles yet.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="mt-6 bg-white rounded-lg shadow p-6">
+  <h2 class="text-xl font-bold mb-4">Recent Books</h2>
+  <% if @recent_books.any? %>
+    <div class="space-y-2">
+      <% @recent_books.each do |book| %>
+        <div class="flex justify-between items-center py-2 border-b">
+          <div>
+            <p class="font-medium"><%= book.title %></p>
+            <p class="text-sm text-gray-500"><%= book.child_profile.name %> • <%= book.status.titleize %></p>
+          </div>
+          <%= link_to "View", admin_content_path(book), class: "text-blue-600 hover:underline" %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-gray-500">No books yet.</p>
+  <% end %>
+</div>

@@ -48,4 +48,35 @@ class UserTest < ActiveSupport::TestCase
     family_account = user.create_family_account!(name: "Test Family")
     assert_equal family_account, user.family_account
   end
+
+  test "user should have default role of user" do
+    user = User.new(name: "Test", email: "newtest@example.com", password: "password123")
+    assert_equal "user", user.role
+    assert user.user?
+    assert_not user.admin?
+  end
+
+  test "user can be admin" do
+    user = User.create!(name: "Admin", email: "admin@example.com", password: "password123", role: :admin)
+    assert_equal "admin", user.role
+    assert user.admin?
+    assert_not user.user?
+  end
+
+  test "admins scope returns only admins" do
+    User.create!(name: "Admin", email: "admin1@example.com", password: "password123", role: :admin)
+    User.create!(name: "User", email: "user1@example.com", password: "password123", role: :user)
+
+    assert_equal 1, User.admins.count
+    assert User.admins.all?(&:admin?)
+  end
+
+  test "regular_users scope returns only non-admin users" do
+    User.create!(name: "Admin", email: "admin2@example.com", password: "password123", role: :admin)
+    regular_count = User.regular_users.count
+    User.create!(name: "User", email: "user2@example.com", password: "password123", role: :user)
+
+    assert_equal regular_count + 1, User.regular_users.count
+    assert User.regular_users.all?(&:user?)
+  end
 end

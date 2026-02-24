@@ -1,0 +1,95 @@
+<% content_for :title, @book.title %>
+
+<div class="mb-6">
+  <%= link_to admin_content_index_path, class: "text-blue-600 hover:underline" do %>
+    <i data-lucide="arrow-left" class="inline w-4 h-4"></i> Back to Content
+  <% end %>
+</div>
+
+<h1 class="text-3xl font-bold mb-6"><%= @book.title %></h1>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="lg:col-span-2 space-y-6">
+    <!-- Book Info -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-bold mb-4">Book Information</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-sm text-gray-600">Status</p>
+          <p class="font-medium"><%= @book.status.titleize %></p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600">Moderation Status</p>
+          <p class="font-medium"><%= @book.moderation_status.humanize %></p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600">Child Profile</p>
+          <p class="font-medium"><%= @book.child_profile.name %></p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600">Family Owner</p>
+          <p class="font-medium">
+            <%= link_to @book.child_profile.family_account.owner.name,
+                admin_user_path(@book.child_profile.family_account.owner),
+                class: "text-blue-600 hover:underline" %>
+          </p>
+        </div>
+      </div>
+      <% if @book.description.present? %>
+        <div class="mt-4">
+          <p class="text-sm text-gray-600">Description</p>
+          <p class="mt-1"><%= @book.description %></p>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Drawings -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-bold mb-4">Drawings (<%= @drawings.count %>)</h2>
+      <% if @drawings.any? %>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <% @drawings.each do |drawing| %>
+            <div class="border rounded p-2">
+              <% if drawing.image.attached? %>
+                <%= image_tag drawing.image.variant(resize_to_limit: [200, 200]), class: "w-full h-32 object-cover rounded" %>
+              <% end %>
+              <p class="text-xs text-gray-500 mt-1"><%= drawing.tag || "Position #{drawing.position}" %></p>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-500">No drawings uploaded.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Moderation Actions -->
+  <div class="space-y-6">
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-bold mb-4">Moderation Actions</h2>
+      <div class="space-y-2">
+        <%= button_to "Approve", approve_admin_content_path(@book), method: :patch, class: "w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
+        <%= button_to "Flag for Review", flag_admin_content_path(@book), method: :patch, class: "w-full bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700" %>
+        <%= button_to "Reject", reject_admin_content_path(@book), method: :patch, data: { confirm: "Are you sure?" }, class: "w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" %>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-bold mb-4">Stats</h2>
+      <div class="space-y-3">
+        <div>
+          <p class="text-sm text-gray-600">Created</p>
+          <p class="font-medium"><%= @book.created_at.strftime("%B %d, %Y") %></p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600">Views</p>
+          <p class="font-medium"><%= @book.view_count %></p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600">Story Generations</p>
+          <p class="font-medium"><%= @story_generations.count %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
