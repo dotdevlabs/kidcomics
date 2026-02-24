@@ -1,0 +1,82 @@
+import { Controller } from "@hotwired/stimulus"
+import {
+  createIcons,
+  AlertCircle,
+  ArrowLeft,
+  BarChart,
+  Book,
+  BookHeart,
+  BookOpen,
+  Calendar,
+  Camera,
+  CheckCircle,
+  Eye,
+  FileText,
+  GripVertical,
+  Home,
+  Image,
+  Info,
+  LayoutDashboard,
+  LayoutGrid,
+  List,
+  Loader,
+  Lock,
+  LogOut,
+  Mail,
+  Pencil,
+  Plus,
+  Search,
+  Shield,
+  SlidersHorizontal,
+  Sparkles,
+  Star,
+  Tag,
+  Trash2,
+  Upload,
+  Users,
+  X
+} from "lucide"
+
+// Connects to data-controller="lucide"
+export default class extends Controller {
+  connect() {
+    createIcons({
+      icons: {
+        AlertCircle,
+        ArrowLeft,
+        BarChart,
+        Book,
+        BookHeart,
+        BookOpen,
+        Calendar,
+        Camera,
+        CheckCircle,
+        Eye,
+        FileText,
+        GripVertical,
+        Home,
+        Image,
+        Info,
+        LayoutDashboard,
+        LayoutGrid,
+        List,
+        Loader,
+        Lock,
+        LogOut,
+        Mail,
+        Pencil,
+        Plus,
+        Search,
+        Shield,
+        SlidersHorizontal,
+        Sparkles,
+        Star,
+        Tag,
+        Trash2,
+        Upload,
+        Users,
+        X
+      }
+    })
+  }
+}

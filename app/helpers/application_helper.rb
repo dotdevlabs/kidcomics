@@ -26,4 +26,11 @@ module ApplicationHelper
       "Hey #{current_child_profile.name}"
     end
   end
+
+  def icon(name, options = {})
+    css_class = options[:class] || ""
+    additional_attrs = options.except(:class)
+
+    content_tag(:i, "", data: { lucide: name }, class: css_class, **additional_attrs)
+  end
 end
