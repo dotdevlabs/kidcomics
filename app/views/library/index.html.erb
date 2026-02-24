@@ -4,26 +4,21 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div>
-          <h1 class="text-3xl font-bold text-gray-800"><%= @child_profile.name %>'s Books</h1>
-          <p class="text-gray-600 mt-1">Create and manage your comic books</p>
+          <h1 class="text-3xl font-bold text-gray-800">Family Library</h1>
+          <p class="text-gray-600 mt-1">Browse all books from your family</p>
         </div>
         <div class="flex items-center space-x-3">
           <!-- View Mode Toggle -->
           <div class="flex items-center bg-gray-100 rounded-lg p-1">
-            <%= link_to child_profile_books_path(@child_profile, params.permit(:search, :status, :favorited, :date_from, :date_to, :sort).merge(view_mode: 'grid')),
+            <%= link_to library_path(params.permit(:search, :status, :favorited, :date_from, :date_to, :sort, :child_profile_id).merge(view_mode: 'grid')),
                 class: "px-3 py-2 rounded transition #{@view_mode == 'grid' ? 'bg-white shadow-sm' : 'text-gray-600 hover:text-gray-800'}" do %>
               <i data-lucide="grid" class="w-4 h-4"></i>
             <% end %>
-            <%= link_to child_profile_books_path(@child_profile, params.permit(:search, :status, :favorited, :date_from, :date_to, :sort).merge(view_mode: 'list')),
+            <%= link_to library_path(params.permit(:search, :status, :favorited, :date_from, :date_to, :sort, :child_profile_id).merge(view_mode: 'list')),
                 class: "px-3 py-2 rounded transition #{@view_mode == 'list' ? 'bg-white shadow-sm' : 'text-gray-600 hover:text-gray-800'}" do %>
               <i data-lucide="list" class="w-4 h-4"></i>
             <% end %>
           </div>
-
-          <%= link_to new_child_profile_book_path(@child_profile), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-            <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
-            Create New Book
-          <% end %>
         </div>
       </div>
     </div>
@@ -44,17 +39,17 @@
     <% end %>
 
     <!-- Statistics -->
-    <%= render "statistics", statistics: @statistics %>
+    <%= render "books/statistics", statistics: @statistics %>
 
     <!-- Filters -->
-    <%= render "filters", show_child_filter: false %>
+    <%= render "books/filters", show_child_filter: true, child_profiles: @child_profiles %>
 
     <!-- Books List -->
     <%= turbo_frame_tag "books_list" do %>
       <% if @books.any? %>
         <div class="<%= @view_mode == 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4' %>">
           <% @books.each do |book| %>
-            <%= render "book_card", book: book, child_profile: @child_profile, show_child_info: false %>
+            <%= render "books/book_card", book: book, child_profile: book.child_profile, show_child_info: true %>
           <% end %>
         </div>
       <% else %>
@@ -63,18 +58,14 @@
             <i data-lucide="book-open" class="w-16 h-16 mx-auto text-gray-400"></i>
           </div>
           <h3 class="text-xl font-bold text-gray-800 mb-2">No books found</h3>
-          <% if params[:search].present? || params[:status].present? || params[:favorited].present? || params[:date_from].present? || params[:date_to].present? %>
+          <% if params[:search].present? || params[:status].present? || params[:favorited].present? || params[:date_from].present? || params[:date_to].present? || params[:child_profile_id].present? %>
             <p class="text-gray-600 mb-6">Try adjusting your filters to see more results.</p>
-            <%= link_to child_profile_books_path(@child_profile), class: "bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition duration-200 inline-flex items-center" do %>
+            <%= link_to library_path, class: "bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition duration-200 inline-flex items-center" do %>
               <i data-lucide="x" class="w-5 h-5 mr-2"></i>
               Clear Filters
             <% end %>
           <% else %>
-            <p class="text-gray-600 mb-6">Start creating your first comic book!</p>
-            <%= link_to new_child_profile_book_path(@child_profile), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-              <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
-              Create Your First Book
-            <% end %>
+            <p class="text-gray-600 mb-6">No books have been created yet. Start by selecting a child profile and creating a book!</p>
           <% end %>
         </div>
       <% end %>

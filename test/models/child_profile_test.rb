@@ -53,4 +53,21 @@ class ChildProfileTest < ActiveSupport::TestCase
     child_profile = ChildProfile.create!(name: "Test Child", age: 8, family_account: @family_account)
     assert_equal @family_account, child_profile.family_account
   end
+
+  test "book_statistics returns correct statistics" do
+    child_profile = ChildProfile.create!(name: "Test Child", age: 8, family_account: @family_account)
+    Book.create!(title: "Draft Book 1", status: "draft", child_profile: child_profile)
+    Book.create!(title: "Draft Book 2", status: "draft", child_profile: child_profile)
+    Book.create!(title: "Published Book", status: "published", child_profile: child_profile)
+    Book.create!(title: "Favorite Book", status: "draft", favorited: true, child_profile: child_profile, view_count: 10)
+    Book.create!(title: "Popular Book", status: "draft", view_count: 20, child_profile: child_profile)
+
+    stats = child_profile.book_statistics
+
+    assert_equal 5, stats[:total]
+    assert_equal 4, stats[:drafts]
+    assert_equal 1, stats[:published]
+    assert_equal 1, stats[:favorites]
+    assert_equal 30, stats[:total_views]
+  end
 end

@@ -1,0 +1,25 @@
+<div class="bg-white rounded-lg shadow-md p-6 mb-6">
+  <h2 class="text-xl font-bold text-gray-800 mb-4">Statistics</h2>
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+    <div class="text-center">
+      <div class="text-3xl font-bold text-purple-600"><%= statistics[:total] %></div>
+      <div class="text-sm text-gray-600">Total Books</div>
+    </div>
+    <div class="text-center">
+      <div class="text-3xl font-bold text-yellow-600"><%= statistics[:drafts] %></div>
+      <div class="text-sm text-gray-600">Drafts</div>
+    </div>
+    <div class="text-center">
+      <div class="text-3xl font-bold text-green-600"><%= statistics[:published] %></div>
+      <div class="text-sm text-gray-600">Published</div>
+    </div>
+    <div class="text-center">
+      <div class="text-3xl font-bold text-pink-600"><%= statistics[:favorites] %></div>
+      <div class="text-sm text-gray-600">Favorites</div>
+    </div>
+    <div class="text-center">
+      <div class="text-3xl font-bold text-blue-600"><%= statistics[:total_views] %></div>
+      <div class="text-sm text-gray-600">Total Views</div>
+    </div>
+  </div>
+</div>

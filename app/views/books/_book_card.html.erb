@@ -1,0 +1,74 @@
+<%
+  # Variables
+  # book - required
+  # child_profile - optional, if not provided will use book.child_profile
+  # show_child_info - optional, default false (show child profile info on card)
+  child_profile ||= book.child_profile
+  show_child_info ||= false
+%>
+
+<div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-200">
+  <!-- Book Cover Placeholder -->
+  <div class="bg-gradient-to-br from-purple-400 to-pink-400 h-48 flex items-center justify-center">
+    <i data-lucide="book-open" class="w-16 h-16 text-white opacity-80"></i>
+  </div>
+
+  <div class="p-6">
+    <!-- Child Info (if shown) -->
+    <% if show_child_info %>
+      <div class="mb-3 flex items-center text-sm text-gray-600">
+        <i data-lucide="info" class="w-4 h-4 mr-1"></i>
+        <%= child_profile.name %>
+      </div>
+    <% end %>
+
+    <!-- Title and Status -->
+    <div class="flex items-start justify-between mb-4">
+      <h3 class="text-xl font-bold text-gray-800 flex-1 line-clamp-2"><%= book.title %></h3>
+      <span class="ml-2 px-3 py-1 text-xs font-semibold rounded-full <%= book.status == 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
+        <%= book.status.capitalize %>
+      </span>
+    </div>
+
+    <!-- Description -->
+    <% if book.description.present? %>
+      <p class="text-gray-600 mb-4 line-clamp-2"><%= book.description %></p>
+    <% end %>
+
+    <!-- Metadata -->
+    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+      <div class="flex items-center space-x-3">
+        <span class="flex items-center">
+          <i data-lucide="image" class="w-4 h-4 mr-1"></i>
+          <%= pluralize(book.drawings.count, 'drawing') %>
+        </span>
+        <span class="flex items-center">
+          <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
+          <%= book.view_count %>
+        </span>
+      </div>
+
+      <!-- Favorite Toggle -->
+      <%= button_to toggle_favorite_child_profile_book_path(child_profile, book),
+          method: :patch,
+          class: "text-gray-400 hover:text-pink-500 transition",
+          data: { turbo: false },
+          form: { data: { controller: "favorite" } } do %>
+        <i data-lucide="<%= book.favorited? ? 'heart' : 'star' %>" class="w-5 h-5 <%= book.favorited? ? 'text-pink-500 fill-pink-500' : '' %>"></i>
+      <% end %>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex space-x-2">
+      <%= link_to child_profile_book_path(child_profile, book), class: "flex-1 bg-blue-500 text-white px-4 py-2 rounded text-center hover:bg-blue-600 transition duration-200" do %>
+        View
+      <% end %>
+      <%= link_to edit_child_profile_book_path(child_profile, book), class: "bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition duration-200 inline-flex items-center justify-center" do %>
+        <i data-lucide="pencil" class="w-4 h-4"></i>
+      <% end %>
+      <%= button_to child_profile_book_path(child_profile, book), method: :delete, data: { turbo_confirm: "Are you sure you want to delete this book? This action cannot be undone." }, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200 inline-flex items-center justify-center" do %>
+        <i data-lucide="trash-2" class="w-4 h-4"></i>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -19,6 +19,17 @@ class ChildProfile < ApplicationRecord
     end
   end
 
+  # Book statistics for this child profile
+  def book_statistics
+    {
+      total: books.count,
+      drafts: books.drafts.count,
+      published: books.published.count,
+      favorites: books.favorited.count,
+      total_views: books.sum(:view_count)
+    }
+  end
+
   private
 
   def avatar_validation
