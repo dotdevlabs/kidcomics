@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_24_164648) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_24_170721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,6 +42,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_164648) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "books", force: :cascade do |t|
+    t.bigint "child_profile_id", null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "status", default: "draft", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_profile_id", "created_at"], name: "index_books_on_child_profile_id_and_created_at"
+    t.index ["child_profile_id"], name: "index_books_on_child_profile_id"
+  end
+
   create_table "child_profiles", force: :cascade do |t|
     t.integer "age"
     t.datetime "created_at", null: false
@@ -49,6 +60,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_164648) do
     t.string "name"
     t.datetime "updated_at", null: false
     t.index ["family_account_id"], name: "index_child_profiles_on_family_account_id"
+  end
+
+  create_table "drawings", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.text "caption"
+    t.datetime "created_at", null: false
+    t.integer "position", default: 0, null: false
+    t.string "tag"
+    t.datetime "updated_at", null: false
+    t.index ["book_id", "position"], name: "index_drawings_on_book_id_and_position"
+    t.index ["book_id"], name: "index_drawings_on_book_id"
   end
 
   create_table "family_accounts", force: :cascade do |t|
@@ -70,6 +92,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_164648) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "books", "child_profiles"
   add_foreign_key "child_profiles", "family_accounts"
+  add_foreign_key "drawings", "books"
   add_foreign_key "family_accounts", "users", column: "owner_id"
 end

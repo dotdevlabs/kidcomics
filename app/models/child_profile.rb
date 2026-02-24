@@ -1,6 +1,7 @@
 class ChildProfile < ApplicationRecord
   belongs_to :family_account
   has_one_attached :avatar
+  has_many :books, dependent: :destroy
 
   validates :name, presence: true
   validates :age, presence: true, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 18 }

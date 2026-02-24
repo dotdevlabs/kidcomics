@@ -1,0 +1,96 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Header -->
+  <div class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex justify-between items-center">
+        <div>
+          <div class="flex items-center mb-2">
+            <%= link_to child_profile_books_path(@child_profile), class: "text-gray-600 hover:text-gray-800 mr-3" do %>
+              <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            <% end %>
+            <h1 class="text-3xl font-bold text-gray-800"><%= @book.title %></h1>
+            <span class="ml-3 px-3 py-1 text-sm font-semibold rounded-full <%= @book.status == 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
+              <%= @book.status.capitalize %>
+            </span>
+          </div>
+          <% if @book.description.present? %>
+            <p class="text-gray-600"><%= @book.description %></p>
+          <% end %>
+        </div>
+        <div class="flex space-x-3">
+          <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
+            <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
+            Upload Drawings
+          <% end %>
+          <%= link_to edit_child_profile_book_path(@child_profile, @book), class: "bg-gray-200 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-300 transition duration-200 inline-flex items-center" do %>
+            <i data-lucide="pencil" class="w-5 h-5 mr-2"></i>
+            Edit Book
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <% if flash[:notice] %>
+      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">
+          Drawings (<%= @drawings.count %>)
+        </h2>
+        <% if @drawings.any? %>
+          <%= link_to child_profile_book_drawings_path(@child_profile, @book), class: "text-purple-600 hover:text-purple-700 inline-flex items-center" do %>
+            <i data-lucide="grip-vertical" class="w-5 h-5 mr-2"></i>
+            Manage & Reorder
+          <% end %>
+        <% end %>
+      </div>
+
+      <% if @drawings.any? %>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <% @drawings.each do |drawing| %>
+            <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition duration-200">
+              <div class="aspect-square bg-gray-100">
+                <%= image_tag drawing.image.variant(:medium), class: "w-full h-full object-cover" if drawing.image.attached? %>
+              </div>
+              <div class="p-3">
+                <div class="flex items-center justify-between text-sm text-gray-600">
+                  <span>Position: <%= drawing.position + 1 %></span>
+                  <% if drawing.tag.present? %>
+                    <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs">
+                      <%= drawing.tag %>
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-12">
+          <div class="mb-4">
+            <i data-lucide="image" class="w-16 h-16 mx-auto text-gray-400"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">No drawings yet</h3>
+          <p class="text-gray-600 mb-6">Upload your drawings to start building your book!</p>
+          <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
+            <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
+            Upload Your First Drawing
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
