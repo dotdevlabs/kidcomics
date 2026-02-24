@@ -8,6 +8,7 @@ class DrawingsControllerTest < ActionDispatch::IntegrationTest
     @book = Book.create!(title: "Test Book", child_profile: @child_profile)
     @drawing = Drawing.create!(book: @book, position: 0)
     @drawing.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "test.jpg", content_type: "image/jpeg")
+    log_in_as(@user)
   end
 
   test "should get index" do

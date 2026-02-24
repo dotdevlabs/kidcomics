@@ -6,6 +6,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     @family_account = FamilyAccount.create!(name: "Test Family", owner: @user)
     @child_profile = ChildProfile.create!(name: "Test Child", age: 8, family_account: @family_account)
     @book = Book.create!(title: "Test Book", child_profile: @child_profile)
+    log_in_as(@user)
   end
 
   test "should get index" do
