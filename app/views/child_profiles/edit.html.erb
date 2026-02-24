@@ -1,0 +1,15 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-2xl mx-auto px-4">
+    <div class="bg-white rounded-lg shadow-md p-8">
+      <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Edit <%= @child_profile.name %>'s Profile</h1>
+
+      <% if flash[:alert] %>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= render "form" %>
+    </div>
+  </div>
+</div>
