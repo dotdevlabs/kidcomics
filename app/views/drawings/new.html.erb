@@ -8,28 +8,59 @@
     </div>
 
     <div class="bg-white rounded-lg shadow-md p-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">Upload Drawings</h1>
-      <p class="text-gray-600 mb-6">Add drawings to "<%= @book.title %>"</p>
+      <% if @is_onboarding_book && @current_page_count == 0 %>
+        <h1 class="text-3xl font-bold text-purple-600 mb-2">Let's Bring Your Story to Life!</h1>
+        <p class="text-gray-600 mb-6">
+          Upload a photo of your first drawing to get started. No forms, no fuss—just your creativity!
+        </p>
+      <% else %>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">
+          <% if @is_onboarding_book %>Add More Pages<% else %>Upload Drawings<% end %>
+        </h1>
+        <p class="text-gray-600 mb-6">
+          <% if @is_onboarding_book %>
+            Keep the story going! Add more drawings to "<%= @book.title %>"
+          <% else %>
+            Add drawings to "<%= @book.title %>"
+          <% end %>
+        </p>
+      <% end %>
 
       <% if @is_onboarding_book && @page_limit %>
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <div class="flex items-start">
-            <%= icon "info", class: "w-5 h-5 text-blue-600 mr-3 flex-shrink-0 mt-0.5" %>
-            <div>
-              <h3 class="text-sm font-semibold text-blue-900 mb-1">
-                Page Limit: <%= @current_page_count %>/<%= @page_limit %>
-              </h3>
-              <p class="text-sm text-blue-800">
-                <% remaining = @page_limit - @current_page_count %>
-                <% if remaining > 0 %>
-                  You can add <%= remaining %> more page(s) to this onboarding book.
-                <% else %>
-                  Your onboarding book is complete! Complete your account setup to create unlimited books.
-                <% end %>
-              </p>
+        <% remaining = @page_limit - @current_page_count %>
+        <% if @current_page_count == 0 %>
+          <div class="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4 mb-6">
+            <div class="flex items-start">
+              <%= icon "sparkles", class: "w-5 h-5 text-purple-600 mr-3 flex-shrink-0 mt-0.5" %>
+              <div>
+                <h3 class="text-sm font-semibold text-purple-900 mb-1">
+                  Your First Book: Up to <%= @page_limit %> Pages
+                </h3>
+                <p class="text-sm text-purple-800">
+                  Start with your favorite drawing! You can add up to 5 pages. After that, complete your account setup to create unlimited books.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        <% else %>
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div class="flex items-start">
+              <%= icon "info", class: "w-5 h-5 text-blue-600 mr-3 flex-shrink-0 mt-0.5" %>
+              <div>
+                <h3 class="text-sm font-semibold text-blue-900 mb-1">
+                  Pages: <%= @current_page_count %>/<%= @page_limit %>
+                </h3>
+                <p class="text-sm text-blue-800">
+                  <% if remaining > 0 %>
+                    You can add <%= remaining %> more page(s) to this book. Keep going!
+                  <% else %>
+                    Your onboarding book is complete! Complete your account setup to create unlimited books.
+                  <% end %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
       <% end %>
 
       <%= form_with(model: [@child_profile, @book, @drawing], local: true, data: { controller: "drawings-upload" }) do |form| %>

@@ -13,6 +13,17 @@ KidComics is a web and mobile application that allows children and their parents
 
 The product focuses on creativity, literacy, pride of creation, and safe sharing—turning kids into published authors and illustrators.
 
+### Design Philosophy: Creative First, Not Administrative
+
+**This is a creative tool, not accounting software.** Every interaction should feel fluid, joyful, and momentum-based—never sterile or form-driven.
+
+Core principles:
+- **Start with creation, not forms.** The first thing a user sees should be a way to create (upload a drawing, capture a photo), not fields to fill out.
+- **Preserve and enhance, never replace.** AI enhances children's original artwork; it doesn't override their vision or artistic intent.
+- **Keep momentum flowing.** Don't interrupt the creative process with administrative tasks. Let users keep adding, creating, and building without friction.
+- **Make children feel like real authors.** Every feature should reinforce that they are the creator, the author, the illustrator—not just filling in templates.
+- **Joyful and frictionless.** Sharing, creating, and reading should feel delightful at every step.
+
 ---
 
 ## 2. Problem Statement
@@ -71,18 +82,29 @@ The product focuses on creativity, literacy, pride of creation, and safe sharing
 
 ## 5. Core Use Cases
 
-1. A child draws characters and scenes on paper
-2. Parent takes photos of drawings using the app
-3. Child and parent describe:
-   - Characters
-   - Setting
-   - Story arc
-4. AI generates:
+### Primary Flow: Photo-First Creation
+
+1. A child draws their first page/character on paper
+2. Parent or child captures/uploads the photo immediately (no forms, no barriers)
+3. The system creates a book automatically with a placeholder title
+4. User continues adding more drawings fluidly, without interruption
+5. After adding drawings, the AI can propose:
+   - A title based on the artwork
+   - Story concepts and themes
+   - Character descriptions
+6. Child and parent refine the story together:
+   - Accept or modify AI suggestions
+   - Add dialogue and narration
+   - Describe additional characters or settings
+7. AI generates:
    - Cleaned-up illustrations that preserve the child's style
    - Story text and dialogue
-5. Family reviews and edits the book
-6. Book is published digitally
-7. Book is shared with family members or subscribers
+   - Panel layouts and narrative flow
+8. Family reviews and edits the book
+9. Book is published digitally
+10. Book is shared with family members or subscribers
+
+**Key principle:** The creative act (uploading a drawing) happens first. Everything else—titles, descriptions, structure—comes naturally afterward, never as a prerequisite.
 
 ---
 
@@ -97,12 +119,18 @@ The product focuses on creativity, literacy, pride of creation, and safe sharing
 
 ---
 
-### 6.2 Drawing Capture & Upload
+### 6.2 Drawing Capture & Upload (Photo-First Entry Point)
+
+**This is the primary entry point for creation—not forms.**
 
 - Camera capture with auto-crop and perspective correction
-- Multiple drawings per book
-- Ability to reorder drawings
+- Gallery/file upload for existing photos
+- Immediate upload without requiring book title or description first
+- Multiple drawings can be added in sequence without interruption
+- Ability to reorder drawings later
 - Optional tagging of drawings (character, background, object)
+- For first-time users: book is auto-created with placeholder title
+- Users can keep adding pages fluidly; metadata (title, description) can be added later
 
 ---
 

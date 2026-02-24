@@ -30,7 +30,8 @@ import { createIcons,
   Star,
   Pencil,
   Upload,
-  CheckCircle
+  CheckCircle,
+  Camera
 } from "lucide"
 
 export default class extends Controller {
@@ -67,7 +68,8 @@ export default class extends Controller {
         Star,
         Pencil,
         Upload,
-        CheckCircle
+        CheckCircle,
+        Camera
       }
     })
   }
