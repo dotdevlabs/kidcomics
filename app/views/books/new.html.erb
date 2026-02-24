@@ -1,0 +1,15 @@
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-6">
+      <%= link_to child_profile_books_path(@child_profile), class: "text-gray-600 hover:text-gray-800 inline-flex items-center" do %>
+        <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>
+        Back to Books
+      <% end %>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-8">
+      <h1 class="text-3xl font-bold text-gray-800 mb-6">Create New Book</h1>
+      <%= render "form", book: @book %>
+    </div>
+  </div>
+</div>

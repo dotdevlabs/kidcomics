@@ -16,6 +16,17 @@ Rails.application.routes.draw do
     resources :child_profiles, except: [ :show ]
   end
 
+  # Books and Drawings (nested under child profiles)
+  resources :child_profiles, only: [] do
+    resources :books do
+      resources :drawings do
+        member do
+          patch :reorder
+        end
+      end
+    end
+  end
+
   # Profile Selection
   get  "select_profile", to: "profile_selections#index"
   post "select_profile/:id", to: "profile_selections#create", as: :create_profile_selection
