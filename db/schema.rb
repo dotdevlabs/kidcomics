@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_24_172105) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_24_174301) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,14 +43,35 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_172105) do
   end
 
   create_table "books", force: :cascade do |t|
+    t.boolean "ai_generation_enabled", default: true, null: false
     t.bigint "child_profile_id", null: false
     t.datetime "created_at", null: false
     t.text "description"
+    t.datetime "last_generated_at"
+    t.string "preferred_style"
     t.string "status", default: "draft", null: false
+    t.text "story_prompt"
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.index ["child_profile_id", "created_at"], name: "index_books_on_child_profile_id_and_created_at"
     t.index ["child_profile_id"], name: "index_books_on_child_profile_id"
+    t.index ["last_generated_at"], name: "index_books_on_last_generated_at"
+  end
+
+  create_table "character_extractions", force: :cascade do |t|
+    t.string "character_name"
+    t.jsonb "color_palette", default: {}
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.bigint "drawing_id", null: false
+    t.jsonb "proportions", default: {}
+    t.integer "status", default: 0, null: false
+    t.bigint "story_generation_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drawing_id", "story_generation_id"], name: "index_character_extractions_on_drawing_and_story_gen", unique: true
+    t.index ["drawing_id"], name: "index_character_extractions_on_drawing_id"
+    t.index ["status"], name: "index_character_extractions_on_status"
+    t.index ["story_generation_id"], name: "index_character_extractions_on_story_generation_id"
   end
 
   create_table "child_profiles", force: :cascade do |t|
@@ -63,14 +84,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_172105) do
   end
 
   create_table "drawings", force: :cascade do |t|
+    t.jsonb "analysis_data", default: {}
+    t.integer "analysis_status", default: 0
     t.bigint "book_id", null: false
     t.text "caption"
     t.datetime "created_at", null: false
+    t.datetime "extracted_at"
+    t.boolean "is_background", default: false
+    t.boolean "is_character", default: false
     t.integer "position", null: false
     t.string "tag"
     t.datetime "updated_at", null: false
+    t.index ["analysis_status"], name: "index_drawings_on_analysis_status"
     t.index ["book_id", "position"], name: "index_drawings_on_book_id_and_position"
     t.index ["book_id"], name: "index_drawings_on_book_id"
+    t.index ["is_background"], name: "index_drawings_on_is_background"
+    t.index ["is_character"], name: "index_drawings_on_is_character"
   end
 
   create_table "family_accounts", force: :cascade do |t|
@@ -79,6 +108,48 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_172105) do
     t.bigint "owner_id", null: false
     t.datetime "updated_at", null: false
     t.index ["owner_id"], name: "index_family_accounts_on_owner_id"
+  end
+
+  create_table "page_generations", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.integer "cost_cents", default: 0
+    t.datetime "created_at", null: false
+    t.jsonb "dialogue_data", default: {}
+    t.text "error_message"
+    t.string "generated_image_url"
+    t.float "generation_time_seconds"
+    t.text "narration_text"
+    t.integer "page_number", null: false
+    t.jsonb "panel_layout", default: {}
+    t.text "prompt"
+    t.integer "reference_drawing_ids", default: [], array: true
+    t.integer "retry_count", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.bigint "story_generation_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_page_generations_on_book_id"
+    t.index ["page_number"], name: "index_page_generations_on_page_number"
+    t.index ["status"], name: "index_page_generations_on_status"
+    t.index ["story_generation_id", "page_number"], name: "index_page_generations_on_story_generation_id_and_page_number", unique: true
+    t.index ["story_generation_id"], name: "index_page_generations_on_story_generation_id"
+  end
+
+  create_table "story_generations", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.jsonb "character_data", default: {}
+    t.datetime "completed_at"
+    t.integer "cost_cents", default: 0
+    t.datetime "created_at", null: false
+    t.text "error_message"
+    t.jsonb "generation_metadata", default: {}
+    t.text "prompt_template"
+    t.integer "status", default: 0, null: false
+    t.text "story_outline"
+    t.jsonb "style_data", default: {}
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_story_generations_on_book_id"
+    t.index ["completed_at"], name: "index_story_generations_on_completed_at"
+    t.index ["status"], name: "index_story_generations_on_status"
   end
 
   create_table "users", force: :cascade do |t|
@@ -93,7 +164,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_172105) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "books", "child_profiles"
+  add_foreign_key "character_extractions", "drawings"
+  add_foreign_key "character_extractions", "story_generations"
   add_foreign_key "child_profiles", "family_accounts"
   add_foreign_key "drawings", "books"
   add_foreign_key "family_accounts", "users", column: "owner_id"
+  add_foreign_key "page_generations", "books"
+  add_foreign_key "page_generations", "story_generations"
+  add_foreign_key "story_generations", "books"
 end

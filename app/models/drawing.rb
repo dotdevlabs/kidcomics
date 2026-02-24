@@ -5,11 +5,19 @@ class Drawing < ApplicationRecord
     attachable.variant :medium, resize_to_limit: [ 800, 800 ]
     attachable.variant :large, resize_to_limit: [ 1600, 1600 ]
   end
+  has_many :character_extractions, dependent: :destroy
 
   validates :image, presence: true, on: :update
   validates :position, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :tag, inclusion: { in: %w[character background object], allow_nil: true }
   validate :image_validation
+
+  enum :analysis_status, {
+    pending: 0,
+    analyzing: 1,
+    completed: 2,
+    failed: 3
+  }, prefix: true
 
   # Callbacks
   before_validation :set_position, on: :create
@@ -17,6 +25,9 @@ class Drawing < ApplicationRecord
   # Scopes
   scope :ordered, -> { order(position: :asc) }
   scope :tagged, ->(tag) { where(tag: tag) }
+  scope :characters, -> { where(is_character: true) }
+  scope :backgrounds, -> { where(is_background: true) }
+  scope :analyzed, -> { analysis_status_completed }
 
   private
 
