@@ -98,8 +98,17 @@ class OnboardingController < ApplicationController
       # Set this child as the active profile for the session
       session[:child_profile_id] = @child_profile.id
 
-      # Redirect to book creation
-      redirect_to new_child_profile_book_path(@child_profile), notice: "Great! Now let's create your first book (up to 5 pages)."
+      # Auto-create first book for onboarding (photo-first approach)
+      book = @child_profile.books.create!(
+        title: "#{@child_profile.name}'s First Book",
+        description: "",
+        status: "draft",
+        is_onboarding_book: true
+      )
+
+      # Redirect directly to photo upload (skip the form!)
+      redirect_to new_child_profile_book_drawing_path(@child_profile, book),
+        notice: "Great! Let's start by adding your first drawing (up to 5 pages)."
     else
       flash.now[:alert] = @child_profile.errors.full_messages.join(", ")
       render :child_profile

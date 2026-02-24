@@ -9,6 +9,9 @@ class Book < ApplicationRecord
   validates :status, presence: true, inclusion: { in: %w[draft published] }
   validates :edit_mode, presence: true, inclusion: { in: %w[parent_only shared] }
 
+  # Callbacks
+  before_validation :ensure_title, on: :create
+
   enum :status, { draft: "draft", published: "published" }, default: :draft
   enum :moderation_status, { pending_review: 0, approved: 1, flagged: 2, rejected: 3 }, default: :pending_review, prefix: :moderation
 
@@ -72,5 +75,18 @@ class Book < ApplicationRecord
 
   def cover_page
     drawings.find_by(is_cover: true)
+  end
+
+  private
+
+  def ensure_title
+    return if title.present?
+
+    # Generate a default title based on the child's name or a creative placeholder
+    if child_profile&.name.present?
+      self.title = "#{child_profile.name}'s Story"
+    else
+      self.title = "My Story"
+    end
   end
 end
