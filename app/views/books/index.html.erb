@@ -12,7 +12,7 @@
           <div class="flex items-center bg-gray-100 rounded-lg p-1">
             <%= link_to child_profile_books_path(@child_profile, params.permit(:search, :status, :favorited, :date_from, :date_to, :sort).merge(view_mode: 'grid')),
                 class: "px-3 py-2 rounded transition #{@view_mode == 'grid' ? 'bg-white shadow-sm' : 'text-gray-600 hover:text-gray-800'}" do %>
-              <%= icon "grid", class: "w-4 h-4" %>
+              <%= icon "layout-grid", class: "w-4 h-4" %>
             <% end %>
             <%= link_to child_profile_books_path(@child_profile, params.permit(:search, :status, :favorited, :date_from, :date_to, :sort).merge(view_mode: 'list')),
                 class: "px-3 py-2 rounded transition #{@view_mode == 'list' ? 'bg-white shadow-sm' : 'text-gray-600 hover:text-gray-800'}" do %>
