@@ -7,7 +7,7 @@
   <% if @book.drawings.empty? %>
     <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
       <div class="flex items-start">
-        <i data-lucide="alert-circle" class="w-5 h-5 text-yellow-600 mt-0.5 mr-3"></i>
+        <%= icon "alert-circle", class: "w-5 h-5 text-yellow-600 mt-0.5 mr-3" %>
         <div>
           <h3 class="text-sm font-medium text-yellow-800">No Drawings Yet</h3>
           <p class="mt-1 text-sm text-yellow-700">
@@ -67,7 +67,7 @@
 
   <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
     <div class="flex items-start">
-      <i data-lucide="info" class="w-5 h-5 text-blue-600 mt-0.5 mr-3"></i>
+      <%= icon "info", class: "w-5 h-5 text-blue-600 mt-0.5 mr-3" %>
       <div class="text-sm text-blue-800">
         <h3 class="font-medium mb-1">How it works</h3>
         <ul class="list-disc list-inside space-y-1 text-blue-700">

@@ -2,7 +2,7 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-6">
       <%= link_to child_profile_book_path(@child_profile, @book), class: "text-gray-600 hover:text-gray-800 inline-flex items-center" do %>
-        <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i>
+        <%= icon "arrow-left", class: "w-5 h-5 mr-2" %>
         Back to Book
       <% end %>
     </div>
@@ -40,7 +40,7 @@
               <!-- Camera Capture (Mobile) -->
               <div>
                 <label for="camera-input" class="inline-flex items-center justify-center bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 cursor-pointer">
-                  <i data-lucide="camera" class="w-5 h-5 mr-2"></i>
+                  <%= icon "camera", class: "w-5 h-5 mr-2" %>
                   Take Photo
                 </label>
                 <%= form.file_field :images,
@@ -57,7 +57,7 @@
               <!-- File Picker -->
               <div>
                 <label for="file-input" class="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200 cursor-pointer">
-                  <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
+                  <%= icon "upload", class: "w-5 h-5 mr-2" %>
                   Choose from Gallery
                 </label>
                 <%= form.file_field :images,

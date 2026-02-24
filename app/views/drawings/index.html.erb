@@ -6,14 +6,14 @@
         <div>
           <div class="flex items-center mb-2">
             <%= link_to child_profile_book_path(@child_profile, @book), class: "text-gray-600 hover:text-gray-800 mr-3" do %>
-              <i data-lucide="arrow-left" class="w-5 h-5"></i>
+              <%= icon "arrow-left", class: "w-5 h-5" %>
             <% end %>
             <h1 class="text-3xl font-bold text-gray-800">Manage Drawings</h1>
           </div>
           <p class="text-gray-600">Reorder, edit, or delete drawings for "<%= @book.title %>"</p>
         </div>
         <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-          <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
+          <%= icon "upload", class: "w-5 h-5 mr-2" %>
           Upload More
         <% end %>
       </div>
@@ -37,7 +37,7 @@
     <div class="bg-white rounded-lg shadow-md p-6">
       <% if @drawings.any? %>
         <div class="mb-4 flex items-center text-sm text-gray-600">
-          <i data-lucide="info" class="w-4 h-4 mr-2"></i>
+          <%= icon "info", class: "w-4 h-4 mr-2" %>
           <span>Drag and drop to reorder drawings</span>
         </div>
 
@@ -51,12 +51,12 @@
       <% else %>
         <div class="text-center py-12">
           <div class="mb-4">
-            <i data-lucide="image" class="w-16 h-16 mx-auto text-gray-400"></i>
+            <%= icon "image", class: "w-16 h-16 mx-auto text-gray-400" %>
           </div>
           <h3 class="text-xl font-bold text-gray-800 mb-2">No drawings yet</h3>
           <p class="text-gray-600 mb-6">Upload your drawings to get started!</p>
           <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-            <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
+            <%= icon "upload", class: "w-5 h-5 mr-2" %>
             Upload Drawings
           <% end %>
         </div>
