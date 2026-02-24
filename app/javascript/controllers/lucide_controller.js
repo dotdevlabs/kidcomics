@@ -23,7 +23,14 @@ import { createIcons,
   Plus,
   X,
   BookOpen,
-  Sparkles
+  Sparkles,
+  // Additional icons for book cards and views
+  Info,
+  Heart,
+  Star,
+  Pencil,
+  Upload,
+  CheckCircle
 } from "lucide"
 
 export default class extends Controller {
@@ -53,7 +60,14 @@ export default class extends Controller {
         Plus,
         X,
         BookOpen,
-        Sparkles
+        Sparkles,
+        // Additional icons for book cards and views
+        Info,
+        Heart,
+        Star,
+        Pencil,
+        Upload,
+        CheckCircle
       }
     })
   }

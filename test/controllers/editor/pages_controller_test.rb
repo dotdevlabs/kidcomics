@@ -15,6 +15,8 @@ class Editor::PagesControllerTest < ActionDispatch::IntegrationTest
       position: 0,
       image: @image
     )
+    # Set up session for authentication
+    post login_url, params: { email: @user.email, password: "password123" }
   end
 
   test "should create page" do

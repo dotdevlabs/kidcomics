@@ -20,7 +20,6 @@
     <%= button_to editor_child_profile_book_page_path(child_profile, book, drawing),
                   method: :delete,
                   data: {
-                    turbo_method: :delete,
                     turbo_confirm: "Are you sure you want to delete this page? This action cannot be undone.",
                     page_editor_target: "deleteButton"
                   },
@@ -96,7 +95,6 @@
           <%= button_to regenerate_editor_child_profile_book_page_path(child_profile, book, drawing),
                         method: :post,
                         data: {
-                          turbo_method: :post,
                           turbo_confirm: "Regenerate the illustration for this page?",
                           page_editor_target: "regenerateButton"
                         },

@@ -109,7 +109,6 @@
 
         <% if @can_add_pages %>
           <%= link_to editor_child_profile_book_pages_path(@child_profile, @book),
-                      method: :post,
                       data: { turbo_method: :post },
                       class: "btn btn-primary flex items-center gap-2" do %>
             <i data-lucide="plus" class="w-4 h-4"></i>
@@ -137,8 +136,7 @@
         <div class="text-center py-12">
           <i data-lucide="book-open" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
           <p class="text-gray-500 mb-4">No pages yet. Add your first page to get started!</p>
-          <%= link_to "Add Page", editor_child_profile_book_pages_path(@child_profile, @book),
-                      method: :post,
+          <%= link_to editor_child_profile_book_pages_path(@child_profile, @book),
                       data: { turbo_method: :post },
                       class: "btn btn-primary inline-flex items-center gap-2" do %>
             <i data-lucide="plus" class="w-4 h-4"></i>
