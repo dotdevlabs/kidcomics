@@ -16,19 +16,9 @@ class SessionsController < ApplicationController
       return
     end
 
-    # If user has incomplete onboarding, use magic link flow
+    # If user has incomplete onboarding, redirect to nopassword magic link flow
     if user.needs_magic_link_login?
-      # Generate login token
-      token = user.generate_login_token
-
-      # In development mode, just log them in directly
-      if Rails.env.development?
-        redirect_to magic_link_path(token), notice: "Development mode: Logging you in..."
-      else
-        # In production, send email with magic link
-        UserMailer.magic_link_email(user, token).deliver_later
-        redirect_to login_path, notice: "Check your email! We've sent you a link to continue your registration."
-      end
+      redirect_to new_email_authentication_path(nopassword_email_authentication: { email: email }), notice: "You have an incomplete registration. We'll send you a link to continue."
       return
     end
 

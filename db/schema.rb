@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_25_041416) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_25_042908) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -198,8 +198,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_041416) do
     t.datetime "created_at", null: false
     t.string "email"
     t.boolean "email_verified", default: false, null: false
-    t.string "login_token"
-    t.datetime "login_token_expires_at"
     t.string "name"
     t.boolean "onboarding_completed", default: false, null: false
     t.string "password_digest"
@@ -208,7 +206,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_041416) do
     t.datetime "verification_sent_at"
     t.string "verification_token"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["login_token"], name: "index_users_on_login_token", unique: true
     t.index ["role"], name: "index_users_on_role"
     t.index ["verification_token"], name: "index_users_on_verification_token", unique: true
   end

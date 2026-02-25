@@ -39,24 +39,7 @@ class User < ApplicationRecord
     !onboarding_completed? && !new_record?
   end
 
-  # Magic link authentication methods
-  def generate_login_token
-    self.login_token = SecureRandom.urlsafe_base64(32)
-    self.login_token_expires_at = 24.hours.from_now
-    save!
-    login_token
-  end
-
-  def login_token_valid?(token)
-    return false if login_token.blank? || login_token_expires_at.blank?
-    return false if login_token_expires_at < Time.current
-    ActiveSupport::SecurityUtils.secure_compare(login_token, token)
-  end
-
-  def clear_login_token!
-    update!(login_token: nil, login_token_expires_at: nil)
-  end
-
+  # Users with incomplete onboarding should use passwordless login
   def needs_magic_link_login?
     onboarding_in_progress?
   end
