@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_child_profile
-  before_action :set_book, only: [ :show, :edit, :update, :destroy, :toggle_favorite ]
+  before_action :set_book, only: [ :show, :edit, :update, :destroy ]
   before_action :check_onboarding_status, only: [ :new, :create ]
 
   def index
@@ -42,34 +42,32 @@ class BooksController < ApplicationController
   end
 
   def create
-    # This action is deprecated in favor of the photo-first approach
-    # Redirect to new action which auto-creates and goes to photo upload
-    redirect_to new_child_profile_book_path(@child_profile)
+    @book = @child_profile.books.build(book_params)
+    @book.status = "draft"
+
+    if @book.save
+      redirect_to new_child_profile_book_drawing_path(@child_profile, @book),
+        notice: "Book created successfully! Let's start by adding your first drawing!"
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
-    # Redirect to the AI-powered editor instead of showing traditional form
-    redirect_to edit_editor_child_profile_book_path(@child_profile, @book)
   end
 
   def update
-    # All updates now happen through the AI-powered editor
-    # Redirect to editor if someone tries to update through old route
-    redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-      notice: "Please use the interactive editor to update your book."
+    if @book.update(book_params)
+      redirect_to child_profile_book_path(@child_profile, @book),
+        notice: "Book was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
     @book.destroy
     redirect_to child_profile_books_path(@child_profile), notice: "Book was successfully deleted."
-  end
-
-  def toggle_favorite
-    @book.toggle_favorite!
-    respond_to do |format|
-      format.html { redirect_to child_profile_books_path(@child_profile), notice: "Book #{@book.favorited? ? 'added to' : 'removed from'} favorites." }
-      format.json { render json: { favorited: @book.favorited } }
-    end
   end
 
   private

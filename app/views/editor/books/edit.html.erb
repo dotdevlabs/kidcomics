@@ -1,4 +1,4 @@
-<div data-controller="book-editor" data-book-editor-auto-save-url-value="<%= auto_save_editor_child_profile_book_path(@child_profile, @book) %>" class="min-h-screen bg-gray-50 pb-20">
+<div class="min-h-screen bg-gray-50 pb-20">
   <!-- Header Section -->
   <div class="bg-white border-b border-gray-200 sticky top-0 z-10">
     <div class="container mx-auto px-4 py-4">
@@ -11,26 +11,13 @@
         </div>
 
         <div class="flex items-center gap-3">
-          <!-- Auto-save Indicator -->
-          <span data-book-editor-target="autoSaveIndicator" class="text-sm text-gray-500">
-            <i data-lucide="save" class="w-4 h-4 inline"></i>
-            <span data-book-editor-target="saveStatus">Saved</span>
-          </span>
-
-          <!-- Preview Button -->
-          <%= link_to preview_editor_child_profile_book_path(@child_profile, @book),
-                      class: "btn btn-secondary flex items-center gap-2",
-                      target: "_blank" do %>
-            <i data-lucide="eye" class="w-4 h-4"></i>
-            <span>Preview</span>
-          <% end %>
         </div>
       </div>
 
       <!-- AI Book Assistant -->
       <div data-controller="book-ai-assistant"
            data-book-ai-assistant-book-id-value="<%= @book.id %>"
-           data-book-ai-assistant-update-url-value="<%= auto_save_editor_child_profile_book_path(@child_profile, @book) %>"
+           data-book-ai-assistant-update-url-value="<%= edit_editor_child_profile_book_path(@child_profile, @book) %>"
            class="space-y-4">
 
         <!-- Current Book Info Display -->
@@ -191,9 +178,7 @@
       </div>
 
       <!-- Pages Grid -->
-      <div data-controller="pages-reorder"
-           data-pages-reorder-url-value="<%= editor_child_profile_book_path(@child_profile, @book) %>"
-           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% @drawings.each_with_index do |drawing, index| %>
           <%= render "editor/books/page_card",
                      drawing: drawing,

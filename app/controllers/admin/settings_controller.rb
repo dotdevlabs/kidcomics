@@ -23,29 +23,5 @@ module Admin
 
       redirect_to admin_settings_path
     end
-
-    def test_email
-      unless Setting.postmark_configured?
-        flash[:alert] = "Please configure Postmark API key first"
-        redirect_to admin_settings_path
-        return
-      end
-
-      # Create a test user object
-      test_user = OpenStruct.new(
-        name: current_user.name,
-        email: current_user.email,
-        verification_token: SecureRandom.urlsafe_base64(32)
-      )
-
-      begin
-        UserMailer.verification_email(test_user).deliver_now
-        flash[:notice] = "Test email sent successfully to #{current_user.email}"
-      rescue => e
-        flash[:alert] = "Failed to send test email: #{e.message}"
-      end
-
-      redirect_to admin_settings_path
-    end
   end
 end

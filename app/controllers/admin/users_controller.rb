@@ -1,6 +1,6 @@
 module Admin
   class UsersController < BaseController
-    before_action :set_user, only: [ :show, :update, :suspend, :restore ]
+    before_action :set_user, only: [ :show, :update ]
 
     def index
       @users = User.includes(:family_account)
@@ -43,22 +43,6 @@ module Admin
         flash.now[:alert] = "Failed to update user: #{@user.errors.full_messages.join(', ')}"
         render :show, status: :unprocessable_entity
       end
-    end
-
-    def suspend
-      # In a real app, you might want a separate 'suspended' status
-      # For now, we'll just log the action
-      log_admin_action("user_suspended", @user, { reason: params[:reason] })
-
-      flash[:notice] = "User suspended successfully."
-      redirect_to admin_user_path(@user)
-    end
-
-    def restore
-      log_admin_action("user_restored", @user)
-
-      flash[:notice] = "User restored successfully."
-      redirect_to admin_user_path(@user)
     end
 
     private

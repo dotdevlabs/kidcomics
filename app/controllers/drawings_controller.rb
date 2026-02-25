@@ -1,6 +1,6 @@
 class DrawingsController < ApplicationController
   before_action :set_child_profile_and_book
-  before_action :set_drawing, only: [ :edit, :update, :destroy, :reorder ]
+  before_action :set_drawing, only: [ :edit, :update, :destroy ]
 
   def index
     @drawings = @book.drawings.ordered
@@ -89,28 +89,6 @@ class DrawingsController < ApplicationController
     @drawing.destroy
     redirect_to child_profile_book_drawings_path(@child_profile, @book),
                 notice: "Drawing was successfully deleted."
-  end
-
-  def reorder
-    new_position = params[:position].to_i
-    old_position = @drawing.position
-
-    if new_position != old_position
-      # Reorder drawings
-      if new_position < old_position
-        # Moving up: increment positions of drawings between new and old position
-        @book.drawings.where("position >= ? AND position < ?", new_position, old_position)
-              .update_all("position = position + 1")
-      else
-        # Moving down: decrement positions of drawings between old and new position
-        @book.drawings.where("position > ? AND position <= ?", old_position, new_position)
-              .update_all("position = position - 1")
-      end
-
-      @drawing.update(position: new_position)
-    end
-
-    head :ok
   end
 
   private

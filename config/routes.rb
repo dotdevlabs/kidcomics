@@ -33,15 +33,7 @@ Rails.application.routes.draw do
   # Books and Drawings (nested under child profiles)
   resources :child_profiles, only: [] do
     resources :books do
-      member do
-        patch :toggle_favorite
-      end
-
-      resources :drawings do
-        member do
-          patch :reorder
-        end
-      end
+      resources :drawings
     end
   end
 
@@ -51,21 +43,8 @@ Rails.application.routes.draw do
   # Book Editor (nested under child profiles and books)
   namespace :editor do
     resources :child_profiles, only: [] do
-      resources :books, only: [] do
-        member do
-          get :edit
-          patch :update
-          patch :auto_save
-          get :preview
-          patch :update_cover
-        end
-
-        resources :pages, only: [ :create, :update, :destroy ] do
-          member do
-            post :regenerate
-            patch :reorder
-          end
-        end
+      resources :books, only: [ :edit, :update ] do
+        resources :pages, only: [ :create, :update, :destroy ]
       end
     end
   end
@@ -75,15 +54,7 @@ Rails.application.routes.draw do
     resources :child_profiles, only: [] do
       resources :books, only: [] do
         resources :story_generations, only: [ :new, :create, :show ] do
-          member do
-            post :retry
-          end
-
-          resources :page_generations, only: [ :show, :update ] do
-            member do
-              post :regenerate
-            end
-          end
+          resources :page_generations, only: [ :show, :update ]
         end
       end
     end
@@ -97,31 +68,12 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "dashboard#index"
 
-    resources :users, only: [ :index, :show, :update ] do
-      member do
-        patch :suspend
-        patch :restore
-      end
-    end
-
+    resources :users, only: [ :index, :show, :update ]
     resources :families, only: [ :index, :show ]
-
-    resources :content, only: [ :index, :show ] do
-      member do
-        patch :approve
-        patch :flag
-        patch :reject
-      end
-    end
-
+    resources :content, only: [ :index, :show ]
     resources :ai_usage, only: [ :index ]
     resources :audit_logs, only: [ :index, :show ]
-
-    resources :settings, only: [ :index, :update ] do
-      collection do
-        post :test_email
-      end
-    end
+    resources :settings, only: [ :index, :update ]
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

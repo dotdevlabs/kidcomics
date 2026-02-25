@@ -4,7 +4,7 @@ module Editor
     before_action :set_child_profile
     before_action :set_book
     before_action :authorize_editor_access
-    before_action :set_page, only: [ :update, :destroy, :regenerate, :reorder ]
+    before_action :set_page, only: [ :update, :destroy ]
 
     def create
       # Check onboarding book page limit
@@ -63,46 +63,6 @@ module Editor
       @book.update_last_edited!
       redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
                   notice: "Page deleted successfully."
-    end
-
-    def regenerate
-      # Only available for AI-generated books
-      unless @book.ai_generation_enabled?
-        redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                    alert: "AI regeneration is not enabled for this book."
-        return
-      end
-
-      # TODO: Implement AI regeneration logic
-      # This would trigger a new PageGeneration for this specific page
-      redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                  notice: "Page regeneration started. (Feature coming soon)"
-    end
-
-    def reorder
-      new_position = params[:position].to_i
-      old_position = @page.position
-
-      if new_position != old_position && new_position >= 0
-        # Reorder pages
-        if new_position < old_position
-          # Moving up: increment positions of pages between new and old position
-          @book.drawings.where("position >= ? AND position < ?", new_position, old_position)
-                .update_all("position = position + 1")
-        else
-          # Moving down: decrement positions of pages between old and new position
-          @book.drawings.where("position > ? AND position <= ?", old_position, new_position)
-                .update_all("position = position - 1")
-        end
-
-        # Update the page's position
-        @page.update!(position: new_position)
-        @book.update_last_edited!
-
-        render json: { status: "ok", position: @page.position }
-      else
-        render json: { status: "error", message: "Invalid position" }, status: :unprocessable_entity
-      end
     end
 
     private
