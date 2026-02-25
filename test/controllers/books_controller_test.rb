@@ -14,17 +14,20 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get new" do
-    get new_child_profile_book_url(@child_profile)
-    assert_response :success
-  end
-
-  test "should create book" do
+  test "should get new and redirect to photo upload" do
     assert_difference("Book.count") do
-      post child_profile_books_url(@child_profile), params: { book: { title: "New Book", description: "A new book" } }
+      get new_child_profile_book_url(@child_profile)
     end
 
-    assert_redirected_to child_profile_book_url(@child_profile, Book.last)
+    # Photo-first approach: auto-creates book and redirects to drawing upload
+    new_book = Book.last
+    assert_redirected_to new_child_profile_book_drawing_url(@child_profile, new_book)
+  end
+
+  test "should create book and redirect to new action" do
+    # Create action is deprecated, redirects to new which handles auto-creation
+    post child_profile_books_url(@child_profile), params: { book: { title: "New Book", description: "A new book" } }
+    assert_redirected_to new_child_profile_book_url(@child_profile)
   end
 
   test "should show book" do
@@ -32,17 +35,20 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
+  test "should get edit and redirect to AI editor" do
     get edit_child_profile_book_url(@child_profile, @book)
-    assert_response :success
+    # All editing now happens through the AI-powered editor
+    assert_redirected_to edit_editor_child_profile_book_url(@child_profile, @book)
   end
 
-  test "should update book" do
+  test "should update book and redirect to AI editor" do
     patch child_profile_book_url(@child_profile, @book), params: { book: { title: "Updated Title" } }
-    assert_redirected_to child_profile_book_url(@child_profile, @book)
+    # Updates now happen through the AI-powered editor
+    assert_redirected_to edit_editor_child_profile_book_url(@child_profile, @book)
 
+    # Book should not be updated via this route
     @book.reload
-    assert_equal "Updated Title", @book.title
+    assert_not_equal "Updated Title", @book.title
   end
 
   test "should destroy book" do

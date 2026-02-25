@@ -69,12 +69,7 @@
       <%= link_to edit_editor_child_profile_book_path(child_profile, book),
                   class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200 inline-flex items-center justify-center",
                   title: "Open Editor" do %>
-        <i data-lucide="edit-3" class="w-4 h-4"></i>
-      <% end %>
-      <%= link_to edit_child_profile_book_path(child_profile, book),
-                  class: "bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition duration-200 inline-flex items-center justify-center",
-                  title: "Edit Details" do %>
-        <i data-lucide="pencil" class="w-4 h-4"></i>
+        <i data-lucide="sparkles" class="w-4 h-4"></i>
       <% end %>
       <%= button_to child_profile_book_path(child_profile, book),
                     method: :delete,

@@ -27,62 +27,133 @@
         </div>
       </div>
 
-      <!-- Book Details Form -->
-      <%= form_with model: @book, url: editor_child_profile_book_path(@child_profile, @book),
-                    method: :patch,
-                    data: { book_editor_target: "form" },
-                    class: "space-y-4" do |f| %>
+      <!-- AI Book Assistant -->
+      <div data-controller="book-ai-assistant"
+           data-book-ai-assistant-book-id-value="<%= @book.id %>"
+           data-book-ai-assistant-update-url-value="<%= auto_save_editor_child_profile_book_path(@child_profile, @book) %>"
+           class="space-y-4">
 
-        <!-- Title Input -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Book Title</label>
-          <%= f.text_field :title,
-                          data: { book_editor_target: "title", action: "input->book-editor#markDirty" },
-                          class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-                          placeholder: "Enter book title..." %>
-        </div>
-
-        <!-- Dedication Input -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Dedication (optional)</label>
-          <%= f.text_area :dedication,
-                         data: { book_editor_target: "dedication", action: "input->book-editor#markDirty" },
-                         rows: 2,
-                         class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-                         placeholder: "For my amazing child..." %>
-        </div>
-
-        <!-- Edit Mode Toggle -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Who can edit this book?</label>
-          <div class="flex gap-4">
-            <label class="flex items-center gap-2 cursor-pointer">
-              <%= f.radio_button :edit_mode, "shared",
-                                data: { book_editor_target: "editMode", action: "change->book-editor#markDirty" },
-                                class: "w-4 h-4 text-blue-600" %>
-              <span class="flex items-center gap-1">
-                <i data-lucide="users" class="w-4 h-4"></i>
-                Everyone (Shared)
-              </span>
-            </label>
-
-            <label class="flex items-center gap-2 cursor-pointer">
-              <%= f.radio_button :edit_mode, "parent_only",
-                                data: { book_editor_target: "editMode", action: "change->book-editor#markDirty" },
-                                class: "w-4 h-4 text-blue-600" %>
-              <span class="flex items-center gap-1">
-                <i data-lucide="lock" class="w-4 h-4"></i>
-                Parents Only
-              </span>
-            </label>
+        <!-- Current Book Info Display -->
+        <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-6 border border-purple-200">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <i data-lucide="sparkles" class="w-8 h-8 text-purple-600"></i>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Book Details</h3>
+              <div class="space-y-2 text-sm">
+                <div>
+                  <span class="font-medium text-gray-700">Title:</span>
+                  <span class="text-gray-900 ml-2" data-book-ai-assistant-target="titleDisplay"><%= @book.title %></span>
+                </div>
+                <% if @book.dedication.present? %>
+                  <div>
+                    <span class="font-medium text-gray-700">Dedication:</span>
+                    <span class="text-gray-900 ml-2" data-book-ai-assistant-target="dedicationDisplay"><%= @book.dedication %></span>
+                  </div>
+                <% end %>
+                <div>
+                  <span class="font-medium text-gray-700">Edit Mode:</span>
+                  <span class="text-gray-900 ml-2" data-book-ai-assistant-target="editModeDisplay">
+                    <%= @book.edit_mode == 'parent_only' ? 'Parents Only' : 'Everyone (Shared)' %>
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Save Button -->
-        <div>
-          <%= f.submit "Save Book Details", class: "btn btn-primary" %>
+        <!-- AI Suggestions -->
+        <div class="bg-white rounded-lg border border-gray-200 p-6">
+          <h3 class="text-md font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <i data-lucide="message-square" class="w-5 h-5 text-blue-600"></i>
+            Refine with AI
+          </h3>
+
+          <p class="text-sm text-gray-600 mb-4">
+            Tell me what you'd like to change about your book, or upload a new drawing for inspiration!
+          </p>
+
+          <!-- AI Chat Messages -->
+          <div data-book-ai-assistant-target="messages"
+               class="space-y-3 mb-4 max-h-96 overflow-y-auto">
+            <!-- Initial AI message -->
+            <div class="flex gap-3">
+              <div class="flex-shrink-0">
+                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                  <i data-lucide="bot" class="w-4 h-4 text-blue-600"></i>
+                </div>
+              </div>
+              <div class="flex-1 bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-gray-800">
+                  Hi! I'm here to help you refine "<%= @book.title %>". You can:
+                </p>
+                <ul class="text-sm text-gray-700 mt-2 space-y-1 ml-4 list-disc">
+                  <li>Upload drawings for me to analyze</li>
+                  <li>Ask me to suggest a better title</li>
+                  <li>Tell me what the dedication should say</li>
+                  <li>Change who can edit this book</li>
+                </ul>
+                <p class="text-sm text-gray-600 mt-2 italic">
+                  Just type what you'd like to change!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image Upload Area -->
+          <div class="mb-4">
+            <label class="block">
+              <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-purple-400 transition cursor-pointer">
+                <input type="file"
+                       accept="image/*"
+                       class="hidden"
+                       data-action="change->book-ai-assistant#handleImageUpload"
+                       data-book-ai-assistant-target="imageInput">
+                <i data-lucide="camera" class="w-8 h-8 mx-auto text-gray-400 mb-2"></i>
+                <p class="text-sm text-gray-600">Click to upload a drawing</p>
+                <p class="text-xs text-gray-500 mt-1">AI will analyze it and suggest updates</p>
+              </div>
+            </label>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="flex gap-2">
+            <%= form_with url: "#", method: :post, class: "flex-1 flex gap-2", data: { action: "submit->book-ai-assistant#sendMessage" } do |f| %>
+              <%= f.text_field :message,
+                              placeholder: "Tell me what you'd like to change...",
+                              class: "flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                              data: { book_ai_assistant_target: "messageInput" },
+                              autocomplete: "off" %>
+              <%= f.submit "Send",
+                          class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition inline-flex items-center gap-2",
+                          data: { book_ai_assistant_target: "sendButton" } %>
+            <% end %>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="mt-4 flex flex-wrap gap-2">
+            <button type="button"
+                    class="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition"
+                    data-action="click->book-ai-assistant#quickAction"
+                    data-message="Suggest a better title based on the story">
+              Suggest Title
+            </button>
+            <button type="button"
+                    class="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition"
+                    data-action="click->book-ai-assistant#quickAction"
+                    data-message="Write a dedication for this book">
+              Add Dedication
+            </button>
+            <button type="button"
+                    class="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition"
+                    data-action="click->book-ai-assistant#quickAction"
+                    data-message="Make this parents only">
+              Lock to Parents
+            </button>
+          </div>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 

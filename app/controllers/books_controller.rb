@@ -28,43 +28,35 @@ class BooksController < ApplicationController
   end
 
   def new
-    @book = @child_profile.books.build
-    @is_onboarding = current_user&.onboarding_completed? == false
-    @page_limit = @is_onboarding ? 5 : nil
+    # Photo-first approach: Auto-create book and redirect to photo upload
+    # No form barriers - start with creation immediately
+    @book = @child_profile.books.create!(
+      title: "#{@child_profile.name}'s Story",
+      description: "",
+      status: "draft"
+    )
+
+    # Redirect directly to photo upload (creative first, not administrative)
+    redirect_to new_child_profile_book_drawing_path(@child_profile, @book),
+      notice: "Let's start by adding your first drawing!"
   end
 
   def create
-    @book = @child_profile.books.build(book_params)
-
-    # Mark as onboarding book if user hasn't completed onboarding
-    if current_user&.onboarding_completed? == false
-      @book.is_onboarding_book = true
-    end
-
-    if @book.save
-      # If this is an onboarding book, redirect to complete onboarding after creation
-      if @book.is_onboarding_book?
-        redirect_to child_profile_book_path(@child_profile, @book),
-          notice: "Book created! Add up to 5 pages, then we'll help you complete your account setup."
-      else
-        redirect_to child_profile_book_path(@child_profile, @book), notice: "Book was successfully created."
-      end
-    else
-      @is_onboarding = current_user&.onboarding_completed? == false
-      @page_limit = @is_onboarding ? 5 : nil
-      render :new, status: :unprocessable_entity
-    end
+    # This action is deprecated in favor of the photo-first approach
+    # Redirect to new action which auto-creates and goes to photo upload
+    redirect_to new_child_profile_book_path(@child_profile)
   end
 
   def edit
+    # Redirect to the AI-powered editor instead of showing traditional form
+    redirect_to edit_editor_child_profile_book_path(@child_profile, @book)
   end
 
   def update
-    if @book.update(book_params)
-      redirect_to child_profile_book_path(@child_profile, @book), notice: "Book was successfully updated."
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    # All updates now happen through the AI-powered editor
+    # Redirect to editor if someone tries to update through old route
+    redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
+      notice: "Please use the interactive editor to update your book."
   end
 
   def destroy
