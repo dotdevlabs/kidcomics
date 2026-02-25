@@ -39,6 +39,11 @@ class User < ApplicationRecord
     !onboarding_completed? && !new_record?
   end
 
+  # Users with incomplete onboarding should use passwordless login
+  def needs_magic_link_login?
+    onboarding_in_progress?
+  end
+
   private
 
   def downcase_email

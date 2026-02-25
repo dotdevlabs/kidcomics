@@ -4,8 +4,10 @@ one:
   name: John Doe
   email: john@example.com
   password_digest: <%= BCrypt::Password.create('password123', cost: 4) %>
+  onboarding_completed: true
 
 two:
   name: Jane Smith
   email: jane@example.com
   password_digest: <%= BCrypt::Password.create('password123', cost: 4) %>
+  onboarding_completed: true

@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get  "signup", to: "registrations#new"
   post "signup", to: "registrations#create"
 
+  # Magic link authentication (for users with incomplete onboarding)
+  nopassword EmailAuthenticationsController
+
   # Onboarding routes
   post  "onboarding/start", to: "onboarding#start", as: :onboarding_start
   get   "onboarding/name", to: "onboarding#name"
