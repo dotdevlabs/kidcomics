@@ -19,7 +19,7 @@
                     page_editor_target: "deleteButton"
                   },
                   class: "text-red-600 hover:text-red-800 transition-colors" do %>
-      <i data-lucide="trash-2" class="w-4 h-4"></i>
+      <%= icon "trash-2", class: "w-4 h-4" %>
     <% end %>
   </div>
 
@@ -33,7 +33,7 @@
       </div>
     <% else %>
       <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden mb-4 flex items-center justify-center">
-        <i data-lucide="image" class="w-12 h-12 text-gray-300"></i>
+        <%= icon "image", class: "w-12 h-12 text-gray-300" %>
       </div>
     <% end %>
 

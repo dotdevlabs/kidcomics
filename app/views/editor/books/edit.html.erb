@@ -5,7 +5,7 @@
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-4">
           <%= link_to child_profile_book_path(@child_profile, @book), class: "text-gray-600 hover:text-gray-900" do %>
-            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            <%= icon "chevron-left", class: "w-6 h-6" %>
           <% end %>
           <h1 class="text-2xl font-bold text-gray-900">Book Editor</h1>
         </div>
@@ -24,7 +24,7 @@
         <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-6 border border-purple-200">
           <div class="flex items-start gap-4">
             <div class="flex-shrink-0">
-              <i data-lucide="sparkles" class="w-8 h-8 text-purple-600"></i>
+              <%= icon "sparkles", class: "w-8 h-8 text-purple-600" %>
             </div>
             <div class="flex-1">
               <h3 class="text-lg font-semibold text-gray-900 mb-2">Book Details</h3>
@@ -53,7 +53,7 @@
         <!-- AI Suggestions -->
         <div class="bg-white rounded-lg border border-gray-200 p-6">
           <h3 class="text-md font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <i data-lucide="message-square" class="w-5 h-5 text-blue-600"></i>
+            <%= icon "message-square", class: "w-5 h-5 text-blue-600" %>
             Refine with AI
           </h3>
 
@@ -68,7 +68,7 @@
             <div class="flex gap-3">
               <div class="flex-shrink-0">
                 <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                  <i data-lucide="bot" class="w-4 h-4 text-blue-600"></i>
+                  <%= icon "bot", class: "w-4 h-4 text-blue-600" %>
                 </div>
               </div>
               <div class="flex-1 bg-blue-50 rounded-lg p-3">
@@ -97,7 +97,7 @@
                        class="hidden"
                        data-action="change->book-ai-assistant#handleImageUpload"
                        data-book-ai-assistant-target="imageInput">
-                <i data-lucide="camera" class="w-8 h-8 mx-auto text-gray-400 mb-2"></i>
+                <%= icon "camera", class: "w-8 h-8 mx-auto text-gray-400 mb-2" %>
                 <p class="text-sm text-gray-600">Click to upload a drawing</p>
                 <p class="text-xs text-gray-500 mt-1">AI will analyze it and suggest updates</p>
               </div>
@@ -148,7 +148,7 @@
   <div class="container mx-auto px-4 py-6">
     <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
       <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-        <i data-lucide="image" class="w-5 h-5"></i>
+        <%= icon "image", class: "w-5 h-5" %>
         Cover Image
       </h2>
 
@@ -161,7 +161,7 @@
     <div class="bg-white rounded-lg shadow-sm p-6">
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-          <i data-lucide="book-open" class="w-5 h-5"></i>
+          <%= icon "book-open", class: "w-5 h-5" %>
           Pages (<%= @drawings.count %>)
         </h2>
 
@@ -169,7 +169,7 @@
           <%= link_to editor_child_profile_book_pages_path(@child_profile, @book),
                       data: { turbo_method: :post },
                       class: "btn btn-primary flex items-center gap-2" do %>
-            <i data-lucide="plus" class="w-4 h-4"></i>
+            <%= icon "plus", class: "w-4 h-4" %>
             <span>Add Page</span>
           <% end %>
         <% else %>
@@ -190,12 +190,12 @@
 
       <% if @drawings.empty? %>
         <div class="text-center py-12">
-          <i data-lucide="book-open" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
+          <%= icon "book-open", class: "w-16 h-16 mx-auto text-gray-300 mb-4" %>
           <p class="text-gray-500 mb-4">No pages yet. Add your first page to get started!</p>
           <%= link_to editor_child_profile_book_pages_path(@child_profile, @book),
                       data: { turbo_method: :post },
                       class: "btn btn-primary inline-flex items-center gap-2" do %>
-            <i data-lucide="plus" class="w-4 h-4"></i>
+            <%= icon "plus", class: "w-4 h-4" %>
             <span>Add First Page</span>
           <% end %>
         </div>

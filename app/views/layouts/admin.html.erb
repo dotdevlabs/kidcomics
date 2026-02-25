@@ -9,7 +9,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="admin-layout" data-controller="lucide">
+  <body class="admin-layout">
     <div class="flex min-h-screen bg-gray-100">
       <!-- Sidebar -->
       <aside class="w-64 bg-gray-900 text-white">
@@ -20,44 +20,44 @@
 
         <nav class="mt-8">
           <%= link_to admin_root_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_root_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
-            <i data-lucide="layout-dashboard" class="mr-3 w-5 h-5"></i>
+            <%= icon "layout-dashboard", class: "mr-3 w-5 h-5" %>
             <span>Dashboard</span>
           <% end %>
 
           <%= link_to admin_users_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_users_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
-            <i data-lucide="users" class="mr-3 w-5 h-5"></i>
+            <%= icon "users", class: "mr-3 w-5 h-5" %>
             <span>Users</span>
           <% end %>
 
           <%= link_to admin_families_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_families_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
-            <i data-lucide="home" class="mr-3 w-5 h-5"></i>
+            <%= icon "house", class: "mr-3 w-5 h-5" %>
             <span>Families</span>
           <% end %>
 
           <%= link_to admin_content_index_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_content_index_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
-            <i data-lucide="file-text" class="mr-3 w-5 h-5"></i>
+            <%= icon "file-text", class: "mr-3 w-5 h-5" %>
             <span>Content</span>
           <% end %>
 
           <%= link_to admin_ai_usage_index_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_ai_usage_index_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
-            <i data-lucide="bar-chart" class="mr-3 w-5 h-5"></i>
+            <%= icon "chart-bar", class: "mr-3 w-5 h-5" %>
             <span>AI Usage</span>
           <% end %>
 
           <%= link_to admin_audit_logs_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_audit_logs_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
-            <i data-lucide="shield" class="mr-3 w-5 h-5"></i>
+            <%= icon "shield", class: "mr-3 w-5 h-5" %>
             <span>Audit Log</span>
           <% end %>
 
           <hr class="my-4 border-gray-700">
 
           <%= link_to root_path, class: "flex items-center px-4 py-3 hover:bg-gray-800" do %>
-            <i data-lucide="arrow-left" class="mr-3 w-5 h-5"></i>
+            <%= icon "arrow-left", class: "mr-3 w-5 h-5" %>
             <span>Back to Site</span>
           <% end %>
 
           <%= button_to logout_path, method: :delete, class: "w-full flex items-center px-4 py-3 hover:bg-gray-800 text-left" do %>
-            <i data-lucide="log-out" class="mr-3 w-5 h-5"></i>
+            <%= icon "log-out", class: "mr-3 w-5 h-5" %>
             <span>Logout</span>
           <% end %>
         </nav>

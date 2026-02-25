@@ -180,6 +180,7 @@ export default class extends Controller {
   }
 
   addUserMessage(text) {
+    const userIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-white"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`
     const messageHtml = `
       <div class="flex gap-3 justify-end">
         <div class="bg-purple-100 rounded-lg p-3 max-w-md">
@@ -187,7 +188,7 @@ export default class extends Controller {
         </div>
         <div class="flex-shrink-0">
           <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center">
-            <i data-lucide="user" class="w-4 h-4 text-white"></i>
+            ${userIcon}
           </div>
         </div>
       </div>
@@ -195,15 +196,15 @@ export default class extends Controller {
 
     this.messagesTarget.insertAdjacentHTML('beforeend', messageHtml)
     this.scrollToBottom()
-    this.reinitializeLucide()
   }
 
   addAIMessage(text) {
+    const botIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-blue-600"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`
     const messageHtml = `
       <div class="flex gap-3">
         <div class="flex-shrink-0">
           <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-            <i data-lucide="bot" class="w-4 h-4 text-blue-600"></i>
+            ${botIcon}
           </div>
         </div>
         <div class="bg-blue-50 rounded-lg p-3 max-w-md">
@@ -214,18 +215,10 @@ export default class extends Controller {
 
     this.messagesTarget.insertAdjacentHTML('beforeend', messageHtml)
     this.scrollToBottom()
-    this.reinitializeLucide()
   }
 
   scrollToBottom() {
     this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight
-  }
-
-  reinitializeLucide() {
-    // Reinitialize Lucide icons for newly added elements
-    if (window.lucide) {
-      window.lucide.createIcons()
-    }
   }
 
   escapeHtml(text) {
