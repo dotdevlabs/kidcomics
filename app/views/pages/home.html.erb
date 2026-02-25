@@ -1,155 +1,280 @@
-<div class="min-h-screen bg-gradient-to-br from-purple-500 via-blue-500 to-teal-500">
+<!-- Animated Background Container -->
+<div class="landing-animation-container" data-controller="landing-animation" data-landing-animation-scene-count-value="3">
+  <!-- Scene 1 -->
+  <div class="animation-scene active" data-landing-animation-target="scene">
+    <div class="drawing-layer sketch-layer scene-gradient-1">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-white/20 text-9xl font-bold transform rotate-12">✏️</div>
+      </div>
+    </div>
+    <div class="drawing-layer rendered-layer scene-gradient-1">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-white text-9xl transform">✨</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 2 -->
+  <div class="animation-scene hidden" data-landing-animation-target="scene">
+    <div class="drawing-layer sketch-layer scene-gradient-2">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-white/20 text-9xl font-bold transform -rotate-6">🎨</div>
+      </div>
+    </div>
+    <div class="drawing-layer rendered-layer scene-gradient-2">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-white text-9xl">🌟</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 3 -->
+  <div class="animation-scene hidden" data-landing-animation-target="scene">
+    <div class="drawing-layer sketch-layer scene-gradient-3">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-white/20 text-9xl font-bold transform rotate-6">📖</div>
+      </div>
+    </div>
+    <div class="drawing-layer rendered-layer scene-gradient-3">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-white text-9xl">📚</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Turn Effect -->
+  <div class="page-turn-container">
+    <div class="page-turn" data-landing-animation-target="page"></div>
+  </div>
+</div>
+
+<!-- Main Content (overlays the animation) -->
+<div class="landing-content min-h-screen">
   <!-- Hero Section -->
-  <div class="container mx-auto px-4 py-16">
-    <!-- Header/Navigation -->
-    <div class="flex justify-between items-center mb-16">
-      <div class="flex items-center space-x-2">
-        <%= icon "book-open", class: "w-8 h-8 text-white" %>
-        <span class="text-2xl font-bold text-white">KidComics</span>
-      </div>
-      <div class="flex space-x-4">
-        <%= link_to "Log In", login_path, class: "text-white hover:text-gray-200 transition" %>
-        <%= link_to "Sign Up", signup_path, class: "bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition" %>
-      </div>
-    </div>
+  <div class="relative min-h-screen flex items-center">
+    <div class="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
 
-    <!-- Hero Content -->
-    <div class="max-w-4xl mx-auto text-center text-white mb-16">
-      <h1 class="text-5xl md:text-6xl font-bold mb-6">
-        Bring Your Child's Stories to Life
-      </h1>
-      <p class="text-xl md:text-2xl mb-8 text-blue-100">
-        Create magical illustrated storybooks powered by AI. Turn your child's imagination into beautiful comics in minutes.
-      </p>
-
-      <!-- Email Signup Form -->
-      <div class="max-w-md mx-auto bg-white rounded-lg shadow-2xl p-6">
-        <%= form_with url: onboarding_start_path, method: :post, class: "space-y-4" do |f| %>
-          <div>
-            <%= f.label :email, "Start Creating - Just Enter Your Email", class: "block text-gray-800 font-semibold mb-2 text-center" %>
-            <%= f.email_field :email, required: true, placeholder: "your@email.com",
-                class: "w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-800",
-                autofocus: true %>
-          </div>
-          <%= f.submit "Create Your First Book", class: "w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:from-purple-700 hover:to-blue-700 transition duration-200 cursor-pointer" %>
-          <p class="text-xs text-gray-600 text-center">
-            No credit card required. Create your first 5-page book for free.
-          </p>
-        <% end %>
-      </div>
-    </div>
-
-    <!-- Features Grid -->
-    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 mb-16">
-      <!-- Feature 1 -->
-      <div class="bg-white/10 backdrop-blur-lg rounded-lg p-6 text-white">
-        <div class="bg-white/20 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-          <%= icon "sparkles", class: "w-6 h-6" %>
+    <div class="container mx-auto px-4 py-16 relative z-10">
+      <!-- Header/Navigation -->
+      <div class="flex justify-between items-center mb-16">
+        <div class="flex items-center space-x-2">
+          <%= icon "book-open", class: "w-8 h-8 text-white" %>
+          <span class="text-2xl font-bold text-white">KidComics</span>
         </div>
-        <h3 class="text-xl font-bold mb-2">AI-Powered Magic</h3>
-        <p class="text-blue-100">
-          Our AI helps create engaging stories and beautiful illustrations tailored to your child's interests.
+        <div class="flex space-x-4">
+          <%= link_to "Log In", login_path, class: "text-white hover:text-gray-200 transition" %>
+          <%= link_to "Sign Up", signup_path, class: "bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition" %>
+        </div>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="max-w-4xl mx-auto text-center text-white">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">
+          Transform Your Child's Drawings Into Magical Stories
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-white/90 drop-shadow">
+          Watch their sketches come to life with AI-powered illustrations. From crayon to creation in minutes.
         </p>
-      </div>
 
-      <!-- Feature 2 -->
-      <div class="bg-white/10 backdrop-blur-lg rounded-lg p-6 text-white">
-        <div class="bg-white/20 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-          <%= icon "image", class: "w-6 h-6" %>
-        </div>
-        <h3 class="text-xl font-bold mb-2">Upload Your Art</h3>
-        <p class="text-blue-100">
-          Use your child's drawings or let AI generate illustrations. Mix and match for unique stories.
-        </p>
-      </div>
-
-      <!-- Feature 3 -->
-      <div class="bg-white/10 backdrop-blur-lg rounded-lg p-6 text-white">
-        <div class="bg-white/20 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-          <%= icon "book-heart", class: "w-6 h-6" %>
-        </div>
-        <h3 class="text-xl font-bold mb-2">Digital Library</h3>
-        <p class="text-blue-100">
-          Build a growing collection of personalized storybooks your family can enjoy anytime.
-        </p>
-      </div>
-    </div>
-
-    <!-- Benefits Section -->
-    <div class="max-w-4xl mx-auto bg-white/10 backdrop-blur-lg rounded-lg p-8 text-white mb-16">
-      <h2 class="text-3xl font-bold text-center mb-8">Why Parents Love KidComics</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="flex items-start space-x-3">
-          <%= icon "circle-check", class: "w-6 h-6 flex-shrink-0 mt-1" %>
-          <div>
-            <h4 class="font-semibold mb-1">Encourages Creativity</h4>
-            <p class="text-blue-100 text-sm">Help your child develop storytelling skills and imagination.</p>
-          </div>
-        </div>
-        <div class="flex items-start space-x-3">
-          <%= icon "circle-check", class: "w-6 h-6 flex-shrink-0 mt-1" %>
-          <div>
-            <h4 class="font-semibold mb-1">Screen Time with Purpose</h4>
-            <p class="text-blue-100 text-sm">Turn screen time into creative, educational experiences.</p>
-          </div>
-        </div>
-        <div class="flex items-start space-x-3">
-          <%= icon "circle-check", class: "w-6 h-6 flex-shrink-0 mt-1" %>
-          <div>
-            <h4 class="font-semibold mb-1">Build Reading Confidence</h4>
-            <p class="text-blue-100 text-sm">Kids love reading stories they helped create.</p>
-          </div>
-        </div>
-        <div class="flex items-start space-x-3">
-          <%= icon "circle-check", class: "w-6 h-6 flex-shrink-0 mt-1" %>
-          <div>
-            <h4 class="font-semibold mb-1">Family Bonding</h4>
-            <p class="text-blue-100 text-sm">Create stories together and build lasting memories.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- How It Works -->
-    <div class="max-w-4xl mx-auto text-center text-white">
-      <h2 class="text-3xl font-bold mb-8">Get Started in Minutes</h2>
-      <div class="grid md:grid-cols-4 gap-6">
-        <div>
-          <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
-            1
-          </div>
-          <h4 class="font-semibold mb-2">Enter Email</h4>
-          <p class="text-blue-100 text-sm">No password needed to start</p>
-        </div>
-        <div>
-          <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
-            2
-          </div>
-          <h4 class="font-semibold mb-2">Add Child Profile</h4>
-          <p class="text-blue-100 text-sm">Tell us about your young author</p>
-        </div>
-        <div>
-          <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
-            3
-          </div>
-          <h4 class="font-semibold mb-2">Create First Book</h4>
-          <p class="text-blue-100 text-sm">Up to 5 pages for free</p>
-        </div>
-        <div>
-          <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
-            4
-          </div>
-          <h4 class="font-semibold mb-2">Complete Setup</h4>
-          <p class="text-blue-100 text-sm">Verify email and set password</p>
+        <!-- Email Signup Form -->
+        <div class="max-w-md mx-auto bg-white/95 backdrop-blur rounded-2xl shadow-2xl p-8">
+          <%= form_with url: onboarding_start_path, method: :post, class: "space-y-4" do |f| %>
+            <div>
+              <%= f.label :email, "Start Your Creative Journey", class: "block text-gray-800 font-bold mb-3 text-xl" %>
+              <%= f.email_field :email, required: true, placeholder: "your@email.com",
+                  class: "w-full px-4 py-4 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-800 text-lg",
+                  autofocus: true %>
+            </div>
+            <%= f.submit "Create Your First Book Free", class: "w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-4 px-6 rounded-lg hover:from-purple-700 hover:to-blue-700 transition duration-200 cursor-pointer text-lg shadow-lg" %>
+            <p class="text-sm text-gray-600 text-center">
+              No credit card required • Free 5-page book • Start in 60 seconds
+            </p>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Simple Illustration Section (Screenshot 2 style) -->
+  <div class="bg-white py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div class="flex justify-center">
+          <div class="simple-illustration">
+            <div class="w-full h-full bg-gradient-to-br from-yellow-400 via-orange-400 to-pink-500 rounded-3xl flex items-center justify-center transform hover:scale-105 transition duration-300 shadow-2xl">
+              <div class="text-white text-8xl">🎨</div>
+            </div>
+          </div>
+        </div>
+        <div class="text-gray-800">
+          <h2 class="text-4xl font-bold mb-6">From Imagination to Illustration</h2>
+          <p class="text-xl text-gray-600 mb-4">
+            Upload your child's drawings or let our AI create stunning illustrations from scratch.
+          </p>
+          <p class="text-xl text-gray-600">
+            Either way, you'll have a beautiful, professional-quality storybook in minutes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Grid -->
+  <div class="bg-gradient-to-br from-purple-500 via-blue-500 to-teal-500 py-20">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center text-white mb-12">Everything You Need to Create Magic</h2>
+      <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-white transform hover:scale-105 transition duration-300">
+          <div class="bg-white/20 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+            <%= icon "sparkles", class: "w-8 h-8" %>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">AI-Powered Magic</h3>
+          <p class="text-white/90 text-lg">
+            Our AI helps create engaging stories and beautiful illustrations tailored to your child's interests.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-white transform hover:scale-105 transition duration-300">
+          <div class="bg-white/20 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+            <%= icon "image", class: "w-8 h-8" %>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">Upload Your Art</h3>
+          <p class="text-white/90 text-lg">
+            Use your child's drawings or let AI generate illustrations. Mix and match for unique stories.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-white transform hover:scale-105 transition duration-300">
+          <div class="bg-white/20 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+            <%= icon "book-heart", class: "w-8 h-8" %>
+          </div>
+          <h3 class="text-2xl font-bold mb-3">Digital Library</h3>
+          <p class="text-white/90 text-lg">
+            Build a growing collection of personalized storybooks your family can enjoy anytime.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Another Simple Illustration Section -->
+  <div class="bg-white py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div class="text-gray-800 order-2 md:order-1">
+          <h2 class="text-4xl font-bold mb-6">Stories That Grow With Them</h2>
+          <p class="text-xl text-gray-600 mb-4">
+            From simple picture books for young readers to chapter books for teens, our AI adapts to your child's age and reading level.
+          </p>
+          <p class="text-xl text-gray-600">
+            Every story is a chance to learn, imagine, and create together.
+          </p>
+        </div>
+        <div class="flex justify-center order-1 md:order-2">
+          <div class="simple-illustration">
+            <div class="w-full h-full bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-3xl flex items-center justify-center transform hover:scale-105 transition duration-300 shadow-2xl">
+              <div class="text-white text-8xl">📚</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits Section -->
+  <div class="bg-gradient-to-br from-teal-500 via-blue-500 to-purple-500 py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold text-center text-white mb-12">Why Parents Love KidComics</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="flex items-start space-x-4 bg-white/10 backdrop-blur-lg rounded-xl p-6">
+            <%= icon "circle-check", class: "w-8 h-8 flex-shrink-0 mt-1 text-white" %>
+            <div class="text-white">
+              <h4 class="font-bold text-xl mb-2">Encourages Creativity</h4>
+              <p class="text-white/90">Help your child develop storytelling skills and imagination.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 bg-white/10 backdrop-blur-lg rounded-xl p-6">
+            <%= icon "circle-check", class: "w-8 h-8 flex-shrink-0 mt-1 text-white" %>
+            <div class="text-white">
+              <h4 class="font-bold text-xl mb-2">Screen Time with Purpose</h4>
+              <p class="text-white/90">Turn screen time into creative, educational experiences.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 bg-white/10 backdrop-blur-lg rounded-xl p-6">
+            <%= icon "circle-check", class: "w-8 h-8 flex-shrink-0 mt-1 text-white" %>
+            <div class="text-white">
+              <h4 class="font-bold text-xl mb-2">Build Reading Confidence</h4>
+              <p class="text-white/90">Kids love reading stories they helped create.</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4 bg-white/10 backdrop-blur-lg rounded-xl p-6">
+            <%= icon "circle-check", class: "w-8 h-8 flex-shrink-0 mt-1 text-white" %>
+            <div class="text-white">
+              <h4 class="font-bold text-xl mb-2">Family Bonding</h4>
+              <p class="text-white/90">Create stories together and build lasting memories.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <div class="bg-white py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-4xl font-bold text-gray-800 mb-12">Get Started in Minutes</h2>
+        <div class="grid md:grid-cols-4 gap-8">
+          <div class="transform hover:scale-105 transition duration-300">
+            <div class="bg-gradient-to-br from-purple-500 to-blue-500 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-white shadow-lg">
+              1
+            </div>
+            <h4 class="font-bold text-xl mb-2 text-gray-800">Enter Email</h4>
+            <p class="text-gray-600">No password needed to start</p>
+          </div>
+          <div class="transform hover:scale-105 transition duration-300">
+            <div class="bg-gradient-to-br from-blue-500 to-teal-500 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-white shadow-lg">
+              2
+            </div>
+            <h4 class="font-bold text-xl mb-2 text-gray-800">Add Child Profile</h4>
+            <p class="text-gray-600">Tell us about your young author</p>
+          </div>
+          <div class="transform hover:scale-105 transition duration-300">
+            <div class="bg-gradient-to-br from-teal-500 to-green-500 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-white shadow-lg">
+              3
+            </div>
+            <h4 class="font-bold text-xl mb-2 text-gray-800">Create First Book</h4>
+            <p class="text-gray-600">Up to 5 pages for free</p>
+          </div>
+          <div class="transform hover:scale-105 transition duration-300">
+            <div class="bg-gradient-to-br from-green-500 to-purple-500 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-white shadow-lg">
+              4
+            </div>
+            <h4 class="font-bold text-xl mb-2 text-gray-800">Watch the Magic</h4>
+            <p class="text-gray-600">See drawings transform into stories</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final CTA Section -->
+  <div class="bg-gradient-to-br from-purple-600 via-blue-600 to-teal-600 py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-5xl font-bold text-white mb-6">Ready to Bring Stories to Life?</h2>
+      <p class="text-2xl text-white/90 mb-8">Join thousands of families creating magical memories.</p>
+      <%= link_to "Start Creating Free", onboarding_start_path, method: :post, class: "inline-block bg-white text-purple-600 px-12 py-4 rounded-full font-bold text-xl hover:bg-gray-100 transition duration-200 shadow-2xl transform hover:scale-105" %>
+    </div>
+  </div>
+
   <!-- Footer -->
-  <div class="bg-black/20 backdrop-blur-lg">
-    <div class="container mx-auto px-4 py-8 text-center text-white">
-      <p class="text-sm text-blue-100">
+  <div class="bg-gray-900 text-white">
+    <div class="container mx-auto px-4 py-8 text-center">
+      <p class="text-gray-400">
         &copy; 2026 KidComics. Bringing imagination to life.
       </p>
     </div>

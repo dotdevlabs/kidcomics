@@ -4,7 +4,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   test "should render home page" do
     get root_url
     assert_response :success
-    assert_select "h1", text: /Bring Your Child's Stories to Life/
+    assert_select "h1", text: /Transform Your Child's Drawings Into Magical Stories/
   end
 
   test "should show signup link on home page" do
