@@ -20,9 +20,8 @@ class OnboardingController < ApplicationController
         redirect_to login_path, alert: "Account already exists. Please log in."
         return
       else
-        # User started onboarding before, let them continue
-        session[:onboarding_user_id] = user.id
-        redirect_to onboarding_name_path
+        # User has a partial registration - trigger magic link flow
+        handle_partial_registration(user)
         return
       end
     end
@@ -163,6 +162,41 @@ class OnboardingController < ApplicationController
   def redirect_if_completed
     if @onboarding_user&.onboarding_completed?
       redirect_to dashboard_path
+    end
+  end
+
+  def handle_partial_registration(user)
+    if Rails.env.development?
+      # In development, auto-authenticate and resume onboarding
+      session[:user_id] = user.id
+      session[:onboarding_user_id] = user.id
+      flash[:notice] = "Development mode: Auto-logged in via magic link. Resuming your registration."
+      redirect_to onboarding_resume_step(user)
+    else
+      # In production, send magic link email
+      send_magic_link_for_partial_registration(user)
+      redirect_to root_path, notice: "We've sent a magic link to #{user.email}. Please check your inbox to continue your registration."
+    end
+  end
+
+  def send_magic_link_for_partial_registration(user)
+    authentication = NoPassword::Email::Authentication.new(session)
+    authentication.email = user.email
+    if authentication.valid? && authentication.challenge.save
+      authentication.save
+      UserMailer.magic_link_email(user, email_authentication_url(authentication.challenge.token)).deliver_later
+    end
+  rescue => e
+    Rails.logger.error "Failed to send magic link for partial registration: #{e.message}"
+  end
+
+  def onboarding_resume_step(user)
+    if user.family_account.blank?
+      onboarding_name_path
+    elsif user.family_account.child_profiles.empty?
+      onboarding_child_profile_path
+    else
+      dashboard_path
     end
   end
 
