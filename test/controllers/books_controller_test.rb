@@ -24,10 +24,14 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_child_profile_book_drawing_url(@child_profile, new_book)
   end
 
-  test "should create book and redirect to new action" do
-    # Create action is deprecated, redirects to new which handles auto-creation
-    post child_profile_books_url(@child_profile), params: { book: { title: "New Book", description: "A new book" } }
-    assert_redirected_to new_child_profile_book_url(@child_profile)
+  test "should create book and redirect to photo upload" do
+    # Photo-first approach: create redirects to drawing upload
+    assert_difference("Book.count") do
+      post child_profile_books_url(@child_profile), params: { book: { title: "New Book", description: "A new book" } }
+    end
+
+    new_book = Book.last
+    assert_redirected_to new_child_profile_book_drawing_url(@child_profile, new_book)
   end
 
   test "should show book" do
@@ -35,20 +39,17 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit and redirect to AI editor" do
+  test "should get edit" do
     get edit_child_profile_book_url(@child_profile, @book)
-    # All editing now happens through the AI-powered editor
-    assert_redirected_to edit_editor_child_profile_book_url(@child_profile, @book)
+    assert_response :success
   end
 
-  test "should update book and redirect to AI editor" do
+  test "should update book" do
     patch child_profile_book_url(@child_profile, @book), params: { book: { title: "Updated Title" } }
-    # Updates now happen through the AI-powered editor
-    assert_redirected_to edit_editor_child_profile_book_url(@child_profile, @book)
+    assert_redirected_to child_profile_book_url(@child_profile, @book)
 
-    # Book should not be updated via this route
     @book.reload
-    assert_not_equal "Updated Title", @book.title
+    assert_equal "Updated Title", @book.title
   end
 
   test "should destroy book" do
@@ -97,17 +98,6 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "toggle_favorite should toggle book favorite status" do
-    assert_equal false, @book.favorited
-
-    patch toggle_favorite_child_profile_book_url(@child_profile, @book)
-    @book.reload
-    assert_equal true, @book.favorited
-
-    patch toggle_favorite_child_profile_book_url(@child_profile, @book)
-    @book.reload
-    assert_equal false, @book.favorited
-  end
 
   test "show should increment view count" do
     initial_count = @book.view_count

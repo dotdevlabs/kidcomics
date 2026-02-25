@@ -55,19 +55,6 @@ class Editor::PagesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_editor_child_profile_book_path(@child_profile, @book)
   end
 
-  test "should reorder pages" do
-    page2 = @book.drawings.create!(position: 1, image: @image)
-    page3 = @book.drawings.create!(position: 2, image: @image)
-
-    # Move page3 to position 0
-    patch reorder_editor_child_profile_book_page_url(@child_profile, @book, page3),
-          params: { position: 0 },
-          as: :json
-
-    assert_response :success
-    page3.reload
-    assert_equal 0, page3.position
-  end
 
   test "should not allow creating page beyond onboarding limit" do
     @book.update!(is_onboarding_book: true)

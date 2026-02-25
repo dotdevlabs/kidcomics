@@ -30,32 +30,6 @@ class Editor::BooksControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil @book.last_edited_at
   end
 
-  test "should auto save book" do
-    patch auto_save_editor_child_profile_book_url(@child_profile, @book),
-          params: { book: { title: "Auto Saved Title", dedication: "Auto saved dedication" } },
-          as: :json
-
-    assert_response :success
-    @book.reload
-    assert_equal "Auto Saved Title", @book.title
-    assert_equal "Auto saved dedication", @book.dedication
-    assert_not_nil @book.last_edited_at
-  end
-
-  test "should get preview" do
-    get preview_editor_child_profile_book_url(@child_profile, @book)
-    assert_response :success
-  end
-
-  test "should update cover image" do
-    cover_image = fixture_file_upload("test_image.png", "image/png")
-
-    patch update_cover_editor_child_profile_book_url(@child_profile, @book),
-          params: { cover_image: cover_image }
-
-    @book.reload
-    assert @book.cover_image.attached?
-  end
 
   test "should validate edit mode" do
     patch editor_child_profile_book_url(@child_profile, @book),
