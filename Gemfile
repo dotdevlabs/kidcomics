@@ -28,6 +28,9 @@ gem "anthropic", "~> 0.3"
 # Email delivery via Postmark
 gem "postmark-rails"
 
+# Passwordless authentication with magic links
+gem "nopassword"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

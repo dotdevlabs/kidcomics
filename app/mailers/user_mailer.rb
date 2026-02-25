@@ -19,4 +19,14 @@ class UserMailer < ApplicationMailer
       subject: "Welcome to KidComics!"
     )
   end
+
+  def magic_link_email(user, token)
+    @user = user
+    @magic_link_url = magic_link_url(token)
+
+    mail(
+      to: @user.email,
+      subject: "Continue your KidComics registration"
+    )
+  end
 end
