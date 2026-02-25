@@ -63,5 +63,4 @@ class DrawingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to child_profile_book_drawings_url(@child_profile, @book)
   end
-
 end
