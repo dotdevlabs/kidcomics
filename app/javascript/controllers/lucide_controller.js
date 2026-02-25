@@ -34,7 +34,11 @@ import { createIcons,
   Camera,
   // Landing page icons
   BookHeart,
-  CircleCheck
+  CircleCheck,
+  // AI Chat icons
+  Bot,
+  User,
+  MessageSquare
 } from "lucide"
 
 export default class extends Controller {
@@ -75,7 +79,11 @@ export default class extends Controller {
         Camera,
         // Landing page icons
         BookHeart,
-        CircleCheck
+        CircleCheck,
+        // AI Chat icons
+        Bot,
+        User,
+        MessageSquare
       }
     })
   }

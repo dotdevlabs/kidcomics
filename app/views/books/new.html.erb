@@ -1,31 +1,21 @@
-<div class="min-h-screen bg-gray-50">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="mb-6">
-      <%= link_to child_profile_books_path(@child_profile), class: "text-gray-600 hover:text-gray-800 inline-flex items-center" do %>
-        <%= icon "arrow-left", class: "w-5 h-5 mr-2" %>
-        Back to Books
-      <% end %>
-    </div>
+<div class="min-h-screen bg-gray-50 flex items-center justify-center">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+    <div class="bg-white rounded-lg shadow-md p-12">
+      <div class="mb-6">
+        <i data-lucide="camera" class="w-20 h-20 mx-auto text-purple-600"></i>
+      </div>
 
-    <div class="bg-white rounded-lg shadow-md p-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-6">Create New Book</h1>
+      <h1 class="text-3xl font-bold text-gray-800 mb-4">Let's Start Creating!</h1>
 
-      <% if @is_onboarding && @page_limit %>
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <div class="flex items-start">
-            <%= icon "info", class: "w-5 h-5 text-blue-600 mr-3 flex-shrink-0 mt-0.5" %>
-            <div>
-              <h3 class="text-sm font-semibold text-blue-900 mb-1">First Book - 5 Page Limit</h3>
-              <p class="text-sm text-blue-800">
-                This is your first book! You can add up to <%= @page_limit %> pages.
-                Complete your account setup afterwards to create unlimited books.
-              </p>
-            </div>
-          </div>
-        </div>
-      <% end %>
+      <p class="text-lg text-gray-600 mb-6">
+        This is a creative tool, not a form. We're redirecting you to start with what matters most:
+        your artwork!
+      </p>
 
-      <%= render "form", book: @book %>
+      <p class="text-gray-500">
+        If you're not redirected automatically,
+        <%= link_to "click here", child_profile_books_path(@child_profile), class: "text-purple-600 hover:text-purple-700 underline" %>.
+      </p>
     </div>
   </div>
 </div>

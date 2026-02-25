@@ -67,36 +67,6 @@ module AI
       assert_response :success
     end
 
-    test "should retry failed story generation" do
-      story_generation = @book.story_generations.create!(
-        status: :failed,
-        prompt_template: "Test story",
-        error_message: "Something went wrong"
-      )
-
-      assert_enqueued_with(job: AI::AnalyzeDrawingsJob) do
-        post retry_ai_child_profile_book_story_generation_path(@child_profile, @book, story_generation)
-      end
-
-      story_generation.reload
-      assert story_generation.status_pending?
-      assert_nil story_generation.error_message
-
-      assert_redirected_to ai_child_profile_book_story_generation_path(@child_profile, @book, story_generation)
-      assert_equal "Retrying story generation...", flash[:notice]
-    end
-
-    test "should not retry non-failed story generation" do
-      story_generation = @book.story_generations.create!(
-        status: :pending,
-        prompt_template: "Test story"
-      )
-
-      post retry_ai_child_profile_book_story_generation_path(@child_profile, @book, story_generation)
-
-      assert_redirected_to ai_child_profile_book_story_generation_path(@child_profile, @book, story_generation)
-      assert_equal "Cannot retry a generation that is not failed.", flash[:alert]
-    end
 
     test "should require login" do
       delete logout_path

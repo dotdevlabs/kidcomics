@@ -36,28 +36,15 @@
     <% end %>
 
     <!-- Metadata -->
-    <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
-      <div class="flex items-center space-x-3">
-        <span class="flex items-center">
-          <i data-lucide="image" class="w-4 h-4 mr-1"></i>
-          <%= pluralize(book.drawings.count, 'drawing') %>
-        </span>
-        <span class="flex items-center">
-          <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
-          <%= book.view_count %>
-        </span>
-      </div>
-
-      <!-- Favorite Toggle -->
-      <%= button_to toggle_favorite_child_profile_book_path(child_profile, book),
-          method: :patch,
-          class: "text-gray-400 hover:text-pink-500 transition",
-          data: { turbo: false },
-          form: { data: { controller: "favorite" } } do %>
-        <% icon_name = book.favorited? ? 'heart' : 'star' %>
-        <% icon_classes = "w-5 h-5 #{book.favorited? ? 'text-pink-500 fill-pink-500' : ''}" %>
-        <i data-lucide="<%= icon_name %>" class="<%= icon_classes %>"></i>
-      <% end %>
+    <div class="flex items-center space-x-3 text-sm text-gray-500 mb-4">
+      <span class="flex items-center">
+        <i data-lucide="image" class="w-4 h-4 mr-1"></i>
+        <%= pluralize(book.drawings.count, 'drawing') %>
+      </span>
+      <span class="flex items-center">
+        <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
+        <%= book.view_count %>
+      </span>
     </div>
 
     <!-- Actions -->
@@ -69,12 +56,7 @@
       <%= link_to edit_editor_child_profile_book_path(child_profile, book),
                   class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200 inline-flex items-center justify-center",
                   title: "Open Editor" do %>
-        <i data-lucide="edit-3" class="w-4 h-4"></i>
-      <% end %>
-      <%= link_to edit_child_profile_book_path(child_profile, book),
-                  class: "bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition duration-200 inline-flex items-center justify-center",
-                  title: "Edit Details" do %>
-        <i data-lucide="pencil" class="w-4 h-4"></i>
+        <i data-lucide="sparkles" class="w-4 h-4"></i>
       <% end %>
       <%= button_to child_profile_book_path(child_profile, book),
                     method: :delete,

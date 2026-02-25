@@ -63,16 +63,4 @@ class DrawingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to child_profile_book_drawings_url(@child_profile, @book)
   end
-
-  test "should reorder drawing" do
-    drawing2 = Drawing.create!(book: @book, position: 1)
-    drawing2.image.attach(io: File.open(Rails.root.join("test", "fixtures", "files", "test_image.jpg")), filename: "test2.jpg", content_type: "image/jpeg")
-
-    patch reorder_child_profile_book_drawing_url(@child_profile, @book, @drawing), params: { position: 1 }
-
-    assert_response :success
-
-    @drawing.reload
-    assert_equal 1, @drawing.position
-  end
 end

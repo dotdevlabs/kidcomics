@@ -21,20 +21,6 @@ module AI
       end
     end
 
-    def regenerate
-      if @page_generation.can_retry?
-        @page_generation.increment_retry_count!
-        @page_generation.update!(status: :pending, error_message: nil)
-        GeneratePageJob.perform_later(@page_generation.id)
-
-        redirect_to ai_child_profile_book_story_generation_path(@child_profile, @book, @story_generation),
-                    notice: "Regenerating page #{@page_generation.page_number}..."
-      else
-        redirect_to ai_child_profile_book_story_generation_path(@child_profile, @book, @story_generation),
-                    alert: "Cannot regenerate this page (max retries reached)."
-      end
-    end
-
     private
 
     def set_child_profile

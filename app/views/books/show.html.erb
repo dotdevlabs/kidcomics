@@ -25,16 +25,12 @@
             <% end %>
           <% end %>
           <%= link_to edit_editor_child_profile_book_path(@child_profile, @book), class: "bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 inline-flex items-center" do %>
-            <i data-lucide="edit-3" class="w-5 h-5 mr-2"></i>
+            <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
             Open Editor
           <% end %>
           <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
-            <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
-            Upload Drawings
-          <% end %>
-          <%= link_to edit_child_profile_book_path(@child_profile, @book), class: "bg-gray-200 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-300 transition duration-200 inline-flex items-center" do %>
-            <i data-lucide="pencil" class="w-5 h-5 mr-2"></i>
-            Edit Details
+            <i data-lucide="camera" class="w-5 h-5 mr-2"></i>
+            Add Drawings
           <% end %>
         </div>
       </div>

@@ -10,7 +10,7 @@
             <% end %>
             <h1 class="text-3xl font-bold text-gray-800">Manage Drawings</h1>
           </div>
-          <p class="text-gray-600">Reorder, edit, or delete drawings for "<%= @book.title %>"</p>
+          <p class="text-gray-600">Edit or delete drawings for "<%= @book.title %>"</p>
         </div>
         <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
           <%= icon "upload", class: "w-5 h-5 mr-2" %>
@@ -62,14 +62,7 @@
 
     <div class="bg-white rounded-lg shadow-md p-6">
       <% if @drawings.any? %>
-        <div class="mb-4 flex items-center text-sm text-gray-600">
-          <%= icon "info", class: "w-4 h-4 mr-2" %>
-          <span>Drag and drop to reorder drawings</span>
-        </div>
-
-        <div data-controller="drawings-reorder"
-             data-drawings-reorder-url-value="<%= child_profile_book_path(@child_profile, @book) %>"
-             class="space-y-3">
+        <div class="space-y-3">
           <% @drawings.each do |drawing| %>
             <%= render "drawing", drawing: drawing, child_profile: @child_profile, book: @book %>
           <% end %>

@@ -22,47 +22,6 @@ module Editor
       end
     end
 
-    def auto_save
-      if @book.update(book_params)
-        @book.update_last_edited!
-        render json: {
-          status: "saved",
-          updated_at: @book.last_edited_at.iso8601
-        }
-      else
-        render json: {
-          status: "error",
-          errors: @book.errors.full_messages
-        }, status: :unprocessable_entity
-      end
-    end
-
-    def preview
-      @drawings = @book.drawings.ordered
-      render layout: "preview"
-    end
-
-    def update_cover
-      if params[:remove_cover] == "true"
-        @book.cover_image.purge if @book.cover_image.attached?
-        @book.update_last_edited!
-        redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                    notice: "Cover image removed successfully."
-      elsif params[:cover_image].present?
-        if @book.update(cover_image: params[:cover_image])
-          @book.update_last_edited!
-          redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                      notice: "Cover image updated successfully."
-        else
-          redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                      alert: "Failed to update cover image."
-        end
-      else
-        redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                    alert: "No cover image provided."
-      end
-    end
-
     private
 
     def set_child_profile

@@ -14,17 +14,24 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get new" do
-    get new_child_profile_book_url(@child_profile)
-    assert_response :success
+  test "should get new and redirect to photo upload" do
+    assert_difference("Book.count") do
+      get new_child_profile_book_url(@child_profile)
+    end
+
+    # Photo-first approach: auto-creates book and redirects to drawing upload
+    new_book = Book.last
+    assert_redirected_to new_child_profile_book_drawing_url(@child_profile, new_book)
   end
 
-  test "should create book" do
+  test "should create book and redirect to photo upload" do
+    # Photo-first approach: create redirects to drawing upload
     assert_difference("Book.count") do
       post child_profile_books_url(@child_profile), params: { book: { title: "New Book", description: "A new book" } }
     end
 
-    assert_redirected_to child_profile_book_url(@child_profile, Book.last)
+    new_book = Book.last
+    assert_redirected_to new_child_profile_book_drawing_url(@child_profile, new_book)
   end
 
   test "should show book" do
@@ -91,17 +98,6 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "toggle_favorite should toggle book favorite status" do
-    assert_equal false, @book.favorited
-
-    patch toggle_favorite_child_profile_book_url(@child_profile, @book)
-    @book.reload
-    assert_equal true, @book.favorited
-
-    patch toggle_favorite_child_profile_book_url(@child_profile, @book)
-    @book.reload
-    assert_equal false, @book.favorited
-  end
 
   test "show should increment view count" do
     initial_count = @book.view_count
