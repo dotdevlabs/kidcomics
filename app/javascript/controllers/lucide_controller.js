@@ -31,7 +31,10 @@ import { createIcons,
   Pencil,
   Upload,
   CheckCircle,
-  Camera
+  Camera,
+  // Landing page icons
+  BookHeart,
+  CircleCheck
 } from "lucide"
 
 export default class extends Controller {
@@ -69,7 +72,10 @@ export default class extends Controller {
         Pencil,
         Upload,
         CheckCircle,
-        Camera
+        Camera,
+        // Landing page icons
+        BookHeart,
+        CircleCheck
       }
     })
   }

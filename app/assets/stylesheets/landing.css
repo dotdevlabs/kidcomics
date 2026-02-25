@@ -1,0 +1,213 @@
+/* Landing Page Animation Styles */
+
+/* Animation container setup */
+.landing-animation-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.landing-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Scene setup */
+.animation-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s ease;
+}
+
+.animation-scene.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.animation-scene.active {
+  opacity: 1;
+}
+
+/* Drawing layers - sketch and rendered */
+.drawing-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: all 2s ease-in-out;
+}
+
+.sketch-layer {
+  opacity: 1;
+  filter: blur(1px) contrast(1.2) saturate(0.8);
+  transform: scale(1.05);
+}
+
+.rendered-layer {
+  opacity: 0;
+  filter: blur(0) contrast(1) saturate(1.2);
+  transform: scale(1);
+}
+
+/* Transform animation - sketch fades out, rendered fades in */
+.animation-scene.transforming .sketch-layer {
+  opacity: 0;
+  filter: blur(0) contrast(1) saturate(1);
+  transform: scale(1);
+}
+
+.animation-scene.transforming .rendered-layer {
+  opacity: 1;
+  filter: blur(0) contrast(1) saturate(1.2);
+  transform: scale(1);
+}
+
+/* Page turn effect */
+.page-turn-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  perspective: 2000px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.page-turn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 1.5s ease-in-out;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.8) 100%);
+  opacity: 0;
+}
+
+.page-turn.turning {
+  opacity: 1;
+  transform: rotateY(-180deg);
+}
+
+/* Background gradients for different scenes */
+.scene-gradient-1 {
+  background: linear-gradient(135deg,
+    #667eea 0%,
+    #764ba2 50%,
+    #f093fb 100%
+  );
+}
+
+.scene-gradient-2 {
+  background: linear-gradient(135deg,
+    #fa709a 0%,
+    #fee140 50%,
+    #30cfd0 100%
+  );
+}
+
+.scene-gradient-3 {
+  background: linear-gradient(135deg,
+    #4facfe 0%,
+    #00f2fe 50%,
+    #43e97b 100%
+  );
+}
+
+/* Simple illustration elements (like screenshot 2) */
+.simple-illustration {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Pixelated/voxel style effect */
+.pixelated-element {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Sketch overlay effect using SVG filter simulation */
+.sketch-overlay {
+  position: relative;
+}
+
+.sketch-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+  pointer-events: none;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animation-scene,
+  .drawing-layer,
+  .page-turn,
+  .simple-illustration {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .animation-scene.transforming .sketch-layer {
+    opacity: 0;
+  }
+
+  .animation-scene.transforming .rendered-layer {
+    opacity: 1;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .simple-illustration {
+    width: 200px;
+    height: 200px;
+  }
+
+  .page-turn {
+    display: none; /* Disable page turn on mobile for performance */
+  }
+}
