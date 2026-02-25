@@ -37,7 +37,7 @@
     <% if @book.is_onboarding_book? && @drawings.any? %>
       <div class="bg-gradient-to-r from-green-50 to-blue-50 border border-green-300 rounded-lg p-6 mb-6">
         <div class="flex items-start">
-          <%= icon "check-circle", class: "w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-1" %>
+          <%= icon "circle-check", class: "w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-1" %>
           <div class="flex-1">
             <h3 class="text-lg font-semibold text-gray-900 mb-2">
               Great Start! You've Added <%= @drawings.count %> <%= 'Page'.pluralize(@drawings.count) %>
@@ -51,7 +51,7 @@
                 Add More Pages
               <% end %>
               <%= button_to complete_onboarding_path, class: "bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-200 inline-flex items-center text-sm" do %>
-                <%= icon "check-circle", class: "w-4 h-4 mr-2" %>
+                <%= icon "circle-check", class: "w-4 h-4 mr-2" %>
                 Complete Account Setup
               <% end %>
             </div>

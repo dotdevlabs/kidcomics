@@ -14,7 +14,7 @@
           +<%= @stats[:new_users_7_days] %> this week
         </p>
       </div>
-      <i data-lucide="users" class="w-12 h-12 text-blue-500"></i>
+      <%= icon "users", class: "w-12 h-12 text-blue-500" %>
     </div>
   </div>
 
@@ -28,7 +28,7 @@
           <%= @stats[:total_child_profiles] %> child profiles
         </p>
       </div>
-      <i data-lucide="home" class="w-12 h-12 text-green-500"></i>
+      <%= icon "house", class: "w-12 h-12 text-green-500" %>
     </div>
   </div>
 
@@ -42,7 +42,7 @@
           +<%= @stats[:books_this_week] %> this week
         </p>
       </div>
-      <i data-lucide="book" class="w-12 h-12 text-purple-500"></i>
+      <%= icon "book", class: "w-12 h-12 text-purple-500" %>
     </div>
   </div>
 
@@ -60,7 +60,7 @@
           <p class="text-xs text-gray-500 mt-1">All clear</p>
         <% end %>
       </div>
-      <i data-lucide="alert-circle" class="w-12 h-12 text-yellow-500"></i>
+      <%= icon "circle-alert", class: "w-12 h-12 text-yellow-500" %>
     </div>
   </div>
 </div>

@@ -11,7 +11,7 @@
     <% else %>
       <div class="aspect-[3/4] bg-gray-100 rounded-lg flex flex-col items-center justify-center text-gray-400"
            data-cover-editor-target="preview">
-        <i data-lucide="image" class="w-16 h-16 mb-2"></i>
+        <%= icon "image", class: "w-16 h-16 mb-2" %>
         <p class="text-sm">No cover image yet</p>
       </div>
     <% end %>
@@ -66,7 +66,7 @@
       <button type="button"
               disabled
               class="btn btn-secondary w-full opacity-50 cursor-not-allowed flex items-center justify-center gap-2">
-        <i data-lucide="sparkles" class="w-4 h-4"></i>
+        <%= icon "sparkles", class: "w-4 h-4" %>
         <span>Generate AI Cover (Coming Soon)</span>
       </button>
     </div>

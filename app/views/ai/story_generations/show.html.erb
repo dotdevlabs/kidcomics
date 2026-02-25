@@ -30,7 +30,7 @@
     <% if @story_generation.status_failed? %>
       <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
         <div class="flex items-start">
-          <%= icon "alert-circle", class: "w-5 h-5 text-red-600 mt-0.5 mr-3" %>
+          <%= icon "circle-alert", class: "w-5 h-5 text-red-600 mt-0.5 mr-3" %>
           <div class="flex-1">
             <h3 class="text-sm font-medium text-red-800">Generation Failed</h3>
             <p class="mt-1 text-sm text-red-700"><%= @story_generation.error_message %></p>
