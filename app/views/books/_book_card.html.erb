@@ -50,12 +50,14 @@
     <!-- Actions -->
     <div class="flex space-x-2">
       <%= link_to child_profile_book_path(child_profile, book),
-                  class: "flex-1 bg-blue-500 text-white px-4 py-2 rounded text-center hover:bg-blue-600 transition duration-200" do %>
+                  class: "flex-1 bg-blue-500 text-white px-4 py-2 rounded text-center hover:bg-blue-600 transition duration-200",
+                  data: { turbo_frame: "_top" } do %>
         View
       <% end %>
       <%= link_to edit_editor_child_profile_book_path(child_profile, book),
                   class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200 inline-flex items-center justify-center",
-                  title: "Open Editor" do %>
+                  title: "Open Editor",
+                  data: { turbo_frame: "_top" } do %>
         <%= icon "sparkles", class: "w-4 h-4" %>
       <% end %>
       <%= button_to child_profile_book_path(child_profile, book),
