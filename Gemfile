@@ -23,7 +23,7 @@ gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 
 # AI service integration
-gem "anthropic", "~> 0.3"
+gem "anthropic", "~> 1.23"
 
 # Email delivery via Postmark
 gem "postmark-rails"
