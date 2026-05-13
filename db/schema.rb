@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_25_042908) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_13_035845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -124,6 +124,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_042908) do
     t.boolean "is_cover", default: false, null: false
     t.text "narration_text"
     t.integer "position", null: false
+    t.integer "processing_status", default: 0
     t.string "tag"
     t.datetime "updated_at", null: false
     t.index ["analysis_status"], name: "index_drawings_on_analysis_status"
@@ -132,6 +133,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_042908) do
     t.index ["is_background"], name: "index_drawings_on_is_background"
     t.index ["is_character"], name: "index_drawings_on_is_character"
     t.index ["is_cover"], name: "index_drawings_on_is_cover"
+    t.index ["processing_status"], name: "index_drawings_on_processing_status"
   end
 
   create_table "family_accounts", force: :cascade do |t|
