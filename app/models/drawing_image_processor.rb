@@ -21,7 +21,7 @@ class DrawingImageProcessor
 
       reattach(output_tempfile.path)
       @drawing.update_column(:processing_status, Drawing.processing_statuses[:processed])
-    rescue Vips::Error, StandardError => e
+    rescue StandardError => e
       @drawing.update_column(:processing_status, Drawing.processing_statuses[:failed])
       Rails.logger.error("[DrawingImageProcessor] Failed for Drawing##{@drawing.id}: #{e.message}")
       raise ProcessingError, e.message
@@ -58,7 +58,7 @@ class DrawingImageProcessor
     return img unless width > 10 && height > 10
 
     img.crop(left, top, width, height)
-  rescue Vips::Error
+  rescue StandardError
     img
   end
 
@@ -70,7 +70,7 @@ class DrawingImageProcessor
     scale = 255.0 / (max_val - min_val)
     offset = -min_val * scale
     img.linear([ scale ] * img.bands, [ offset ] * img.bands).cast(:uchar)
-  rescue Vips::Error
+  rescue StandardError
     img
   end
 end
