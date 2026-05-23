@@ -4,6 +4,9 @@ class Drawing < ApplicationRecord
     attachable.variant :thumb, resize_to_limit: [ 150, 150 ]
     attachable.variant :medium, resize_to_limit: [ 800, 800 ]
     attachable.variant :large, resize_to_limit: [ 1600, 1600 ]
+    attachable.variant :thumb_webp, resize_to_limit: [ 150, 150 ], format: :webp, saver: { quality: 85 }
+    attachable.variant :medium_webp, resize_to_limit: [ 800, 800 ], format: :webp, saver: { quality: 85 }
+    attachable.variant :large_webp, resize_to_limit: [ 1600, 1600 ], format: :webp, saver: { quality: 85 }
   end
   has_many :character_extractions, dependent: :destroy
 
@@ -19,8 +22,16 @@ class Drawing < ApplicationRecord
     failed: 3
   }, prefix: true
 
+  enum :processing_status, {
+    pending: 0,
+    processing: 1,
+    processed: 2,
+    failed: 3
+  }, prefix: true
+
   # Callbacks
   before_validation :set_position, on: :create
+  after_create_commit :enqueue_image_processing, if: -> { image.attached? }
 
   # Scopes
   scope :ordered, -> { order(position: :asc) }
@@ -46,6 +57,10 @@ class Drawing < ApplicationRecord
     return if position.present?
     max_position = Drawing.where(book: book).maximum(:position)
     self.position = (max_position || -1) + 1
+  end
+
+  def enqueue_image_processing
+    ProcessImageJob.perform_later(id)
   end
 
   def image_validation
