@@ -20,7 +20,7 @@ module Kidcomics
     config.i18n.available_locales = %i[en es fr pt-BR pt-PT de it]
     config.i18n.default_locale = :en
     # pt-PT falls back through pt-BR then en; all other locales fall back to en automatically
-    config.i18n.fallbacks = { :"pt-PT" => [:"pt-BR", :en] }
+    config.i18n.fallbacks = { "pt-PT": [ :"pt-BR", :en ] }
     # Support split locale files under config/locales/**/*.yml
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.yml")]
 

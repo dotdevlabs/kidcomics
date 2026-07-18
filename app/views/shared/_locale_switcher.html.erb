@@ -1,0 +1,9 @@
+<div class="flex items-center flex-wrap gap-1">
+  <% I18n.available_locales.each do |locale| %>
+    <%= button_to user_locale_path, method: :post,
+        params: { locale: locale },
+        class: "px-2 py-1 text-sm rounded #{ I18n.locale == locale ? 'bg-purple-600 text-white' : 'text-gray-600 hover:bg-gray-100' }" do %>
+      <%= t("locales.#{locale}") %>
+    <% end %>
+  <% end %>
+</div>
