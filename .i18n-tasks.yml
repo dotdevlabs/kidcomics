@@ -1,11 +1,6 @@
 base_locale: en
 locales: [en, es, fr, pt-BR, pt-PT, de, it]
 
-# pt-PT intentionally only provides keys that differ from pt-BR.
-# The remaining keys are resolved via the pt-PT -> pt-BR -> en fallback chain.
-ignore_missing:
-  - {locales: ['pt-PT'], key: '**'}
-
 # These keys are looked up dynamically in views, e.g.:
 #   t("books.statuses.#{book.status}")
 # i18n-tasks cannot statically trace these references.
