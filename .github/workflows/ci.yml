@@ -85,7 +85,7 @@ jobs:
         run: bundle exec i18n-tasks unused
 
       - name: Check locale files are normalized
-        run: bundle exec i18n-tasks normalize && git diff --exit-code config/locales
+        run: bundle exec i18n-tasks check-normalized
 
       - name: i18n health check
         run: bundle exec i18n-tasks health
