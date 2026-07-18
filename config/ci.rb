@@ -11,10 +11,10 @@ CI.run do
   step "Tests: Rails", "bin/rails test"
   step "Tests: Seeds", "env RAILS_ENV=test bin/rails db:seed:replant"
 
-  step "i18n: No missing translations", "bundle exec i18n-tasks missing en es fr pt-BR de it"
+  step "i18n: No missing translations", "bundle exec i18n-tasks missing"
   step "i18n: No unused keys", "bundle exec i18n-tasks unused"
   step "i18n: Files normalized", "bundle exec i18n-tasks normalize && git diff --exit-code config/locales"
-  step "i18n: Health check", "bundle exec i18n-tasks health en es fr pt-BR de it"
+  step "i18n: Health check", "bundle exec i18n-tasks health"
 
   # Optional: Run system tests
   # step "Tests: System", "bin/rails test:system"
