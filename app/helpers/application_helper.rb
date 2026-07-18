@@ -19,11 +19,11 @@ module ApplicationHelper
 
     case current_child_profile.age_group
     when :young
-      "Hi #{current_child_profile.name}! 🌈"
+      I18n.t("helpers.application.welcome_young", name: current_child_profile.name)
     when :middle
-      "Welcome back, #{current_child_profile.name}!"
+      I18n.t("helpers.application.welcome_middle", name: current_child_profile.name)
     when :teen
-      "Hey #{current_child_profile.name}"
+      I18n.t("helpers.application.welcome_teen", name: current_child_profile.name)
     end
   end
 end

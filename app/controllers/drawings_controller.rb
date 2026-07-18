@@ -17,7 +17,7 @@ class DrawingsController < ApplicationController
     uploaded_images = params[:drawing][:images] || []
 
     if uploaded_images.empty?
-      flash.now[:alert] = "Please select at least one image to upload."
+      flash.now[:alert] = t("flash.drawings.no_images")
       @drawing = @book.drawings.build
       render :new, status: :unprocessable_entity
       return
@@ -29,13 +29,13 @@ class DrawingsController < ApplicationController
       remaining = 5 - current_count
 
       if remaining <= 0
-        flash[:alert] = "This book has reached the 5-page limit for onboarding. Please complete your account setup to create unlimited books."
+        flash[:alert] = t("flash.drawings.page_limit_reached")
         redirect_to child_profile_book_drawings_path(@child_profile, @book)
         return
       end
 
       if uploaded_images.count > remaining
-        flash[:alert] = "You can only add #{remaining} more page(s) to this onboarding book (5-page limit)."
+        flash[:alert] = t("flash.drawings.page_limit_exceeded", remaining: remaining)
         redirect_to child_profile_book_drawings_path(@child_profile, @book)
         return
       end
@@ -52,17 +52,16 @@ class DrawingsController < ApplicationController
     end
 
     if saved_count > 0
-      notice_message = "#{saved_count} drawing(s) uploaded successfully."
-
-      # If this book now has drawings and user hasn't completed onboarding, prompt to complete
-      if @book.is_onboarding_book? && @book.drawings.count > 0
-        notice_message += " When you're ready, complete your account setup to unlock unlimited books!"
+      notice_message = if @book.is_onboarding_book? && @book.drawings.count > 0
+        t("flash.drawings.uploaded_with_notice", count: saved_count)
+      else
+        t("flash.drawings.uploaded", count: saved_count)
       end
 
       redirect_to child_profile_book_drawings_path(@child_profile, @book),
                   notice: notice_message
     else
-      flash.now[:alert] = "Failed to upload drawings. Please check file size and format."
+      flash.now[:alert] = t("flash.drawings.upload_failed")
       @drawing = @book.drawings.build
       render :new, status: :unprocessable_entity
     end
@@ -79,7 +78,7 @@ class DrawingsController < ApplicationController
       end
 
       redirect_to child_profile_book_drawings_path(@child_profile, @book),
-                  notice: "Drawing was successfully updated."
+                  notice: t("flash.drawings.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -88,7 +87,7 @@ class DrawingsController < ApplicationController
   def destroy
     @drawing.destroy
     redirect_to child_profile_book_drawings_path(@child_profile, @book),
-                notice: "Drawing was successfully deleted."
+                notice: t("flash.drawings.deleted")
   end
 
   private

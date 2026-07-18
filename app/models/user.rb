@@ -6,9 +6,12 @@ class User < ApplicationRecord
 
   enum :role, { user: 0, admin: 1 }, default: :user
 
+  AVAILABLE_LOCALES = I18n.available_locales.map(&:to_s).freeze
+
   validates :name, presence: true, unless: :onboarding_in_progress?
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }, if: :should_validate_password?
+  validates :locale, inclusion: { in: AVAILABLE_LOCALES }, allow_nil: true
 
   scope :admins, -> { where(role: :admin) }
   scope :regular_users, -> { where(role: :user) }

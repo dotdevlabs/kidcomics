@@ -43,29 +43,29 @@
   </head>
   <body>
     <div class="header">
-      <h1>Welcome Back to KidComics!</h1>
+      <h1><%= t('.heading') %></h1>
     </div>
     <div class="content">
-      <p>Hi there!</p>
+      <p><%= t('.greeting') %></p>
 
-      <p>You started creating your KidComics account but didn't finish. No worries – we've saved your progress!</p>
+      <p><%= t('.body_1') %></p>
 
-      <p>Click the button below to continue where you left off:</p>
+      <p><%= t('.body_2') %></p>
 
       <div style="text-align: center;">
-        <%= link_to "Continue My Registration", @magic_link_url, class: "button" %>
+        <%= link_to t('.button'), @magic_link_url, class: "button" %>
       </div>
 
       <p style="margin-top: 30px; color: #6b7280; font-size: 14px;">
-        This link will expire in 24 hours and can only be used once.
+        <%= t('.expiry') %>
       </p>
 
       <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">
-        If you didn't request this email, you can safely ignore it.
+        <%= t('.ignore') %>
       </p>
     </div>
     <div class="footer">
-      <p>&copy; 2026 KidComics. Bringing imagination to life.</p>
+      <p><%= t('.copyright') %></p>
     </div>
   </body>
 </html>

@@ -11,14 +11,14 @@ class SessionsController < ApplicationController
 
     # If no user found
     if user.blank?
-      flash.now[:alert] = "No account found with that email"
+      flash.now[:alert] = t("flash.sessions.not_found")
       render :new, status: :unprocessable_entity
       return
     end
 
     # If user has incomplete onboarding, redirect to nopassword magic link flow
     if user.needs_magic_link_login?
-      redirect_to new_email_authentication_path(nopassword_email_authentication: { email: email }), notice: "You have an incomplete registration. We'll send you a link to continue."
+      redirect_to new_email_authentication_path(nopassword_email_authentication: { email: email }), notice: t("flash.sessions.incomplete_registration")
       return
     end
 
@@ -26,17 +26,17 @@ class SessionsController < ApplicationController
     if user.authenticate(params[:password])
       reset_session
       session[:user_id] = user.id
-      flash[:notice] = "Welcome back, #{user.name}!"
+      flash[:notice] = t("flash.sessions.welcome_back", name: user.name)
       redirect_to dashboard_path
     else
-      flash.now[:alert] = "Invalid email or password"
+      flash.now[:alert] = t("flash.sessions.invalid_password")
       render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
     reset_session
-    flash[:notice] = "You have been logged out."
+    flash[:notice] = t("flash.sessions.logged_out")
     redirect_to login_path
   end
 end

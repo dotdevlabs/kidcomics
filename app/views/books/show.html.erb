@@ -10,7 +10,7 @@
             <% end %>
             <h1 class="text-3xl font-bold text-gray-800"><%= @book.title %></h1>
             <span class="ml-3 px-3 py-1 text-sm font-semibold rounded-full <%= @book.status == 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
-              <%= @book.status.capitalize %>
+              <%= t("books.statuses.#{@book.status}") %>
             </span>
           </div>
           <% if @book.description.present? %>
@@ -21,16 +21,16 @@
           <% if @book.ready_for_ai_generation? %>
             <%= link_to new_ai_child_profile_book_story_generation_path(@child_profile, @book), class: "bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200 inline-flex items-center" do %>
               <%= icon "sparkles", class: "w-5 h-5 mr-2" %>
-              Generate AI Story
+              <%= t('books_views.show.generate_ai') %>
             <% end %>
           <% end %>
           <%= link_to edit_editor_child_profile_book_path(@child_profile, @book), class: "bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 inline-flex items-center" do %>
             <%= icon "sparkles", class: "w-5 h-5 mr-2" %>
-            Open Editor
+            <%= t('books_views.show.open_editor') %>
           <% end %>
           <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
             <%= icon "camera", class: "w-5 h-5 mr-2" %>
-            Add Drawings
+            <%= t('books_views.show.add_drawings') %>
           <% end %>
         </div>
       </div>
@@ -44,22 +44,22 @@
       <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg shadow-lg p-6 mb-6">
         <div class="flex items-start justify-between">
           <div class="flex-1">
-            <h3 class="text-xl font-bold mb-2">Great job creating your first book!</h3>
+            <h3 class="text-xl font-bold mb-2"><%= t('books_views.show.onboarding_title') %></h3>
             <p class="mb-4 text-blue-100">
-              You've created a book with <%= @book.drawings.count %> page(s).
+              <%= t('books_views.show.onboarding_pages', count: @book.drawings.count) %>
               <% if @book.drawings.count < 5 %>
-                You can add up to <%= 5 - @book.drawings.count %> more page(s) to this onboarding book.
+                <%= t('books_views.show.onboarding_can_add', remaining: 5 - @book.drawings.count) %>
               <% else %>
-                Your onboarding book is complete!
+                <%= t('books_views.show.onboarding_complete') %>
               <% end %>
             </p>
             <p class="mb-4">
-              Ready to unlock unlimited books and features? Complete your account setup now!
+              <%= t('books_views.show.onboarding_unlock') %>
             </p>
-            <%= button_to "Complete Account Setup", complete_onboarding_path, method: :post,
+            <%= button_to complete_onboarding_path, method: :post,
                 class: "bg-white text-purple-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-100 transition inline-flex items-center" do %>
               <%= icon "circle-check", class: "w-5 h-5 mr-2" %>
-              Complete Setup
+              <%= t('books_views.show.complete_setup') %>
             <% end %>
           </div>
           <%= icon "sparkles", class: "w-16 h-16 ml-4 text-white/30" %>
@@ -82,12 +82,12 @@
     <div class="bg-white rounded-lg shadow-md p-6">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800">
-          Drawings (<%= @drawings.count %>)
+          <%= t('books_views.show.drawings_title', count: @drawings.count) %>
         </h2>
         <% if @drawings.any? %>
           <%= link_to child_profile_book_drawings_path(@child_profile, @book), class: "text-purple-600 hover:text-purple-700 inline-flex items-center" do %>
             <%= icon "grip-vertical", class: "w-5 h-5 mr-2" %>
-            Manage & Reorder
+            <%= t('books_views.show.manage_reorder') %>
           <% end %>
         <% end %>
       </div>
@@ -101,7 +101,7 @@
               </div>
               <div class="p-3">
                 <div class="flex items-center justify-between text-sm text-gray-600">
-                  <span>Position: <%= drawing.position + 1 %></span>
+                  <span><%= t('books_views.show.position', pos: drawing.position + 1) %></span>
                   <% if drawing.tag.present? %>
                     <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs">
                       <%= drawing.tag %>
@@ -117,11 +117,11 @@
           <div class="mb-4">
             <%= icon "image", class: "w-16 h-16 mx-auto text-gray-400" %>
           </div>
-          <h3 class="text-xl font-bold text-gray-800 mb-2">No drawings yet</h3>
-          <p class="text-gray-600 mb-6">Upload your drawings to start building your book!</p>
+          <h3 class="text-xl font-bold text-gray-800 mb-2"><%= t('books_views.show.no_drawings_title') %></h3>
+          <p class="text-gray-600 mb-6"><%= t('books_views.show.no_drawings_body') %></p>
           <%= link_to new_child_profile_book_drawing_path(@child_profile, @book), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
             <%= icon "upload", class: "w-5 h-5 mr-2" %>
-            Upload Your First Drawing
+            <%= t('books_views.show.upload_first') %>
           <% end %>
         </div>
       <% end %>

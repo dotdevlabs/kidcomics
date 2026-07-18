@@ -1,0 +1,84 @@
+---
+pt-PT:
+  books_views:
+    show:
+      complete_setup: Concluir Configuração
+      onboarding_can_add: Pode adicionar até %{remaining} página(s) a mais neste livro
+        de registo.
+      onboarding_complete: O seu livro de registo está completo!
+      onboarding_unlock: Pronto para desbloquear livros e funcionalidades ilimitadas?
+        Conclua a configuração da sua conta agora!
+  drawings:
+    index:
+      complete_setup: Concluir Configuração da Conta
+    new:
+      onboarding_complete: O seu livro de registo está completo! Conclua a configuração
+        da conta para criar livros ilimitados.
+  email_authentications:
+    new:
+      intro: Introduza o seu endereço de e-mail e enviaremos um link para iniciar
+        sessão.
+      title: Iniciar sessão
+    show:
+      body: Clique no botão abaixo para iniciar sessão como %{email}.
+      submit: Iniciar sessão
+      title: Confirmar início de sessão
+  flash:
+    drawings:
+      page_limit_exceeded: Só pode adicionar mais %{remaining} página(s) a este livro
+        de registo (limite de 5 páginas).
+      page_limit_reached: Este livro atingiu o limite de 5 páginas para o registo.
+        Por favor, conclua a configuração da sua conta para criar livros ilimitados.
+    editor:
+      pages:
+        onboarding_limit: Os livros de registo estão limitados a 5 páginas.
+    email_authentications:
+      welcome_back_continue: Bem-vindo de volta! Vamos continuar o seu registo.
+      welcome_back_create_book: Bem-vindo de volta! Crie o seu primeiro livro para
+        começar.
+      welcome_back_first_book: Bem-vindo de volta! Conclua o seu primeiro livro para
+        finalizar o registo.
+    onboarding:
+      check_email: Verifique o seu e-mail para validar a sua conta e definir uma palavra-passe!
+      complete_check_email: Registo concluído! Por favor, verifique o seu e-mail para
+        validar a sua conta.
+      complete_first: Por favor, crie o seu primeiro livro para concluir o registo
+      complete_welcome: Registo concluído! Bem-vindo ao KidComics!
+      dev_magic_link: 'Modo de desenvolvimento: Login automático via link mágico.
+        A retomar o seu registo.'
+      first_drawing: Ótimo! Vamos começar por adicionar o seu primeiro desenho (até
+        5 páginas).
+      magic_link_sent: Enviámos um link mágico para %{email}. Verifique a sua caixa
+        de entrada para continuar o seu registo.
+    sessions:
+      incomplete_registration: O seu registo está incompleto. Enviaremos um link para
+        continuar.
+  pages:
+    home:
+      cta_submit: Crie o Seu Primeiro Livro Grátis
+      log_in: Iniciar sessão
+      sign_up: Registar
+  profile_selections:
+    index:
+      log_in: Iniciar sessão
+      sign_up: Registar
+  registrations:
+    new:
+      login_link: Iniciar sessão
+      password_confirmation_label: Confirmar palavra-passe
+      password_hint: Mínimo de 6 caracteres
+      password_label: Palavra-passe
+  sessions:
+    new:
+      password_hint: Se não terminou o registo, enviaremos um link para continuar.
+      password_label: Palavra-passe
+      signup_link: Registe-se
+  user_mailer:
+    magic_link_email:
+      body_1: Começou a criar a sua conta no KidComics, mas não terminou. Não se preocupe
+        — guardámos o seu progresso!
+      body_2: 'Clique no botão abaixo para continuar onde parou:'
+      button: Continuar o Meu Registo
+      subject: Continue o seu registo no KidComics
+    verification_email:
+      greeting: Olá, %{name},

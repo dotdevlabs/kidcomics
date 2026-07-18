@@ -1,31 +1,654 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
+---
 en:
-  hello: "Hello world"
+  admin:
+    dashboard:
+      index:
+        ago: "%{time} ago"
+        ai_costs_title: AI Costs
+        ai_stats_title: AI Generation Stats
+        all_clear: All clear
+        child_profiles: "%{count} child profiles"
+        families: Families
+        last_30_days: Last 30 Days
+        last_7_days: Last 7 Days
+        needs_attention: Needs attention
+        new_this_week: "+%{count} this week"
+        page_7_days: Page Generations (7 days)
+        pending_moderation: Pending Moderation
+        recent_actions_title: Recent Admin Actions
+        recent_users_title: Recent Users
+        story_7_days: Story Generations (7 days)
+        title: Admin Dashboard
+        total_books: Total Books
+        total_page: Total Page Generations
+        total_story: Total Story Generations
+        total_users: Total Users
+        view_ai_usage: View Detailed AI Usage
+        view_all_users: View All Users
+        view_audit_log: View Audit Log
+    layout:
+      app_title: KidComics Admin
+      nav_ai_usage: AI Usage
+      nav_audit_log: Audit Log
+      nav_back_to_site: Back to Site
+      nav_content: Content
+      nav_dashboard: Dashboard
+      nav_families: Families
+      nav_logout: Logout
+      nav_users: Users
+    settings:
+      index:
+        api_key_hint_html: Get your API key from %{link}
+        api_key_label: Postmark API Key
+        api_key_link: Postmark Dashboard
+        api_key_placeholder: Enter your Postmark Server API Token
+        configured: Email service configured
+        email_config_title: Email Configuration (Postmark)
+        from_email_hint: This email address must be verified in your Postmark account
+        from_email_label: From Email Address
+        from_email_placeholder: noreply@yourdomain.com
+        help_step_1: Sign up for a free Postmark account at %{link}
+        help_step_2: Create a new "Server" in your Postmark account
+        help_step_3: Copy the "Server API Token" from the API Tokens tab
+        help_step_4: Paste it into the API Key field above
+        help_step_5: Add and verify your sending domain in Postmark
+        help_step_6: Update the From Email Address to use your verified domain
+        help_step_7: Send a test email to confirm everything works
+        help_title: Setting up Postmark
+        not_configured: Email service not configured
+        send_test: Send Test Email
+        subtitle: Configure email and system settings
+        test_email_body: Send a test email to your account (%{email}) to verify everything
+          is working correctly.
+        test_email_title: Test Email Configuration
+        title: Settings
+        update_api_key: Update API Key
+        update_from_email: Update From Address
+    users:
+      index:
+        admin_role: Admin
+        ago: "%{time} ago"
+        all_roles: All Roles
+        col_actions: Actions
+        col_email: Email
+        col_family: Family
+        col_joined: Joined
+        col_role: Role
+        col_user: User
+        no_family: No family
+        no_users: No users found.
+        search_btn: Search
+        search_placeholder: Search by name or email
+        title: Users
+        user_role: User
+        view: View
+      show:
+        admin_actions_title: Recent Admin Actions
+        ago: "%{time} ago"
+        back: Back to Users
+        books_title: Recent Books
+        by: by %{name}
+        child_profiles_count: 'Child Profiles:'
+        email_label: Email
+        family_name_label: 'Name:'
+        family_not_set: Not set
+        family_title: Family Account
+        member_since: Member Since
+        name_label: Name
+        no_books: No books yet.
+        quick_actions: Quick Actions
+        role_label: Role
+        stats_title: Stats
+        suspend: Suspend User
+        total_books: Total Books
+        update: Update User
+        user_info_title: User Information
+        view_book: View
+        view_family: View Family
+  ai:
+    page_generations:
+      show:
+        back: Back to Story Generation
+        cancel: Cancel
+        dialogue_label: Dialogue
+        illustration_prompt_label: Illustration Prompt
+        narration_label: Narration
+        no_dialogue: No dialogue for this page.
+        page_title: Page %{number}
+        regenerate: Regenerate Page
+        save: Save Changes
+    story_generations:
+      new:
+        add_drawings: Add Drawings
+        cancel: Cancel
+        generate: Generate Story
+        how_1: AI analyzes your drawings to identify characters and art style
+        how_2: Generates a story based on your description
+        how_3: Creates illustrated pages with dialogue and narration
+        how_4: You can edit and regenerate any page after generation
+        how_5: Generation typically takes 2-5 minutes
+        how_title: How it works
+        no_drawings_body: You need to upload at least one drawing before generating
+          a story.
+        no_drawings_title: No Drawings Yet
+        story_prompt_hint: Describe the story you'd like to create. Our AI will use
+          your drawings and this description to generate an illustrated storybook.
+        story_prompt_label: Tell us about your story
+        story_prompt_placeholder: What should the story be about? What happens to
+          the characters? Where does the story take place?
+        subtitle: Create an illustrated story from your drawings using AI
+        title: Generate AI Story
+        your_drawings: Your Drawings
+      show:
+        back: Back to Book
+        complete_body: Your story has been generated. You can now review and edit
+          the pages below.
+        complete_title: Generation Complete!
+        dialogue_title: Dialogue
+        estimated_cost: 'Estimated cost: $%{cost}'
+        failed_title: Generation Failed
+        generated_in: Generated in %{seconds}s
+        generating: Generating your story... This may take a few minutes.
+        generating_spinner: Generating...
+        narration_title: Narration
+        outline_title: Story Outline
+        page_number: Page %{number}
+        pages_title: Generated Pages
+        progress: Progress
+        regenerate: Regenerate
+        retry: Retry Generation
+        status_title: Generation Status
+        title: Story Generation
+  books:
+    drawing:
+      one: 1 drawing
+      other: "%{count} drawings"
+    edit_modes:
+      parent_only: Parents Only
+      shared: Everyone (Shared)
+    statuses:
+      draft: Draft
+      published: Published
+  books_views:
+    _book_card:
+      delete_confirm: Are you sure you want to delete this book? This action cannot
+        be undone.
+      view: View
+    _filters:
+      all_books: All Books
+      all_children: All Children
+      all_status: All
+      child_label: Child
+      clear_all: Clear All
+      date_from_label: From Date
+      date_to_label: To Date
+      favorites_label: Favorites
+      favorites_only: Favorites Only
+      search_label: Search by Title
+      search_placeholder: Enter book title...
+      sort_label: Sort By
+      sort_newest: Newest First
+      sort_oldest: Oldest First
+      sort_popularity: Most Popular
+      sort_title: Title A-Z
+      status_label: Status
+      title: Filters
+    _statistics:
+      drafts: Drafts
+      favorites: Favorites
+      published: Published
+      title: Statistics
+      total_books: Total Books
+      total_views: Total Views
+    edit:
+      body: We're taking you to the new AI-powered book editor where you can refine
+        your story through conversation and image uploads.
+      redirect_html: If you're not redirected automatically, %{link}.
+      redirect_link: click here
+      title: Opening Interactive Editor
+    index:
+      clear_filters: Clear Filters
+      no_books_empty: Start creating your first comic book!
+      no_books_filter: Try adjusting your filters to see more results.
+      no_books_title: No books found
+      start_drawing: Start with a Drawing
+      start_first_story: Start Your First Story
+      subtitle: Create and manage your comic books
+      title: "%{name}'s Books"
+    new:
+      body: 'This is a creative tool, not a form. We''re redirecting you to start
+        with what matters most: your artwork!'
+      redirect_html: If you're not redirected automatically, %{link}.
+      redirect_link: click here
+      title: Let's Start Creating!
+    show:
+      add_drawings: Add Drawings
+      complete_setup: Complete Setup
+      drawings_title: Drawings (%{count})
+      generate_ai: Generate AI Story
+      manage_reorder: Manage & Reorder
+      no_drawings_body: Upload your drawings to start building your book!
+      no_drawings_title: No drawings yet
+      onboarding_can_add: You can add up to %{remaining} more page(s) to this onboarding
+        book.
+      onboarding_complete: Your onboarding book is complete!
+      onboarding_pages: You've created a book with %{count} page(s).
+      onboarding_title: Great job creating your first book!
+      onboarding_unlock: Ready to unlock unlimited books and features? Complete your
+        account setup now!
+      open_editor: Open Editor
+      position: 'Position: %{pos}'
+      upload_first: Upload Your First Drawing
+  child_profiles:
+    _form:
+      age_hint: Age 1-18
+      age_label: Age
+      avatar_label: Avatar (optional)
+      cancel: Cancel
+      name_label: Child's Name
+      save: Save Profile
+    edit:
+      title: Edit %{name}'s Profile
+    new:
+      title: Add Child Profile
+  drawings:
+    _drawing:
+      delete_confirm: Are you sure you want to delete this drawing?
+      no_caption: No caption
+    edit:
+      back: Back to Drawings
+      cancel: Cancel
+      current_image: Current Image
+      errors_one: '1 error prohibited this drawing from being saved:'
+      errors_other: "%{count} errors prohibited this drawing from being saved:"
+      formats_hint: 'Supported formats: JPEG, PNG, HEIC, WebP (max 10MB)'
+      replace_image_label: Replace Image (optional)
+      title: Edit Drawing
+      update_submit: Update Drawing
+    index:
+      add_more_pages: Add More Pages
+      complete_setup: Complete Account Setup
+      no_drawings_body: Upload your drawings to get started!
+      no_drawings_title: No drawings yet
+      onboarding_body: Keep adding pages to bring your story to life, or complete
+        your account setup now to unlock unlimited books and features!
+      onboarding_title:
+        one: Great Start! You've Added 1 Page
+        other: Great Start! You've Added %{count} Pages
+      subtitle: Edit or delete drawings for "%{title}"
+      title: Manage Drawings
+      upload_drawings: Upload Drawings
+      upload_more: Upload More
+    new:
+      add_for_book: Add drawings to "%{title}"
+      add_more_for_book: Keep the story going! Add more drawings to "%{title}"
+      add_more_title: Add More Pages
+      back_to_book: Back to Book
+      bring_to_life_body: Upload a photo of your first drawing to get started. No
+        forms, no fuss—just your creativity!
+      bring_to_life_title: Let's Bring Your Story to Life!
+      can_add_more: You can add %{remaining} more page(s) to this book. Keep going!
+      cancel: Cancel
+      caption_label: Caption (optional)
+      caption_placeholder: Add a caption for these drawings...
+      choose_gallery: Choose from Gallery
+      divider_or: or
+      errors_one: '1 error occurred:'
+      errors_other: "%{count} errors occurred:"
+      first_book_limit_body: Start with your favorite drawing! You can add up to 5
+        pages. After that, complete your account setup to create unlimited books.
+      first_book_limit_title: 'Your First Book: Up to %{limit} Pages'
+      formats_hint: 'Supported formats: JPEG, PNG, HEIC, WebP (max 10MB per file)'
+      onboarding_complete: Your onboarding book is complete! Complete your account
+        setup to create unlimited books.
+      pages_count_title: 'Pages: %{current}/%{limit}'
+      select_images_label: Select Images
+      selected_images: Selected Images
+      tag_background: Background
+      tag_character: Character
+      tag_hint: This tag will apply to all uploaded drawings
+      tag_label: Tag (optional)
+      tag_no_tag: No tag
+      tag_object: Object
+      take_photo: Take Photo
+      upload_submit: Upload Drawings
+      upload_title: Upload Drawings
+  editor:
+    books:
+      edit:
+        add_dedication: Add Dedication
+        add_first_page: Add First Page
+        add_page: Add Page
+        ai_bullet_1: Upload drawings for me to analyze
+        ai_bullet_2: Ask me to suggest a better title
+        ai_bullet_3: Tell me what the dedication should say
+        ai_bullet_4: Change who can edit this book
+        ai_greeting: 'Hi! I''m here to help you refine "%{title}". You can:'
+        ai_intro: Tell me what you'd like to change about your book, or upload a new
+          drawing for inspiration!
+        ai_prompt: Just type what you'd like to change!
+        ai_section_title: Refine with AI
+        back_label: Book Editor
+        book_details_title: Book Details
+        cover_section_title: Cover Image
+        dedication_label: 'Dedication:'
+        edit_mode_label: 'Edit Mode:'
+        lock_parents: Lock to Parents
+        message_placeholder: Tell me what you'd like to change...
+        no_pages_body: No pages yet. Add your first page to get started!
+        onboarding_limit_note: Onboarding books are limited to 5 pages
+        pages_section_title: Pages (%{count})
+        send: Send
+        suggest_title: Suggest Title
+        title_label: 'Title:'
+        upload_drawing: Click to upload a drawing
+        upload_hint: AI will analyze it and suggest updates
+  email_authentications:
+    new:
+      email_label: Email address
+      intro: Enter your email address and we'll send you a link to sign in.
+      submit: Continue
+      title: Sign in
+    show:
+      body: Click the button below to sign in as %{email}.
+      cancel: Cancel
+      submit: Sign in
+      title: Confirm sign in
+  family_accounts:
+    show:
+      add_child: Add Child
+      add_first_child: Add your first child
+      age: 'Age: %{age}'
+      child_profiles_title: Child Profiles
+      delete: Delete
+      delete_confirm: Are you sure you want to delete %{name}'s profile?
+      edit: Edit
+      library: Library
+      logout: Logout
+      no_profiles: No child profiles yet.
+      view_books: View Books
+      welcome: Welcome, %{name}
+  flash:
+    admin:
+      authorization:
+        not_admin: You must be an administrator to access this page.
+      settings:
+        from_email_updated: From email address updated successfully
+        invalid_setting: Invalid setting
+        postmark_key_updated: Postmark API key updated successfully
+      users:
+        update_failed: 'Failed to update user: %{errors}'
+        updated: User updated successfully.
+    ai:
+      page_generations:
+        updated: Page updated successfully.
+      story_generations:
+        started: Story generation started! This may take a few minutes.
+    application:
+      require_family_owner: You must be a family account owner to access this page.
+      require_login: You must be logged in to access this page.
+    books:
+      created: Book created successfully! Let's start by adding your first drawing!
+      deleted: Book was successfully deleted.
+      first_drawing: Let's start by adding your first drawing!
+      updated: Book was successfully updated.
+    child_profiles:
+      create_failed: 'Failed to create child profile: %{errors}'
+      created: Child profile created successfully!
+      deleted: Child profile deleted successfully.
+      no_family_account: You must have a family account to manage child profiles.
+      not_found: Child profile not found.
+      update_failed: 'Failed to update child profile: %{errors}'
+      updated: Child profile updated successfully!
+    drawings:
+      deleted: Drawing was successfully deleted.
+      no_images: Please select at least one image to upload.
+      page_limit_exceeded: You can only add %{remaining} more page(s) to this onboarding
+        book (5-page limit).
+      page_limit_reached: This book has reached the 5-page limit for onboarding. Please
+        complete your account setup to create unlimited books.
+      updated: Drawing was successfully updated.
+      upload_failed: Failed to upload drawings. Please check file size and format.
+      uploaded: "%{count} drawing(s) uploaded successfully."
+      uploaded_with_notice: "%{count} drawing(s) uploaded successfully. When you're
+        ready, complete your account setup to unlock unlimited books!"
+    editor:
+      books:
+        book_not_found: Book not found.
+        child_not_found: Child profile not found.
+        no_permission: You don't have permission to edit this book.
+        updated: Book updated successfully.
+      pages:
+        add_failed: 'Failed to add page: %{errors}'
+        added: Page added successfully.
+        deleted: Page deleted successfully.
+        no_permission: You don't have permission to edit this book.
+        not_found: Page not found.
+        onboarding_limit: Onboarding books are limited to 5 pages.
+        update_failed: Failed to update page.
+        updated: Page updated successfully.
+    email_authentications:
+      dev_auto_login: 'Development mode: Auto-logging you in...'
+      not_found: No account found with that email. Please sign up.
+      welcome_back: Welcome back, %{name}!
+      welcome_back_continue: Welcome back! Let's continue your registration.
+      welcome_back_create_book: Welcome back! Create your first book to get started.
+      welcome_back_first_book: Welcome back! Complete your first book to finish onboarding.
+    email_verifications:
+      already_verified: Your email is already verified. Please log in.
+      expired: Verification link has expired. Please request a new one.
+      invalid: Invalid verification link.
+      success: Email verified successfully! Welcome to KidComics. You can now set
+        your password in your account settings.
+    family_accounts:
+      not_found: You don't have a family account yet.
+    library:
+      no_family_account: You must have a family account to access the library.
+    onboarding:
+      account_exists: Account already exists. Please log in.
+      check_email: Check your email to verify your account and set a password!
+      child_missing: Please complete your profile first
+      complete_check_email: Onboarding complete! Please check your email to verify
+        your account.
+      complete_first: Please create your first book to complete onboarding
+      complete_welcome: Onboarding complete! Welcome to KidComics!
+      create_failed: Unable to create account. Please try again.
+      dev_magic_link: 'Development mode: Auto-logged in via magic link. Resuming your
+        registration.'
+      email_blank: Please enter an email address
+      first_drawing: Great! Let's start by adding your first drawing (up to 5 pages).
+      magic_link_sent: We've sent a magic link to %{email}. Please check your inbox
+        to continue your registration.
+      name_blank: Please enter your name
+      name_errors: "%{errors}"
+      start_first: Please start onboarding first
+    profile_selections:
+      no_family_account: Please create a family account first.
+      not_found: Child profile not found.
+      welcome: Welcome, %{name}!
+    registrations:
+      failed: 'Registration failed: %{errors}'
+      family_account_failed: 'Failed to create family account: %{errors}'
+      welcome: Welcome to KidComics, %{name}! Your family account has been created.
+    sessions:
+      incomplete_registration: You have an incomplete registration. We'll send you
+        a link to continue.
+      invalid_password: Invalid email or password
+      logged_out: You have been logged out.
+      not_found: No account found with that email
+      welcome_back: Welcome back, %{name}!
+  helpers:
+    application:
+      welcome_middle: Welcome back, %{name}!
+      welcome_teen: Hey %{name}
+      welcome_young: "Hi %{name}! 🌈"
+  library:
+    index:
+      clear_filters: Clear Filters
+      no_books_empty: No books have been created yet. Start by selecting a child profile
+        and creating a book!
+      no_books_filter: Try adjusting your filters to see more results.
+      no_books_title: No books found
+      subtitle: Browse all books from your family
+      title: Family Library
+  locales:
+    de: Deutsch
+    en: English
+    es: Español
+    fr: Français
+    it: Italiano
+    pt-BR: Português (BR)
+    pt-PT: Português (PT)
+  onboarding:
+    child_profile:
+      age_hint: Ages 1-18
+      age_label: Age
+      age_placeholder: Enter age
+      back: Back
+      name_label: Child's Name
+      name_placeholder: Enter child's name
+      percent: 66%
+      step: Step 2 of 3
+      submit: Continue to Book Creation
+      subtitle: Who will be creating stories?
+      title: Create a Child Profile
+    name:
+      name_label: Your Name
+      name_placeholder: Enter your name
+      percent: 33%
+      security: Your information is secure and private
+      step: Step 1 of 3
+      submit: Continue
+      subtitle: We'll use this to personalize your experience
+      title: What's Your Name?
+  pages:
+    home:
+      benefit_1_body: Help your child develop storytelling skills and imagination.
+      benefit_1_title: Encourages Creativity
+      benefit_2_body: Turn screen time into creative, educational experiences.
+      benefit_2_title: Screen Time with Purpose
+      benefit_3_body: Kids love reading stories they helped create.
+      benefit_3_title: Build Reading Confidence
+      benefit_4_body: Create stories together and build lasting memories.
+      benefit_4_title: Family Bonding
+      benefits_title: Why Parents Love KidComics
+      brand: KidComics
+      cta_disclaimer: No credit card required • Free 5-page book • Start in 60 seconds
+      cta_email_placeholder: your@email.com
+      cta_label: Start Your Creative Journey
+      cta_submit: Create Your First Book Free
+      feature_1_body: Our AI helps create engaging stories and beautiful illustrations
+        tailored to your child's interests.
+      feature_1_title: AI-Powered Magic
+      feature_2_body: Use your child's drawings or let AI generate illustrations.
+        Mix and match for unique stories.
+      feature_2_title: Upload Your Art
+      feature_3_body: Build a growing collection of personalized storybooks your family
+        can enjoy anytime.
+      feature_3_title: Digital Library
+      features_title: Everything You Need to Create Magic
+      final_cta_body: Join thousands of families creating magical memories.
+      final_cta_link: Start Creating Free
+      final_cta_title: Ready to Bring Stories to Life?
+      footer: "© 2026 KidComics. Bringing imagination to life."
+      grows_body_1: From simple picture books for young readers to chapter books for
+        teens, our AI adapts to your child's age and reading level.
+      grows_body_2: Every story is a chance to learn, imagine, and create together.
+      grows_title: Stories That Grow With Them
+      hero_subtitle: Watch their sketches come to life with AI-powered illustrations.
+        From crayon to creation in minutes.
+      hero_title: Transform Your Child's Drawings Into Magical Stories
+      how_title: Get Started in Minutes
+      illustration_body_1: Upload your child's drawings or let our AI create stunning
+        illustrations from scratch.
+      illustration_body_2: Either way, you'll have a beautiful, professional-quality
+        storybook in minutes.
+      illustration_title: From Imagination to Illustration
+      log_in: Log In
+      sign_up: Sign Up
+      step_1_body: No password needed to start
+      step_1_title: Enter Email
+      step_2_body: Tell us about your young author
+      step_2_title: Add Child Profile
+      step_3_body: Up to 5 pages for free
+      step_3_title: Create First Book
+      step_4_body: See drawings transform into stories
+      step_4_title: Watch the Magic
+  profile_selections:
+    index:
+      age: Age %{age}
+      go_to_dashboard: Go to Dashboard
+      log_in: Log In
+      no_profiles: No child profiles yet. Add your first child to get started!
+      parent_dashboard: Parent Dashboard
+      sign_up: Sign Up
+      title: Who's Reading Today?
+      welcome_body: Create comics for your kids with age-appropriate content!
+      welcome_title: Welcome to KidComics
+  registrations:
+    new:
+      email_label: Email
+      have_account_html: Already have an account? %{link}
+      login_link: Log in
+      name_label: Your Name
+      password_confirmation_label: Confirm Password
+      password_hint: Minimum 6 characters
+      password_label: Password
+      submit: Create Account
+      title: Create Family Account
+  sessions:
+    new:
+      email_label: Email
+      no_account_html: Don't have an account? %{link}
+      password_hint: If you haven't finished registration, we'll send you a link to
+        continue.
+      password_label: Password
+      signup_link: Sign up
+      submit: Log In
+      title: Parent Login
+  user_mailer:
+    magic_link_email:
+      body_1: You started creating your KidComics account but didn't finish. No worries
+        – we've saved your progress!
+      body_2: 'Click the button below to continue where you left off:'
+      button: Continue My Registration
+      copyright: "© 2026 KidComics. Bringing imagination to life."
+      expiry: This link will expire in 24 hours and can only be used once.
+      greeting: Hi there!
+      heading: Welcome Back to KidComics!
+      ignore: If you didn't request this email, you can safely ignore it.
+      subject: Continue your KidComics registration
+    verification_email:
+      benefit_1: Set your own password
+      benefit_2: Create unlimited books
+      benefit_3: Access your digital library anytime
+      benefit_4: Manage your family account
+      benefits_title: 'Once verified, you''ll be able to:'
+      body: 'To complete your account setup and continue creating amazing stories,
+        please verify your email address by clicking the button below:'
+      button: Verify My Email
+      closing: Happy storytelling!
+      copy_paste: 'Or copy and paste this link into your browser:'
+      copyright: "© 2026 KidComics. All rights reserved."
+      greeting: Hi %{name},
+      heading: Welcome to KidComics!
+      intro: Thanks for creating your first book with KidComics! We hope you and your
+        family enjoyed bringing those stories to life.
+      subject: Verify your KidComics account
+      team: The KidComics Team
+    welcome_email:
+      benefit_1: Create unlimited storybooks
+      benefit_2: Upload custom drawings and images
+      benefit_3: Generate AI-powered stories and illustrations
+      benefit_4: Build your family's digital library
+      benefit_5: Manage multiple child profiles
+      benefits_title: 'You now have full access to all KidComics features:'
+      body: Congratulations! Your email has been verified and your account is now
+        fully set up.
+      closing_1: We can't wait to see what amazing stories you and your family create!
+      closing_2: Happy storytelling!
+      copyright: "© 2026 KidComics. All rights reserved."
+      greeting: Hi %{name},
+      heading: Your Account is Verified!
+      subject: Welcome to KidComics!
+      team: The KidComics Team

@@ -16,6 +16,14 @@ module Kidcomics
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    # i18n configuration
+    config.i18n.available_locales = %i[en es fr pt-BR pt-PT de it]
+    config.i18n.default_locale = :en
+    # pt-PT falls back through pt-BR then en; all other locales fall back to en automatically
+    config.i18n.fallbacks = { :"pt-PT" => [:"pt-BR", :en] }
+    # Support split locale files under config/locales/**/*.yml
+    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.yml")]
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

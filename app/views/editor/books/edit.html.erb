@@ -7,7 +7,7 @@
           <%= link_to child_profile_book_path(@child_profile, @book), class: "text-gray-600 hover:text-gray-900" do %>
             <%= icon "chevron-left", class: "w-6 h-6" %>
           <% end %>
-          <h1 class="text-2xl font-bold text-gray-900">Book Editor</h1>
+          <h1 class="text-2xl font-bold text-gray-900"><%= t('.back_label') %></h1>
         </div>
 
         <div class="flex items-center gap-3">
@@ -27,22 +27,22 @@
               <%= icon "sparkles", class: "w-8 h-8 text-purple-600" %>
             </div>
             <div class="flex-1">
-              <h3 class="text-lg font-semibold text-gray-900 mb-2">Book Details</h3>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2"><%= t('.book_details_title') %></h3>
               <div class="space-y-2 text-sm">
                 <div>
-                  <span class="font-medium text-gray-700">Title:</span>
+                  <span class="font-medium text-gray-700"><%= t('.title_label') %></span>
                   <span class="text-gray-900 ml-2" data-book-ai-assistant-target="titleDisplay"><%= @book.title %></span>
                 </div>
                 <% if @book.dedication.present? %>
                   <div>
-                    <span class="font-medium text-gray-700">Dedication:</span>
+                    <span class="font-medium text-gray-700"><%= t('.dedication_label') %></span>
                     <span class="text-gray-900 ml-2" data-book-ai-assistant-target="dedicationDisplay"><%= @book.dedication %></span>
                   </div>
                 <% end %>
                 <div>
-                  <span class="font-medium text-gray-700">Edit Mode:</span>
+                  <span class="font-medium text-gray-700"><%= t('.edit_mode_label') %></span>
                   <span class="text-gray-900 ml-2" data-book-ai-assistant-target="editModeDisplay">
-                    <%= @book.edit_mode == 'parent_only' ? 'Parents Only' : 'Everyone (Shared)' %>
+                    <%= @book.edit_mode == 'parent_only' ? t('books.edit_modes.parent_only') : t('books.edit_modes.shared') %>
                   </span>
                 </div>
               </div>
@@ -54,11 +54,11 @@
         <div class="bg-white rounded-lg border border-gray-200 p-6">
           <h3 class="text-md font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <%= icon "message-square", class: "w-5 h-5 text-blue-600" %>
-            Refine with AI
+            <%= t('.ai_section_title') %>
           </h3>
 
           <p class="text-sm text-gray-600 mb-4">
-            Tell me what you'd like to change about your book, or upload a new drawing for inspiration!
+            <%= t('.ai_intro') %>
           </p>
 
           <!-- AI Chat Messages -->
@@ -73,16 +73,16 @@
               </div>
               <div class="flex-1 bg-blue-50 rounded-lg p-3">
                 <p class="text-sm text-gray-800">
-                  Hi! I'm here to help you refine "<%= @book.title %>". You can:
+                  <%= t('.ai_greeting', title: @book.title) %>
                 </p>
                 <ul class="text-sm text-gray-700 mt-2 space-y-1 ml-4 list-disc">
-                  <li>Upload drawings for me to analyze</li>
-                  <li>Ask me to suggest a better title</li>
-                  <li>Tell me what the dedication should say</li>
-                  <li>Change who can edit this book</li>
+                  <li><%= t('.ai_bullet_1') %></li>
+                  <li><%= t('.ai_bullet_2') %></li>
+                  <li><%= t('.ai_bullet_3') %></li>
+                  <li><%= t('.ai_bullet_4') %></li>
                 </ul>
                 <p class="text-sm text-gray-600 mt-2 italic">
-                  Just type what you'd like to change!
+                  <%= t('.ai_prompt') %>
                 </p>
               </div>
             </div>
@@ -98,8 +98,8 @@
                        data-action="change->book-ai-assistant#handleImageUpload"
                        data-book-ai-assistant-target="imageInput">
                 <%= icon "camera", class: "w-8 h-8 mx-auto text-gray-400 mb-2" %>
-                <p class="text-sm text-gray-600">Click to upload a drawing</p>
-                <p class="text-xs text-gray-500 mt-1">AI will analyze it and suggest updates</p>
+                <p class="text-sm text-gray-600"><%= t('.upload_drawing') %></p>
+                <p class="text-xs text-gray-500 mt-1"><%= t('.upload_hint') %></p>
               </div>
             </label>
           </div>
@@ -108,11 +108,11 @@
           <div class="flex gap-2">
             <%= form_with url: "#", method: :post, class: "flex-1 flex gap-2", data: { action: "submit->book-ai-assistant#sendMessage" } do |f| %>
               <%= f.text_field :message,
-                              placeholder: "Tell me what you'd like to change...",
+                              placeholder: t('.message_placeholder'),
                               class: "flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                               data: { book_ai_assistant_target: "messageInput" },
                               autocomplete: "off" %>
-              <%= f.submit "Send",
+              <%= f.submit t('.send'),
                           class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition inline-flex items-center gap-2",
                           data: { book_ai_assistant_target: "sendButton" } %>
             <% end %>
@@ -124,19 +124,19 @@
                     class="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition"
                     data-action="click->book-ai-assistant#quickAction"
                     data-message="Suggest a better title based on the story">
-              Suggest Title
+              <%= t('.suggest_title') %>
             </button>
             <button type="button"
                     class="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition"
                     data-action="click->book-ai-assistant#quickAction"
                     data-message="Write a dedication for this book">
-              Add Dedication
+              <%= t('.add_dedication') %>
             </button>
             <button type="button"
                     class="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition"
                     data-action="click->book-ai-assistant#quickAction"
                     data-message="Make this parents only">
-              Lock to Parents
+              <%= t('.lock_parents') %>
             </button>
           </div>
         </div>
@@ -149,7 +149,7 @@
     <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
       <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
         <%= icon "image", class: "w-5 h-5" %>
-        Cover Image
+        <%= t('.cover_section_title') %>
       </h2>
 
       <%= render "editor/books/cover_editor", book: @book, child_profile: @child_profile %>
@@ -162,7 +162,7 @@
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
           <%= icon "book-open", class: "w-5 h-5" %>
-          Pages (<%= @drawings.count %>)
+          <%= t('.pages_section_title', count: @drawings.count) %>
         </h2>
 
         <% if @can_add_pages %>
@@ -170,10 +170,10 @@
                       data: { turbo_method: :post },
                       class: "btn btn-primary flex items-center gap-2" do %>
             <%= icon "plus", class: "w-4 h-4" %>
-            <span>Add Page</span>
+            <span><%= t('.add_page') %></span>
           <% end %>
         <% else %>
-          <span class="text-sm text-gray-500">Onboarding books are limited to 5 pages</span>
+          <span class="text-sm text-gray-500"><%= t('.onboarding_limit_note') %></span>
         <% end %>
       </div>
 
@@ -191,12 +191,12 @@
       <% if @drawings.empty? %>
         <div class="text-center py-12">
           <%= icon "book-open", class: "w-16 h-16 mx-auto text-gray-300 mb-4" %>
-          <p class="text-gray-500 mb-4">No pages yet. Add your first page to get started!</p>
+          <p class="text-gray-500 mb-4"><%= t('.no_pages_body') %></p>
           <%= link_to editor_child_profile_book_pages_path(@child_profile, @book),
                       data: { turbo_method: :post },
                       class: "btn btn-primary inline-flex items-center gap-2" do %>
             <%= icon "plus", class: "w-4 h-4" %>
-            <span>Add First Page</span>
+            <span><%= t('.add_first_page') %></span>
           <% end %>
         </div>
       <% end %>

@@ -1,22 +1,22 @@
-Welcome to KidComics!
+<%= t('.heading') %>
 
-Hi <%= @user.name %>,
+<%= t('.greeting', name: @user.name) %>
 
-Thanks for creating your first book with KidComics! We hope you and your family enjoyed bringing those stories to life.
+<%= t('.intro') %>
 
-To complete your account setup and continue creating amazing stories, please verify your email address by clicking the link below:
+<%= t('.body') %>
 
 <%= @verification_url %>
 
-Once verified, you'll be able to:
-- Set your own password
-- Create unlimited books
-- Access your digital library anytime
-- Manage your family account
+<%= t('.benefits_title') %>
+- <%= t('.benefit_1') %>
+- <%= t('.benefit_2') %>
+- <%= t('.benefit_3') %>
+- <%= t('.benefit_4') %>
 
-Happy storytelling!
+<%= t('.closing') %>
 
-The KidComics Team
+<%= t('.team') %>
 
 ---
-© 2026 KidComics. All rights reserved.
+<%= t('.copyright') %>

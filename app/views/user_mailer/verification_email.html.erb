@@ -44,37 +44,37 @@
 </head>
 <body>
   <div class="header">
-    <h1 style="margin: 0;">Welcome to KidComics!</h1>
+    <h1 style="margin: 0;"><%= t('.heading') %></h1>
   </div>
 
   <div class="content">
-    <p>Hi <%= @user.name %>,</p>
+    <p><%= t('.greeting', name: @user.name) %></p>
 
-    <p>Thanks for creating your first book with KidComics! We hope you and your family enjoyed bringing those stories to life.</p>
+    <p><%= t('.intro') %></p>
 
-    <p>To complete your account setup and continue creating amazing stories, please verify your email address by clicking the button below:</p>
+    <p><%= t('.body') %></p>
 
     <div style="text-align: center;">
-      <a href="<%= @verification_url %>" class="button">Verify My Email</a>
+      <a href="<%= @verification_url %>" class="button"><%= t('.button') %></a>
     </div>
 
-    <p style="color: #6b7280; font-size: 14px;">Or copy and paste this link into your browser:<br>
+    <p style="color: #6b7280; font-size: 14px;"><%= t('.copy_paste') %><br>
     <%= @verification_url %></p>
 
-    <p>Once verified, you'll be able to:</p>
+    <p><%= t('.benefits_title') %></p>
     <ul>
-      <li>Set your own password</li>
-      <li>Create unlimited books</li>
-      <li>Access your digital library anytime</li>
-      <li>Manage your family account</li>
+      <li><%= t('.benefit_1') %></li>
+      <li><%= t('.benefit_2') %></li>
+      <li><%= t('.benefit_3') %></li>
+      <li><%= t('.benefit_4') %></li>
     </ul>
 
-    <p>Happy storytelling!</p>
-    <p>The KidComics Team</p>
+    <p><%= t('.closing') %></p>
+    <p><%= t('.team') %></p>
   </div>
 
   <div class="footer">
-    <p>&copy; 2026 KidComics. All rights reserved.</p>
+    <p><%= t('.copyright') %></p>
   </div>
 </body>
 </html>

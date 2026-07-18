@@ -1,21 +1,21 @@
-Your Account is Verified!
+<%= t('.heading') %>
 
-Hi <%= @user.name %>,
+<%= t('.greeting', name: @user.name) %>
 
-Congratulations! Your email has been verified and your account is now fully set up.
+<%= t('.body') %>
 
-You now have full access to all KidComics features:
-- Create unlimited storybooks
-- Upload custom drawings and images
-- Generate AI-powered stories and illustrations
-- Build your family's digital library
-- Manage multiple child profiles
+<%= t('.benefits_title') %>
+- <%= t('.benefit_1') %>
+- <%= t('.benefit_2') %>
+- <%= t('.benefit_3') %>
+- <%= t('.benefit_4') %>
+- <%= t('.benefit_5') %>
 
-We can't wait to see what amazing stories you and your family create!
+<%= t('.closing_1') %>
 
-Happy storytelling!
+<%= t('.closing_2') %>
 
-The KidComics Team
+<%= t('.team') %>
 
 ---
-© 2026 KidComics. All rights reserved.
+<%= t('.copyright') %>

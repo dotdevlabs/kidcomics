@@ -8,7 +8,7 @@ class OnboardingController < ApplicationController
     email = params[:email]&.strip&.downcase
 
     if email.blank?
-      redirect_to root_path, alert: "Please enter an email address"
+      redirect_to root_path, alert: t("flash.onboarding.email_blank")
       return
     end
 
@@ -17,7 +17,7 @@ class OnboardingController < ApplicationController
 
     if user
       if user.onboarding_completed?
-        redirect_to login_path, alert: "Account already exists. Please log in."
+        redirect_to login_path, alert: t("flash.onboarding.account_exists")
         return
       else
         # User has a partial registration - trigger magic link flow
@@ -39,7 +39,7 @@ class OnboardingController < ApplicationController
       session[:user_id] = user.id # Log them in for the session
       redirect_to onboarding_name_path
     else
-      redirect_to root_path, alert: "Unable to create account. Please try again."
+      redirect_to root_path, alert: t("flash.onboarding.create_failed")
     end
   end
 
@@ -54,7 +54,7 @@ class OnboardingController < ApplicationController
     name = params[:name]&.strip
 
     if name.blank?
-      flash.now[:alert] = "Please enter your name"
+      flash.now[:alert] = t("flash.onboarding.name_blank")
       render :name
       return
     end
@@ -64,14 +64,14 @@ class OnboardingController < ApplicationController
     if @user.save
       # Create family account automatically
       family_name = "#{name}'s Family"
-      family = FamilyAccount.create!(
+      FamilyAccount.create!(
         name: family_name,
         owner_id: @user.id
       )
 
       redirect_to onboarding_child_profile_path
     else
-      flash.now[:alert] = @user.errors.full_messages.join(", ")
+      flash.now[:alert] = t("flash.onboarding.name_errors", errors: @user.errors.full_messages.join(", "))
       render :name
     end
   end
@@ -87,7 +87,7 @@ class OnboardingController < ApplicationController
     @family = @onboarding_user.family_account
 
     unless @family
-      redirect_to onboarding_name_path, alert: "Please complete your profile first"
+      redirect_to onboarding_name_path, alert: t("flash.onboarding.child_missing")
       return
     end
 
@@ -107,7 +107,7 @@ class OnboardingController < ApplicationController
 
       # Redirect directly to photo upload (skip the form!)
       redirect_to new_child_profile_book_drawing_path(@child_profile, book),
-        notice: "Great! Let's start by adding your first drawing (up to 5 pages)."
+        notice: t("flash.onboarding.first_drawing")
     else
       flash.now[:alert] = @child_profile.errors.full_messages.join(", ")
       render :child_profile
@@ -126,7 +126,7 @@ class OnboardingController < ApplicationController
     has_books = family && family.child_profiles.joins(:books).exists?
 
     unless has_books
-      redirect_to dashboard_path, alert: "Please create your first book to complete onboarding"
+      redirect_to dashboard_path, alert: t("flash.onboarding.complete_first")
       return
     end
 
@@ -136,13 +136,13 @@ class OnboardingController < ApplicationController
     if Setting.postmark_configured?
       begin
         @onboarding_user.send_verification_email
-        flash[:notice] = "Check your email to verify your account and set a password!"
+        flash[:notice] = t("flash.onboarding.check_email")
       rescue => e
         Rails.logger.error "Failed to send verification email: #{e.message}"
-        flash[:notice] = "Onboarding complete! Please check your email to verify your account."
+        flash[:notice] = t("flash.onboarding.complete_check_email")
       end
     else
-      flash[:notice] = "Onboarding complete! Welcome to KidComics!"
+      flash[:notice] = t("flash.onboarding.complete_welcome")
     end
 
     session.delete(:onboarding_user_id)
@@ -155,7 +155,7 @@ class OnboardingController < ApplicationController
     @onboarding_user = User.find_by(id: session[:onboarding_user_id])
 
     unless @onboarding_user
-      redirect_to root_path, alert: "Please start onboarding first"
+      redirect_to root_path, alert: t("flash.onboarding.start_first")
     end
   end
 
@@ -170,12 +170,12 @@ class OnboardingController < ApplicationController
       # In development, auto-authenticate and resume onboarding
       session[:user_id] = user.id
       session[:onboarding_user_id] = user.id
-      flash[:notice] = "Development mode: Auto-logged in via magic link. Resuming your registration."
+      flash[:notice] = t("flash.onboarding.dev_magic_link")
       redirect_to onboarding_resume_step(user)
     else
       # In production, send magic link email
       send_magic_link_for_partial_registration(user)
-      redirect_to root_path, notice: "We've sent a magic link to #{user.email}. Please check your inbox to continue your registration."
+      redirect_to root_path, notice: t("flash.onboarding.magic_link_sent", email: user.email)
     end
   end
 

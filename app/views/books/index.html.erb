@@ -4,8 +4,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div>
-          <h1 class="text-3xl font-bold text-gray-800"><%= @child_profile.name %>'s Books</h1>
-          <p class="text-gray-600 mt-1">Create and manage your comic books</p>
+          <h1 class="text-3xl font-bold text-gray-800"><%= t('books_views.index.title', name: @child_profile.name) %></h1>
+          <p class="text-gray-600 mt-1"><%= t('books_views.index.subtitle') %></p>
         </div>
         <div class="flex items-center space-x-3">
           <!-- View Mode Toggle -->
@@ -22,7 +22,7 @@
 
           <%= link_to new_child_profile_book_path(@child_profile), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
             <%= icon "camera", class: "w-5 h-5 mr-2" %>
-            Start with a Drawing
+            <%= t('books_views.index.start_drawing') %>
           <% end %>
         </div>
       </div>
@@ -62,18 +62,18 @@
           <div class="mb-4">
             <%= icon "book-open", class: "w-16 h-16 mx-auto text-gray-400" %>
           </div>
-          <h3 class="text-xl font-bold text-gray-800 mb-2">No books found</h3>
+          <h3 class="text-xl font-bold text-gray-800 mb-2"><%= t('books_views.index.no_books_title') %></h3>
           <% if params[:search].present? || params[:status].present? || params[:favorited].present? || params[:date_from].present? || params[:date_to].present? %>
-            <p class="text-gray-600 mb-6">Try adjusting your filters to see more results.</p>
+            <p class="text-gray-600 mb-6"><%= t('books_views.index.no_books_filter') %></p>
             <%= link_to child_profile_books_path(@child_profile), class: "bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition duration-200 inline-flex items-center" do %>
               <%= icon "x", class: "w-5 h-5 mr-2" %>
-              Clear Filters
+              <%= t('books_views.index.clear_filters') %>
             <% end %>
           <% else %>
-            <p class="text-gray-600 mb-6">Start creating your first comic book!</p>
+            <p class="text-gray-600 mb-6"><%= t('books_views.index.no_books_empty') %></p>
             <%= link_to new_child_profile_book_path(@child_profile), class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 inline-flex items-center" do %>
               <%= icon "camera", class: "w-5 h-5 mr-2" %>
-              Start Your First Story
+              <%= t('books_views.index.start_first_story') %>
             <% end %>
           <% end %>
         </div>

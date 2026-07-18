@@ -23,7 +23,7 @@ module AI
       @book.update(story_prompt: story_generation_params[:story_prompt])
 
       redirect_to ai_child_profile_book_story_generation_path(@child_profile, @book, @story_generation),
-                  notice: "Story generation started! This may take a few minutes."
+                  notice: t("flash.ai.story_generations.started")
     rescue StoryGenerationService::ValidationError => e
       @story_generation = @book.story_generations.new
       flash.now[:alert] = e.message

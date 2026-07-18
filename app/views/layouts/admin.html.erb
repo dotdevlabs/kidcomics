@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Admin Dashboard" %> - KidComics Admin</title>
+    <title><%= content_for(:title) || t('admin.layout.app_title') %> - <%= t('admin.layout.app_title') %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -14,51 +14,51 @@
       <!-- Sidebar -->
       <aside class="w-64 bg-gray-900 text-white">
         <div class="p-4">
-          <h1 class="text-xl font-bold mb-1">KidComics Admin</h1>
+          <h1 class="text-xl font-bold mb-1"><%= t('admin.layout.app_title') %></h1>
           <p class="text-sm text-gray-400"><%= current_user.name %></p>
         </div>
 
         <nav class="mt-8">
           <%= link_to admin_root_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_root_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
             <%= icon "layout-dashboard", class: "mr-3 w-5 h-5" %>
-            <span>Dashboard</span>
+            <span><%= t('admin.layout.nav_dashboard') %></span>
           <% end %>
 
           <%= link_to admin_users_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_users_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
             <%= icon "users", class: "mr-3 w-5 h-5" %>
-            <span>Users</span>
+            <span><%= t('admin.layout.nav_users') %></span>
           <% end %>
 
           <%= link_to admin_families_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_families_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
             <%= icon "house", class: "mr-3 w-5 h-5" %>
-            <span>Families</span>
+            <span><%= t('admin.layout.nav_families') %></span>
           <% end %>
 
           <%= link_to admin_content_index_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_content_index_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
             <%= icon "file-text", class: "mr-3 w-5 h-5" %>
-            <span>Content</span>
+            <span><%= t('admin.layout.nav_content') %></span>
           <% end %>
 
           <%= link_to admin_ai_usage_index_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_ai_usage_index_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
             <%= icon "chart-bar", class: "mr-3 w-5 h-5" %>
-            <span>AI Usage</span>
+            <span><%= t('admin.layout.nav_ai_usage') %></span>
           <% end %>
 
           <%= link_to admin_audit_logs_path, class: "flex items-center px-4 py-3 hover:bg-gray-800 #{current_page?(admin_audit_logs_path) ? 'bg-gray-800 border-l-4 border-blue-500' : ''}" do %>
             <%= icon "shield", class: "mr-3 w-5 h-5" %>
-            <span>Audit Log</span>
+            <span><%= t('admin.layout.nav_audit_log') %></span>
           <% end %>
 
           <hr class="my-4 border-gray-700">
 
           <%= link_to root_path, class: "flex items-center px-4 py-3 hover:bg-gray-800" do %>
             <%= icon "arrow-left", class: "mr-3 w-5 h-5" %>
-            <span>Back to Site</span>
+            <span><%= t('admin.layout.nav_back_to_site') %></span>
           <% end %>
 
           <%= button_to logout_path, method: :delete, class: "w-full flex items-center px-4 py-3 hover:bg-gray-800 text-left" do %>
             <%= icon "log-out", class: "mr-3 w-5 h-5" %>
-            <span>Logout</span>
+            <span><%= t('admin.layout.nav_logout') %></span>
           <% end %>
         </nav>
       </aside>

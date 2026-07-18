@@ -7,7 +7,7 @@ class EmailAuthenticationsController < NoPassword::EmailAuthenticationsControlle
 
     if user.blank?
       # User doesn't exist - redirect to signup
-      flash[:alert] = "No account found with that email. Please sign up."
+      flash[:alert] = t("flash.email_authentications.not_found")
       redirect_to signup_path
       return
     end
@@ -22,19 +22,19 @@ class EmailAuthenticationsController < NoPassword::EmailAuthenticationsControlle
 
       # Determine where to redirect based on onboarding progress
       if user.family_account.blank?
-        redirect_to onboarding_name_path, notice: "Welcome back! Let's continue your registration."
+        redirect_to onboarding_name_path, notice: t("flash.email_authentications.welcome_back_continue")
       elsif user.family_account.child_profiles.empty?
-        redirect_to onboarding_child_profile_path, notice: "Welcome back! Let's continue your registration."
+        redirect_to onboarding_child_profile_path, notice: t("flash.email_authentications.welcome_back_continue")
       else
         # They have a child profile, check if they have books
         if user.family_account.child_profiles.joins(:books).exists?
-          redirect_to dashboard_path, notice: "Welcome back! Complete your first book to finish onboarding."
+          redirect_to dashboard_path, notice: t("flash.email_authentications.welcome_back_first_book")
         else
-          redirect_to dashboard_path, notice: "Welcome back! Create your first book to get started."
+          redirect_to dashboard_path, notice: t("flash.email_authentications.welcome_back_create_book")
         end
       end
     else
-      redirect_to dashboard_path, notice: "Welcome back, #{user.name}!"
+      redirect_to dashboard_path, notice: t("flash.email_authentications.welcome_back", name: user.name)
     end
   end
 
@@ -62,7 +62,7 @@ class EmailAuthenticationsController < NoPassword::EmailAuthenticationsControlle
     # In development mode, auto-redirect to the verification link
     if Rails.env.development? && session[:dev_magic_link_token]
       token = session.delete(:dev_magic_link_token)
-      flash[:notice] = "Development mode: Auto-logging you in..."
+      flash[:notice] = t("flash.email_authentications.dev_auto_login")
       redirect_to email_authentication_path(token)
     end
   end

@@ -1,0 +1,669 @@
+---
+it:
+  admin:
+    dashboard:
+      index:
+        ago: "%{time} fa"
+        ai_costs_title: Costi IA
+        ai_stats_title: Statistiche generazione IA
+        all_clear: Tutto a posto
+        child_profiles: "%{count} profili bambino"
+        families: Famiglie
+        last_30_days: Ultimi 30 giorni
+        last_7_days: Ultimi 7 giorni
+        needs_attention: Richiede attenzione
+        new_this_week: "+%{count} questa settimana"
+        page_7_days: Generazioni pagine (7 giorni)
+        pending_moderation: In attesa di moderazione
+        recent_actions_title: Azioni admin recenti
+        recent_users_title: Utenti recenti
+        story_7_days: Generazioni storie (7 giorni)
+        title: Dashboard admin
+        total_books: Libri totali
+        total_page: Totale generazioni pagine
+        total_story: Totale generazioni storie
+        total_users: Utenti totali
+        view_ai_usage: Vedi utilizzo IA dettagliato
+        view_all_users: Vedi tutti gli utenti
+        view_audit_log: Vedi registro audit
+    layout:
+      app_title: KidComics Admin
+      nav_ai_usage: Utilizzo IA
+      nav_audit_log: Registro audit
+      nav_back_to_site: Torna al sito
+      nav_content: Contenuto
+      nav_dashboard: Dashboard
+      nav_families: Famiglie
+      nav_logout: Disconnetti
+      nav_users: Utenti
+    settings:
+      index:
+        api_key_hint_html: Ottieni la tua chiave API da %{link}
+        api_key_label: Chiave API Postmark
+        api_key_link: Dashboard Postmark
+        api_key_placeholder: Inserisci il tuo token API server Postmark
+        configured: Servizio email configurato
+        email_config_title: Configurazione email (Postmark)
+        from_email_hint: Questo indirizzo email deve essere verificato nel tuo account
+          Postmark
+        from_email_label: Indirizzo email mittente
+        from_email_placeholder: noreply@tuodominio.it
+        help_step_1: Registrati per un account Postmark gratuito su %{link}
+        help_step_2: Crea un nuovo "Server" nel tuo account Postmark
+        help_step_3: Copia il "Token API Server" dalla scheda Token API
+        help_step_4: Incollalo nel campo Chiave API sopra
+        help_step_5: Aggiungi e verifica il tuo dominio di invio in Postmark
+        help_step_6: Aggiorna l'indirizzo email mittente per usare il tuo dominio
+          verificato
+        help_step_7: Invia un'email di test per confermare che tutto funzioni
+        help_title: Configurare Postmark
+        not_configured: Servizio email non configurato
+        send_test: Invia email di test
+        subtitle: Configura le impostazioni email e di sistema
+        test_email_body: Invia un'email di test al tuo account (%{email}) per verificare
+          che tutto funzioni correttamente.
+        test_email_title: Testa configurazione email
+        title: Impostazioni
+        update_api_key: Aggiorna chiave API
+        update_from_email: Aggiorna indirizzo mittente
+    users:
+      index:
+        admin_role: Admin
+        ago: "%{time} fa"
+        all_roles: Tutti i ruoli
+        col_actions: Azioni
+        col_email: Email
+        col_family: Famiglia
+        col_joined: Iscritto
+        col_role: Ruolo
+        col_user: Utente
+        no_family: Nessuna famiglia
+        no_users: Nessun utente trovato.
+        search_btn: Cerca
+        search_placeholder: Cerca per nome o email
+        title: Utenti
+        user_role: Utente
+        view: Visualizza
+      show:
+        admin_actions_title: Azioni admin recenti
+        ago: "%{time} fa"
+        back: Torna agli utenti
+        books_title: Libri recenti
+        by: da %{name}
+        child_profiles_count: 'Profili bambino:'
+        email_label: Email
+        family_name_label: 'Nome:'
+        family_not_set: Non impostato
+        family_title: Account familiare
+        member_since: Membro dal
+        name_label: Nome
+        no_books: Nessun libro ancora.
+        quick_actions: Azioni rapide
+        role_label: Ruolo
+        stats_title: Statistiche
+        suspend: Sospendi utente
+        total_books: Libri totali
+        update: Aggiorna utente
+        user_info_title: Informazioni utente
+        view_book: Visualizza
+        view_family: Vedi famiglia
+  ai:
+    page_generations:
+      show:
+        back: Torna alla generazione storia
+        cancel: Annulla
+        dialogue_label: Dialogo
+        illustration_prompt_label: Prompt illustrazione
+        narration_label: Narrazione
+        no_dialogue: Nessun dialogo per questa pagina.
+        page_title: Pagina %{number}
+        regenerate: Rigenera pagina
+        save: Salva modifiche
+    story_generations:
+      new:
+        add_drawings: Aggiungi disegni
+        cancel: Annulla
+        generate: Genera storia
+        how_1: L'IA analizza i tuoi disegni per identificare i personaggi e lo stile
+          artistico
+        how_2: Genera una storia basata sulla tua descrizione
+        how_3: Crea pagine illustrate con dialoghi e narrazione
+        how_4: Puoi modificare e rigenerare qualsiasi pagina dopo la generazione
+        how_5: La generazione di solito richiede 2-5 minuti
+        how_title: Come funziona
+        no_drawings_body: Devi caricare almeno un disegno prima di generare una storia.
+        no_drawings_title: Nessun disegno ancora
+        story_prompt_hint: Descrivi la storia che vorresti creare. La nostra IA userà
+          i tuoi disegni e questa descrizione per generare un libro di storie illustrato.
+        story_prompt_label: Raccontaci della tua storia
+        story_prompt_placeholder: Di cosa dovrebbe parlare la storia? Cosa succede
+          ai personaggi? Dove si svolge la storia?
+        subtitle: Crea una storia illustrata dai tuoi disegni usando l'IA
+        title: Genera storia con IA
+        your_drawings: I tuoi disegni
+      show:
+        back: Torna al libro
+        complete_body: La tua storia è stata generata. Ora puoi rivedere e modificare
+          le pagine qui sotto.
+        complete_title: Generazione completata!
+        dialogue_title: Dialogo
+        estimated_cost: 'Costo stimato: $%{cost}'
+        failed_title: Generazione fallita
+        generated_in: Generato in %{seconds}s
+        generating: Generando la tua storia... Potrebbe richiedere qualche minuto.
+        generating_spinner: Generando...
+        narration_title: Narrazione
+        outline_title: Schema della storia
+        page_number: Pagina %{number}
+        pages_title: Pagine generate
+        progress: Progresso
+        regenerate: Rigenera
+        retry: Riprova generazione
+        status_title: Stato generazione
+        title: Generazione storia
+  books:
+    drawing:
+      one: 1 disegno
+      other: "%{count} disegni"
+    edit_modes:
+      parent_only: Solo genitori
+      shared: Tutti (Condiviso)
+    statuses:
+      draft: Bozza
+      published: Pubblicato
+  books_views:
+    _book_card:
+      delete_confirm: Sei sicuro di voler eliminare questo libro? Questa azione non
+        può essere annullata.
+      view: Visualizza
+    _filters:
+      all_books: Tutti i libri
+      all_children: Tutti i bambini
+      all_status: Tutti
+      child_label: Bambino
+      clear_all: Cancella tutto
+      date_from_label: Data inizio
+      date_to_label: Data fine
+      favorites_label: Preferiti
+      favorites_only: Solo preferiti
+      search_label: Cerca per titolo
+      search_placeholder: Inserisci il titolo del libro...
+      sort_label: Ordina per
+      sort_newest: Più recenti prima
+      sort_oldest: Più vecchi prima
+      sort_popularity: Più popolari
+      sort_title: Titolo A-Z
+      status_label: Stato
+      title: Filtri
+    _statistics:
+      drafts: Bozze
+      favorites: Preferiti
+      published: Pubblicati
+      title: Statistiche
+      total_books: Libri totali
+      total_views: Visualizzazioni totali
+    edit:
+      body: Ti stiamo portando al nuovo editor di libri con IA dove puoi perfezionare
+        la tua storia tramite conversazione e caricamento di immagini.
+      redirect_html: Se non vieni reindirizzato automaticamente, %{link}.
+      redirect_link: clicca qui
+      title: Apertura editor interattivo
+    index:
+      clear_filters: Cancella filtri
+      no_books_empty: Inizia a creare il tuo primo fumetto!
+      no_books_filter: Prova a modificare i filtri per vedere più risultati.
+      no_books_title: Nessun libro trovato
+      start_drawing: Inizia con un disegno
+      start_first_story: Inizia la tua prima storia
+      subtitle: Crea e gestisci i tuoi fumetti
+      title: Libri di %{name}
+    new:
+      body: 'Questo è uno strumento creativo, non un modulo. Ti stiamo reindirizzando
+        per iniziare con ciò che conta di più: la tua arte!'
+      redirect_html: Se non vieni reindirizzato automaticamente, %{link}.
+      redirect_link: clicca qui
+      title: Iniziamo a creare!
+    show:
+      add_drawings: Aggiungi disegni
+      complete_setup: Completa configurazione
+      drawings_title: Disegni (%{count})
+      generate_ai: Genera storia con IA
+      manage_reorder: Gestisci e riordina
+      no_drawings_body: Carica i tuoi disegni per iniziare a costruire il tuo libro!
+      no_drawings_title: Nessun disegno ancora
+      onboarding_can_add: Puoi aggiungere fino a %{remaining} altra/e pagina/e a questo
+        libro di registrazione.
+      onboarding_complete: Il tuo libro di registrazione è completo!
+      onboarding_pages: Hai creato un libro con %{count} pagina/e.
+      onboarding_title: Ottimo lavoro creando il tuo primo libro!
+      onboarding_unlock: Pronto a sbloccare libri e funzionalità illimitate? Completa
+        subito la configurazione del tuo account!
+      open_editor: Apri editor
+      position: 'Posizione: %{pos}'
+      upload_first: Carica il tuo primo disegno
+  child_profiles:
+    _form:
+      age_hint: Età 1-18
+      age_label: Età
+      avatar_label: Avatar (opzionale)
+      cancel: Annulla
+      name_label: Nome del bambino
+      save: Salva profilo
+    edit:
+      title: Modifica profilo di %{name}
+    new:
+      title: Aggiungi profilo bambino
+  drawings:
+    _drawing:
+      delete_confirm: Sei sicuro di voler eliminare questo disegno?
+      no_caption: Nessuna didascalia
+    edit:
+      back: Torna ai disegni
+      cancel: Annulla
+      current_image: Immagine attuale
+      errors_one: '1 errore ha impedito il salvataggio di questo disegno:'
+      errors_other: "%{count} errori hanno impedito il salvataggio di questo disegno:"
+      formats_hint: 'Formati supportati: JPEG, PNG, HEIC, WebP (max 10 MB)'
+      replace_image_label: Sostituisci immagine (opzionale)
+      title: Modifica disegno
+      update_submit: Aggiorna disegno
+    index:
+      add_more_pages: Aggiungi altre pagine
+      complete_setup: Completa configurazione account
+      no_drawings_body: Carica i tuoi disegni per iniziare!
+      no_drawings_title: Nessun disegno ancora
+      onboarding_body: Continua ad aggiungere pagine per dare vita alla tua storia,
+        oppure completa subito la configurazione del tuo account per sbloccare libri
+        e funzionalità illimitate!
+      onboarding_title:
+        one: Ottimo inizio! Hai aggiunto 1 pagina
+        other: Ottimo inizio! Hai aggiunto %{count} pagine
+      subtitle: Modifica o elimina disegni per "%{title}"
+      title: Gestisci disegni
+      upload_drawings: Carica disegni
+      upload_more: Carica altri
+    new:
+      add_for_book: Aggiungi disegni a "%{title}"
+      add_more_for_book: Continua la storia! Aggiungi altri disegni a "%{title}"
+      add_more_title: Aggiungi altre pagine
+      back_to_book: Torna al libro
+      bring_to_life_body: Carica una foto del tuo primo disegno per iniziare. Nessun
+        modulo, nessuna complicazione — solo la tua creatività!
+      bring_to_life_title: Diamo vita alla tua storia!
+      can_add_more: Puoi aggiungere altre %{remaining} pagina/e a questo libro. Continua!
+      cancel: Annulla
+      caption_label: Didascalia (opzionale)
+      caption_placeholder: Aggiungi una didascalia per questi disegni...
+      choose_gallery: Scegli dalla galleria
+      divider_or: o
+      errors_one: 'Si è verificato 1 errore:'
+      errors_other: 'Si sono verificati %{count} errori:'
+      first_book_limit_body: Inizia con il tuo disegno preferito! Puoi aggiungere
+        fino a 5 pagine. Dopo, completa la configurazione dell'account per creare
+        libri illimitati.
+      first_book_limit_title: 'Il tuo primo libro: fino a %{limit} pagine'
+      formats_hint: 'Formati supportati: JPEG, PNG, HEIC, WebP (max 10 MB per file)'
+      onboarding_complete: Il tuo libro di registrazione è completo! Completa la configurazione
+        dell'account per creare libri illimitati.
+      pages_count_title: 'Pagine: %{current}/%{limit}'
+      select_images_label: Seleziona immagini
+      selected_images: Immagini selezionate
+      tag_background: Sfondo
+      tag_character: Personaggio
+      tag_hint: Questo tag verrà applicato a tutti i disegni caricati
+      tag_label: Tag (opzionale)
+      tag_no_tag: Nessun tag
+      tag_object: Oggetto
+      take_photo: Scatta foto
+      upload_submit: Carica disegni
+      upload_title: Carica disegni
+  editor:
+    books:
+      edit:
+        add_dedication: Aggiungi dedica
+        add_first_page: Aggiungi prima pagina
+        add_page: Aggiungi pagina
+        ai_bullet_1: Caricare disegni che analizzerò
+        ai_bullet_2: Chiedermi di suggerire un titolo migliore
+        ai_bullet_3: Dirmi cosa dovrebbe dire la dedica
+        ai_bullet_4: Cambiare chi può modificare questo libro
+        ai_greeting: 'Ciao! Sono qui per aiutarti a perfezionare "%{title}". Puoi:'
+        ai_intro: Dimmi cosa vorresti cambiare nel tuo libro, o carica un nuovo disegno
+          per ispirazione!
+        ai_prompt: Digita semplicemente cosa vorresti cambiare!
+        ai_section_title: Perfeziona con IA
+        back_label: Editor libri
+        book_details_title: Dettagli libro
+        cover_section_title: Immagine di copertina
+        dedication_label: 'Dedica:'
+        edit_mode_label: 'Modalità di modifica:'
+        lock_parents: Blocca ai genitori
+        message_placeholder: Dimmi cosa vorresti cambiare...
+        no_pages_body: Nessuna pagina ancora. Aggiungi la tua prima pagina per iniziare!
+        onboarding_limit_note: I libri di registrazione sono limitati a 5 pagine
+        pages_section_title: Pagine (%{count})
+        send: Invia
+        suggest_title: Suggerisci titolo
+        title_label: 'Titolo:'
+        upload_drawing: Clicca per caricare un disegno
+        upload_hint: L'IA lo analizzerà e suggerirà aggiornamenti
+  email_authentications:
+    new:
+      email_label: Indirizzo email
+      intro: Inserisci il tuo indirizzo email e ti invieremo un link per accedere.
+      submit: Continua
+      title: Accedi
+    show:
+      body: Clicca il pulsante qui sotto per accedere come %{email}.
+      cancel: Annulla
+      submit: Accedi
+      title: Conferma accesso
+  family_accounts:
+    show:
+      add_child: Aggiungi bambino
+      add_first_child: Aggiungi il tuo primo bambino
+      age: 'Età: %{age}'
+      child_profiles_title: Profili bambino
+      delete: Elimina
+      delete_confirm: Sei sicuro di voler eliminare il profilo di %{name}?
+      edit: Modifica
+      library: Biblioteca
+      logout: Disconnetti
+      no_profiles: Nessun profilo bambino ancora.
+      view_books: Vedi libri
+      welcome: Benvenuto, %{name}
+  flash:
+    admin:
+      authorization:
+        not_admin: Devi essere un amministratore per accedere a questa pagina.
+      settings:
+        from_email_updated: Indirizzo email mittente aggiornato con successo
+        invalid_setting: Impostazione non valida
+        postmark_key_updated: Chiave API Postmark aggiornata con successo
+      users:
+        update_failed: 'Aggiornamento dell''utente fallito: %{errors}'
+        updated: Utente aggiornato con successo.
+    ai:
+      page_generations:
+        updated: Pagina aggiornata con successo.
+      story_generations:
+        started: Generazione della storia avviata! Potrebbe richiedere qualche minuto.
+    application:
+      require_family_owner: Devi essere il titolare di un account familiare per accedere
+        a questa pagina.
+      require_login: Devi aver effettuato l'accesso per accedere a questa pagina.
+    books:
+      created: Libro creato con successo! Iniziamo aggiungendo il tuo primo disegno!
+      deleted: Libro eliminato con successo.
+      first_drawing: Iniziamo aggiungendo il tuo primo disegno!
+      updated: Libro aggiornato con successo.
+    child_profiles:
+      create_failed: 'Creazione del profilo bambino fallita: %{errors}'
+      created: Profilo bambino creato con successo!
+      deleted: Profilo bambino eliminato con successo.
+      no_family_account: Devi avere un account familiare per gestire i profili bambino.
+      not_found: Profilo bambino non trovato.
+      update_failed: 'Aggiornamento del profilo bambino fallito: %{errors}'
+      updated: Profilo bambino aggiornato con successo!
+    drawings:
+      deleted: Disegno eliminato con successo.
+      no_images: Seleziona almeno un'immagine da caricare.
+      page_limit_exceeded: Puoi aggiungere solo altre %{remaining} pagina/e a questo
+        libro di registrazione (limite di 5 pagine).
+      page_limit_reached: Questo libro ha raggiunto il limite di 5 pagine per la registrazione.
+        Completa la configurazione del tuo account per creare libri illimitati.
+      updated: Disegno aggiornato con successo.
+      upload_failed: Caricamento dei disegni fallito. Controlla la dimensione e il
+        formato dei file.
+      uploaded: "%{count} disegno/i caricato/i con successo."
+      uploaded_with_notice: "%{count} disegno/i caricato/i con successo. Quando sei
+        pronto, completa la configurazione dell'account per sbloccare libri illimitati!"
+    editor:
+      books:
+        book_not_found: Libro non trovato.
+        child_not_found: Profilo bambino non trovato.
+        no_permission: Non hai il permesso di modificare questo libro.
+        updated: Libro aggiornato con successo.
+      pages:
+        add_failed: 'Aggiunta della pagina fallita: %{errors}'
+        added: Pagina aggiunta con successo.
+        deleted: Pagina eliminata con successo.
+        no_permission: Non hai il permesso di modificare questo libro.
+        not_found: Pagina non trovata.
+        onboarding_limit: I libri di registrazione sono limitati a 5 pagine.
+        update_failed: Aggiornamento della pagina fallito.
+        updated: Pagina aggiornata con successo.
+    email_authentications:
+      dev_auto_login: 'Modalità sviluppo: Accesso automatico in corso...'
+      not_found: Nessun account trovato con quella email. Registrati.
+      welcome_back: Bentornato, %{name}!
+      welcome_back_continue: Bentornato! Continuiamo la tua registrazione.
+      welcome_back_create_book: Bentornato! Crea il tuo primo libro per iniziare.
+      welcome_back_first_book: Bentornato! Completa il tuo primo libro per finire
+        la registrazione.
+    email_verifications:
+      already_verified: La tua email è già verificata. Effettua il login.
+      expired: Il link di verifica è scaduto. Richiedicene uno nuovo.
+      invalid: Link di verifica non valido.
+      success: Email verificata con successo! Benvenuto su KidComics. Ora puoi impostare
+        la tua password nelle impostazioni dell'account.
+    family_accounts:
+      not_found: Non hai ancora un account familiare.
+    library:
+      no_family_account: Devi avere un account familiare per accedere alla biblioteca.
+    onboarding:
+      account_exists: L'account esiste già. Effettua il login.
+      check_email: Controlla la tua email per verificare il tuo account e impostare
+        una password!
+      child_missing: Completa prima il tuo profilo
+      complete_check_email: Registrazione completata! Controlla la tua email per verificare
+        il tuo account.
+      complete_first: Crea il tuo primo libro per completare la registrazione
+      complete_welcome: Registrazione completata! Benvenuto su KidComics!
+      create_failed: Impossibile creare l'account. Riprova.
+      dev_magic_link: 'Modalità sviluppo: Accesso automatico tramite link magico.
+        Riprendendo la tua registrazione.'
+      email_blank: Inserisci un indirizzo email
+      first_drawing: Ottimo! Iniziamo aggiungendo il tuo primo disegno (fino a 5 pagine).
+      magic_link_sent: Abbiamo inviato un link magico a %{email}. Controlla la tua
+        casella di posta per continuare la registrazione.
+      name_blank: Inserisci il tuo nome
+      name_errors: "%{errors}"
+      start_first: Inizia prima la registrazione
+    profile_selections:
+      no_family_account: Crea prima un account familiare.
+      not_found: Profilo bambino non trovato.
+      welcome: Benvenuto, %{name}!
+    registrations:
+      failed: 'Registrazione fallita: %{errors}'
+      family_account_failed: 'Creazione dell''account familiare fallita: %{errors}'
+      welcome: Benvenuto su KidComics, %{name}! Il tuo account familiare è stato creato.
+    sessions:
+      incomplete_registration: La tua registrazione è incompleta. Ti invieremo un
+        link per continuare.
+      invalid_password: Email o password non valida
+      logged_out: Hai effettuato la disconnessione.
+      not_found: Nessun account trovato con quella email
+      welcome_back: Bentornato, %{name}!
+  helpers:
+    application:
+      welcome_middle: Bentornato, %{name}!
+      welcome_teen: Hey %{name}
+      welcome_young: "Ciao %{name}! 🌈"
+  library:
+    index:
+      clear_filters: Cancella filtri
+      no_books_empty: Non è stato ancora creato nessun libro. Inizia selezionando
+        un profilo bambino e creando un libro!
+      no_books_filter: Prova a modificare i filtri per vedere più risultati.
+      no_books_title: Nessun libro trovato
+      subtitle: Sfoglia tutti i libri della tua famiglia
+      title: Biblioteca familiare
+  locales:
+    de: Deutsch
+    en: English
+    es: Español
+    fr: Français
+    it: Italiano
+    pt-BR: Português (BR)
+    pt-PT: Português (PT)
+  onboarding:
+    child_profile:
+      age_hint: Età 1-18
+      age_label: Età
+      age_placeholder: Inserisci l'età
+      back: Indietro
+      name_label: Nome del bambino
+      name_placeholder: Inserisci il nome del bambino
+      percent: 66%
+      step: Passo 2 di 3
+      submit: Continua alla creazione del libro
+      subtitle: Chi creerà le storie?
+      title: Crea un profilo bambino
+    name:
+      name_label: Il tuo nome
+      name_placeholder: Inserisci il tuo nome
+      percent: 33%
+      security: Le tue informazioni sono sicure e private
+      step: Passo 1 di 3
+      submit: Continua
+      subtitle: Lo useremo per personalizzare la tua esperienza
+      title: Come ti chiami?
+  pages:
+    home:
+      benefit_1_body: Aiuta tuo figlio a sviluppare abilità narrative e fantasia.
+      benefit_1_title: Incoraggia la creatività
+      benefit_2_body: Trasforma il tempo davanti allo schermo in esperienze creative
+        ed educative.
+      benefit_2_title: Tempo schermo utile
+      benefit_3_body: I bambini amano leggere storie che hanno contribuito a creare.
+      benefit_3_title: Rafforza la fiducia nella lettura
+      benefit_4_body: Create storie insieme e costruite ricordi duraturi.
+      benefit_4_title: Legami familiari
+      benefits_title: Perché i genitori amano KidComics
+      brand: KidComics
+      cta_disclaimer: Nessuna carta di credito richiesta • Libro di 5 pagine gratuito
+        • Inizia in 60 secondi
+      cta_email_placeholder: tuo@email.it
+      cta_label: Inizia il tuo viaggio creativo
+      cta_submit: Crea il tuo primo libro gratis
+      feature_1_body: La nostra IA aiuta a creare storie coinvolgenti e belle illustrazioni
+        adattate agli interessi di tuo figlio.
+      feature_1_title: Magia dell'IA
+      feature_2_body: Usa i disegni di tuo figlio o lascia che l'IA generi illustrazioni.
+        Combinali per storie uniche.
+      feature_2_title: Carica la tua arte
+      feature_3_body: Costruisci una collezione crescente di libri di storie personalizzati
+        che la tua famiglia può godersi in qualsiasi momento.
+      feature_3_title: Biblioteca digitale
+      features_title: Tutto ciò di cui hai bisogno per creare magia
+      final_cta_body: Unisciti a migliaia di famiglie che creano ricordi magici.
+      final_cta_link: Inizia a creare gratis
+      final_cta_title: Pronto a dare vita alle storie?
+      footer: "© 2026 KidComics. Diamo vita all'immaginazione."
+      grows_body_1: Da semplici libri illustrati per giovani lettori a romanzi per
+        adolescenti, la nostra IA si adatta all'età e al livello di lettura di tuo
+        figlio.
+      grows_body_2: Ogni storia è un'opportunità per imparare, immaginare e creare
+        insieme.
+      grows_title: Storie che crescono con loro
+      hero_subtitle: Guarda i loro schizzi prendere vita con illustrazioni generate
+        dall'IA. Dal matita alla creazione in pochi minuti.
+      hero_title: Trasforma i disegni di tuo figlio in storie magiche
+      how_title: Inizia in pochi minuti
+      illustration_body_1: Carica i disegni di tuo figlio o lascia che la nostra IA
+        crei illustrazioni straordinarie da zero.
+      illustration_body_2: In entrambi i casi, avrai un bellissimo libro di storie
+        di qualità professionale in pochi minuti.
+      illustration_title: Dall'immaginazione all'illustrazione
+      log_in: Accedi
+      sign_up: Registrati
+      step_1_body: Nessuna password necessaria per iniziare
+      step_1_title: Inserisci l'email
+      step_2_body: Parlaci del tuo giovane autore
+      step_2_title: Aggiungi profilo bambino
+      step_3_body: Fino a 5 pagine gratuitamente
+      step_3_title: Crea il primo libro
+      step_4_body: Guarda i disegni trasformarsi in storie
+      step_4_title: Guarda la magia
+  profile_selections:
+    index:
+      age: Età %{age}
+      go_to_dashboard: Vai alla dashboard
+      log_in: Accedi
+      no_profiles: Nessun profilo bambino ancora. Aggiungi il tuo primo bambino per
+        iniziare!
+      parent_dashboard: Dashboard genitore
+      sign_up: Registrati
+      title: Chi legge oggi?
+      welcome_body: Crea fumetti per i tuoi figli con contenuti appropriati all'età!
+      welcome_title: Benvenuto su KidComics
+  registrations:
+    new:
+      email_label: Email
+      have_account_html: Hai già un account? %{link}
+      login_link: Accedi
+      name_label: Il tuo nome
+      password_confirmation_label: Conferma password
+      password_hint: Minimo 6 caratteri
+      password_label: Password
+      submit: Crea account
+      title: Crea account familiare
+  sessions:
+    new:
+      email_label: Email
+      no_account_html: Non hai un account? %{link}
+      password_hint: Se non hai completato la registrazione, ti invieremo un link
+        per continuare.
+      password_label: Password
+      signup_link: Registrati
+      submit: Accedi
+      title: Accesso genitore
+  user_mailer:
+    magic_link_email:
+      body_1: Hai iniziato a creare il tuo account KidComics ma non hai terminato.
+        Nessun problema – abbiamo salvato i tuoi progressi!
+      body_2: 'Clicca il pulsante qui sotto per continuare da dove hai lasciato:'
+      button: Continua la mia registrazione
+      copyright: "© 2026 KidComics. Diamo vita all'immaginazione."
+      expiry: Questo link scadrà tra 24 ore e può essere utilizzato una sola volta.
+      greeting: Ciao!
+      heading: Bentornato su KidComics!
+      ignore: Se non hai richiesto questa email, puoi ignorarla.
+      subject: Continua la tua registrazione su KidComics
+    verification_email:
+      benefit_1: Impostare la tua password
+      benefit_2: Creare libri illimitati
+      benefit_3: Accedere alla tua biblioteca digitale in qualsiasi momento
+      benefit_4: Gestire il tuo account familiare
+      benefits_title: 'Una volta verificato, potrai:'
+      body: 'Per completare la configurazione del tuo account e continuare a creare
+        storie incredibili, verifica il tuo indirizzo email cliccando il pulsante
+        qui sotto:'
+      button: Verifica la mia email
+      closing: Buone storie!
+      copy_paste: 'Oppure copia e incolla questo link nel tuo browser:'
+      copyright: "© 2026 KidComics. Tutti i diritti riservati."
+      greeting: Ciao %{name},
+      heading: Benvenuto su KidComics!
+      intro: Grazie per aver creato il tuo primo libro con KidComics! Speriamo che
+        tu e la tua famiglia abbiate adorato dare vita a quelle storie.
+      subject: Verifica il tuo account KidComics
+      team: Il team KidComics
+    welcome_email:
+      benefit_1: Creare libri di storie illimitati
+      benefit_2: Caricare disegni e immagini personalizzate
+      benefit_3: Generare storie e illustrazioni con IA
+      benefit_4: Costruire la biblioteca digitale della tua famiglia
+      benefit_5: Gestire più profili bambino
+      benefits_title: 'Ora hai accesso completo a tutte le funzionalità di KidComics:'
+      body: Congratulazioni! La tua email è stata verificata e il tuo account è ora
+        completamente configurato.
+      closing_1: Non vediamo l'ora di vedere le storie incredibili che tu e la tua
+        famiglia creerete!
+      closing_2: Buone storie!
+      copyright: "© 2026 KidComics. Tutti i diritti riservati."
+      greeting: Ciao %{name},
+      heading: Il tuo account è verificato!
+      subject: Benvenuto su KidComics!
+      team: Il team KidComics

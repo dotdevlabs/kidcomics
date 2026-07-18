@@ -4,7 +4,7 @@ class ProfileSelectionsController < ApplicationController
   def index
     @family_account = current_user.family_account
     unless @family_account
-      flash[:alert] = "Please create a family account first."
+      flash[:alert] = t("flash.profile_selections.no_family_account")
       redirect_to dashboard_path
       return
     end
@@ -16,10 +16,10 @@ class ProfileSelectionsController < ApplicationController
 
     if child_profile
       session[:child_profile_id] = child_profile.id
-      flash[:notice] = "Welcome, #{child_profile.name}!"
+      flash[:notice] = t("flash.profile_selections.welcome", name: child_profile.name)
       redirect_to root_path
     else
-      flash[:alert] = "Child profile not found."
+      flash[:alert] = t("flash.profile_selections.not_found")
       redirect_to select_profile_path
     end
   end

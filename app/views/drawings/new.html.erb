@@ -3,25 +3,23 @@
     <div class="mb-6">
       <%= link_to child_profile_book_path(@child_profile, @book), class: "text-gray-600 hover:text-gray-800 inline-flex items-center" do %>
         <%= icon "arrow-left", class: "w-5 h-5 mr-2" %>
-        Back to Book
+        <%= t('.back_to_book') %>
       <% end %>
     </div>
 
     <div class="bg-white rounded-lg shadow-md p-8">
       <% if @is_onboarding_book && @current_page_count == 0 %>
-        <h1 class="text-3xl font-bold text-purple-600 mb-2">Let's Bring Your Story to Life!</h1>
-        <p class="text-gray-600 mb-6">
-          Upload a photo of your first drawing to get started. No forms, no fuss—just your creativity!
-        </p>
+        <h1 class="text-3xl font-bold text-purple-600 mb-2"><%= t('.bring_to_life_title') %></h1>
+        <p class="text-gray-600 mb-6"><%= t('.bring_to_life_body') %></p>
       <% else %>
         <h1 class="text-3xl font-bold text-gray-800 mb-2">
-          <% if @is_onboarding_book %>Add More Pages<% else %>Upload Drawings<% end %>
+          <% if @is_onboarding_book %><%= t('.add_more_title') %><% else %><%= t('.upload_title') %><% end %>
         </h1>
         <p class="text-gray-600 mb-6">
           <% if @is_onboarding_book %>
-            Keep the story going! Add more drawings to "<%= @book.title %>"
+            <%= t('.add_more_for_book', title: @book.title) %>
           <% else %>
-            Add drawings to "<%= @book.title %>"
+            <%= t('.add_for_book', title: @book.title) %>
           <% end %>
         </p>
       <% end %>
@@ -34,10 +32,10 @@
               <%= icon "sparkles", class: "w-5 h-5 text-purple-600 mr-3 flex-shrink-0 mt-0.5" %>
               <div>
                 <h3 class="text-sm font-semibold text-purple-900 mb-1">
-                  Your First Book: Up to <%= @page_limit %> Pages
+                  <%= t('.first_book_limit_title', limit: @page_limit) %>
                 </h3>
                 <p class="text-sm text-purple-800">
-                  Start with your favorite drawing! You can add up to 5 pages. After that, complete your account setup to create unlimited books.
+                  <%= t('.first_book_limit_body') %>
                 </p>
               </div>
             </div>
@@ -48,13 +46,13 @@
               <%= icon "info", class: "w-5 h-5 text-blue-600 mr-3 flex-shrink-0 mt-0.5" %>
               <div>
                 <h3 class="text-sm font-semibold text-blue-900 mb-1">
-                  Pages: <%= @current_page_count %>/<%= @page_limit %>
+                  <%= t('.pages_count_title', current: @current_page_count, limit: @page_limit) %>
                 </h3>
                 <p class="text-sm text-blue-800">
                   <% if remaining > 0 %>
-                    You can add <%= remaining %> more page(s) to this book. Keep going!
+                    <%= t('.can_add_more', remaining: remaining) %>
                   <% else %>
-                    Your onboarding book is complete! Complete your account setup to create unlimited books.
+                    <%= t('.onboarding_complete') %>
                   <% end %>
                 </p>
               </div>
@@ -66,7 +64,9 @@
       <%= form_with(model: [@child_profile, @book, @drawing], local: true, data: { controller: "drawings-upload" }) do |form| %>
         <% if @drawing && @drawing.errors.any? %>
           <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-            <h3 class="font-bold mb-2"><%= pluralize(@drawing.errors.count, "error") %> occurred:</h3>
+            <h3 class="font-bold mb-2">
+              <%= @drawing.errors.count == 1 ? t('.errors_one') : t('.errors_other', count: @drawing.errors.count) %>
+            </h3>
             <ul class="list-disc list-inside">
               <% @drawing.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
@@ -84,7 +84,7 @@
         <!-- File Upload Section -->
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-3">
-            Select Images
+            <%= t('.select_images_label') %>
           </label>
 
           <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-purple-500 transition duration-200">
@@ -93,7 +93,7 @@
               <div>
                 <label for="camera-input" class="inline-flex items-center justify-center bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 cursor-pointer">
                   <%= icon "camera", class: "w-5 h-5 mr-2" %>
-                  Take Photo
+                  <%= t('.take_photo') %>
                 </label>
                 <%= form.file_field :images,
                     id: "camera-input",
@@ -104,13 +104,13 @@
                     data: { drawings_upload_target: "input", action: "change->drawings-upload#preview" } %>
               </div>
 
-              <div class="text-gray-500">or</div>
+              <div class="text-gray-500"><%= t('.divider_or') %></div>
 
               <!-- File Picker -->
               <div>
                 <label for="file-input" class="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200 cursor-pointer">
                   <%= icon "upload", class: "w-5 h-5 mr-2" %>
-                  Choose from Gallery
+                  <%= t('.choose_gallery') %>
                 </label>
                 <%= form.file_field :images,
                     id: "file-input",
@@ -121,15 +121,13 @@
               </div>
             </div>
 
-            <p class="text-sm text-gray-500 mt-4">
-              Supported formats: JPEG, PNG, HEIC, WebP (max 10MB per file)
-            </p>
+            <p class="text-sm text-gray-500 mt-4"><%= t('.formats_hint') %></p>
           </div>
         </div>
 
         <!-- Preview Section -->
         <div data-drawings-upload-target="previewContainer" class="hidden mb-6">
-          <h3 class="text-lg font-semibold text-gray-800 mb-3">Selected Images</h3>
+          <h3 class="text-lg font-semibold text-gray-800 mb-3"><%= t('.selected_images') %></h3>
           <div data-drawings-upload-target="previewList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <!-- Preview items will be inserted here by JavaScript -->
           </div>
@@ -137,34 +135,34 @@
 
         <!-- Optional Tag Selection -->
         <div class="mb-6">
-          <%= form.label :tag, "Tag (optional)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.label :tag, t('.tag_label'), class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.select :tag,
               [
-                ['No tag', ''],
-                ['Character', 'character'],
-                ['Background', 'background'],
-                ['Object', 'object']
+                [t('.tag_no_tag'), ''],
+                [t('.tag_character'), 'character'],
+                [t('.tag_background'), 'background'],
+                [t('.tag_object'), 'object']
               ],
               {},
               class: "w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" %>
-          <p class="text-sm text-gray-500 mt-1">This tag will apply to all uploaded drawings</p>
+          <p class="text-sm text-gray-500 mt-1"><%= t('.tag_hint') %></p>
         </div>
 
         <!-- Optional Caption -->
         <div class="mb-6">
-          <%= form.label :caption, "Caption (optional)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.label :caption, t('.caption_label'), class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.text_area :caption,
               rows: 3,
               class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent",
-              placeholder: "Add a caption for these drawings..." %>
+              placeholder: t('.caption_placeholder') %>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex space-x-3">
-          <%= form.submit "Upload Drawings",
+          <%= form.submit t('.upload_submit'),
               class: "bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-200 cursor-pointer",
               data: { drawings_upload_target: "submitButton" } %>
-          <%= link_to "Cancel", child_profile_book_path(@child_profile, @book),
+          <%= link_to t('.cancel'), child_profile_book_path(@child_profile, @book),
               class: "bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition duration-200 inline-block" %>
         </div>
       <% end %>
