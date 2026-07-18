@@ -2,8 +2,8 @@
   <!-- Header -->
   <div class="bg-white shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <h1 class="text-3xl font-bold text-gray-800">Settings</h1>
-      <p class="text-gray-600 mt-1">Configure email and system settings</p>
+      <h1 class="text-3xl font-bold text-gray-800"><%= t('.title') %></h1>
+      <p class="text-gray-600 mt-1"><%= t('.subtitle') %></p>
     </div>
   </div>
 
@@ -26,7 +26,7 @@
       <div class="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-4">
         <div class="flex items-center">
           <%= icon "mail", class: "w-6 h-6 text-white mr-3" %>
-          <h2 class="text-xl font-bold text-white">Email Configuration (Postmark)</h2>
+          <h2 class="text-xl font-bold text-white"><%= t('.email_config_title') %></h2>
         </div>
       </div>
 
@@ -36,10 +36,10 @@
           <div class="flex items-center">
             <% if @postmark_configured %>
               <%= icon "circle-check", class: "w-5 h-5 text-green-600 mr-2" %>
-              <span class="text-green-800 font-semibold">Email service configured</span>
+              <span class="text-green-800 font-semibold"><%= t('.configured') %></span>
             <% else %>
               <%= icon "circle-alert", class: "w-5 h-5 text-yellow-600 mr-2" %>
-              <span class="text-yellow-800 font-semibold">Email service not configured</span>
+              <span class="text-yellow-800 font-semibold"><%= t('.not_configured') %></span>
             <% end %>
           </div>
         </div>
@@ -50,16 +50,16 @@
             <%= hidden_field_tag :setting_key, "postmark_api_key" %>
 
             <div>
-              <%= label_tag :setting_value, "Postmark API Key", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= label_tag :setting_value, t('.api_key_label'), class: "block text-sm font-medium text-gray-700 mb-2" %>
               <%= password_field_tag :setting_value, @postmark_api_key,
-                  placeholder: "Enter your Postmark Server API Token",
+                  placeholder: t('.api_key_placeholder'),
                   class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" %>
               <p class="text-xs text-gray-500 mt-1">
-                Get your API key from <%= link_to "Postmark Dashboard", "https://account.postmarkapp.com/", target: "_blank", class: "text-purple-600 hover:text-purple-800" %>
+                <%= t('.api_key_hint_html', link: link_to(t('.api_key_link'), "https://account.postmarkapp.com/", target: "_blank", class: "text-purple-600 hover:text-purple-800")).html_safe %>
               </p>
             </div>
 
-            <%= submit_tag "Update API Key", class: "bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition" %>
+            <%= submit_tag t('.update_api_key'), class: "bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition" %>
           <% end %>
         </div>
 
@@ -71,16 +71,16 @@
             <%= hidden_field_tag :setting_key, "postmark_from_email" %>
 
             <div>
-              <%= label_tag :setting_value, "From Email Address", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= label_tag :setting_value, t('.from_email_label'), class: "block text-sm font-medium text-gray-700 mb-2" %>
               <%= email_field_tag :setting_value, @postmark_from_email,
-                  placeholder: "noreply@yourdomain.com",
+                  placeholder: t('.from_email_placeholder'),
                   class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" %>
               <p class="text-xs text-gray-500 mt-1">
-                This email address must be verified in your Postmark account
+                <%= t('.from_email_hint') %>
               </p>
             </div>
 
-            <%= submit_tag "Update From Address", class: "bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition" %>
+            <%= submit_tag t('.update_from_email'), class: "bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition" %>
           <% end %>
         </div>
 
@@ -89,13 +89,13 @@
 
           <!-- Test Email -->
           <div>
-            <h3 class="text-lg font-semibold text-gray-800 mb-3">Test Email Configuration</h3>
+            <h3 class="text-lg font-semibold text-gray-800 mb-3"><%= t('.test_email_title') %></h3>
             <p class="text-sm text-gray-600 mb-4">
-              Send a test email to your account (<%= current_user.email %>) to verify everything is working correctly.
+              <%= t('.test_email_body', email: current_user.email) %>
             </p>
 
             <%= form_with url: test_email_admin_settings_path, method: :post do |f| %>
-              <%= submit_tag "Send Test Email", class: "bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition inline-flex items-center" %>
+              <%= submit_tag t('.send_test'), class: "bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition inline-flex items-center" %>
             <% end %>
           </div>
         <% end %>
@@ -107,15 +107,15 @@
       <div class="flex items-start">
         <%= icon "info", class: "w-5 h-5 text-blue-600 mr-3 flex-shrink-0 mt-0.5" %>
         <div>
-          <h3 class="text-lg font-semibold text-blue-900 mb-2">Setting up Postmark</h3>
+          <h3 class="text-lg font-semibold text-blue-900 mb-2"><%= t('.help_title') %></h3>
           <ol class="text-sm text-blue-800 space-y-2 list-decimal list-inside">
-            <li>Sign up for a free Postmark account at <%= link_to "postmarkapp.com", "https://postmarkapp.com", target: "_blank", class: "text-blue-600 hover:underline" %></li>
-            <li>Create a new "Server" in your Postmark account</li>
-            <li>Copy the "Server API Token" from the API Tokens tab</li>
-            <li>Paste it into the API Key field above</li>
-            <li>Add and verify your sending domain in Postmark</li>
-            <li>Update the From Email Address to use your verified domain</li>
-            <li>Send a test email to confirm everything works</li>
+            <li><%= t('.help_step_1', link: link_to("postmarkapp.com", "https://postmarkapp.com", target: "_blank", class: "text-blue-600 hover:underline")).html_safe %></li>
+            <li><%= t('.help_step_2') %></li>
+            <li><%= t('.help_step_3') %></li>
+            <li><%= t('.help_step_4') %></li>
+            <li><%= t('.help_step_5') %></li>
+            <li><%= t('.help_step_6') %></li>
+            <li><%= t('.help_step_7') %></li>
           </ol>
         </div>
       </div>

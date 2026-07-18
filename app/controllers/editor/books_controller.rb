@@ -14,7 +14,7 @@ module Editor
       if @book.update(book_params)
         @book.update_last_edited!
         redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                    notice: "Book updated successfully."
+                    notice: t("flash.editor.books.updated")
       else
         @drawings = @book.drawings.ordered
         @can_add_pages = !@book.is_onboarding_book || @drawings.count < 5
@@ -27,19 +27,19 @@ module Editor
     def set_child_profile
       @child_profile = ChildProfile.find(params[:child_profile_id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to dashboard_path, alert: "Child profile not found."
+      redirect_to dashboard_path, alert: t("flash.editor.books.child_not_found")
     end
 
     def set_book
       @book = @child_profile.books.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to child_profile_books_path(@child_profile), alert: "Book not found."
+      redirect_to child_profile_books_path(@child_profile), alert: t("flash.editor.books.book_not_found")
     end
 
     def authorize_editor_access
       unless @book.editable_by?(current_user)
         redirect_to child_profile_book_path(@child_profile, @book),
-                    alert: "You don't have permission to edit this book."
+                    alert: t("flash.editor.books.no_permission")
       end
     end
 

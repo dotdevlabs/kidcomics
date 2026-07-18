@@ -13,12 +13,12 @@ module Admin
       case setting_key
       when "postmark_api_key"
         Setting.set("postmark_api_key", setting_value, description: "Postmark API Key for transactional emails")
-        flash[:notice] = "Postmark API key updated successfully"
+        flash[:notice] = t("flash.admin.settings.postmark_key_updated")
       when "postmark_from_email"
         Setting.set("postmark_from_email", setting_value, description: "From email address for outgoing emails")
-        flash[:notice] = "From email address updated successfully"
+        flash[:notice] = t("flash.admin.settings.from_email_updated")
       else
-        flash[:alert] = "Invalid setting"
+        flash[:alert] = t("flash.admin.settings.invalid_setting")
       end
 
       redirect_to admin_settings_path

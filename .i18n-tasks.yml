@@ -1,0 +1,17 @@
+base_locale: en
+locales: [en, es, fr, pt-BR, pt-PT, de, it]
+
+# These keys are looked up dynamically in views, e.g.:
+#   t("books.statuses.#{book.status}")
+# i18n-tasks cannot statically trace these references.
+ignore_unused:
+  - 'books.statuses.{draft,published}'
+
+data:
+  read:
+    - config/locales/%{locale}.yml
+
+search:
+  paths:
+    - app
+    - config/initializers

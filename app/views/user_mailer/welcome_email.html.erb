@@ -34,31 +34,31 @@
 </head>
 <body>
   <div class="header">
-    <h1 style="margin: 0;">Your Account is Verified!</h1>
+    <h1 style="margin: 0;"><%= t('.heading') %></h1>
   </div>
 
   <div class="content">
-    <p>Hi <%= @user.name %>,</p>
+    <p><%= t('.greeting', name: @user.name) %></p>
 
-    <p>Congratulations! Your email has been verified and your account is now fully set up.</p>
+    <p><%= t('.body') %></p>
 
-    <p>You now have full access to all KidComics features:</p>
+    <p><%= t('.benefits_title') %></p>
     <ul>
-      <li>Create unlimited storybooks</li>
-      <li>Upload custom drawings and images</li>
-      <li>Generate AI-powered stories and illustrations</li>
-      <li>Build your family's digital library</li>
-      <li>Manage multiple child profiles</li>
+      <li><%= t('.benefit_1') %></li>
+      <li><%= t('.benefit_2') %></li>
+      <li><%= t('.benefit_3') %></li>
+      <li><%= t('.benefit_4') %></li>
+      <li><%= t('.benefit_5') %></li>
     </ul>
 
-    <p>We can't wait to see what amazing stories you and your family create!</p>
+    <p><%= t('.closing_1') %></p>
 
-    <p>Happy storytelling!</p>
-    <p>The KidComics Team</p>
+    <p><%= t('.closing_2') %></p>
+    <p><%= t('.team') %></p>
   </div>
 
   <div class="footer">
-    <p>&copy; 2026 KidComics. All rights reserved.</p>
+    <p><%= t('.copyright') %></p>
   </div>
 </body>
 </html>

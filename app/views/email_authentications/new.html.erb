@@ -1,14 +1,14 @@
-<h1>Sign in</h1>
+<h1><%= t('.title') %></h1>
 
 <% if flash[:alert] %>
   <p><%= flash[:alert] %></p>
 <% else %>
-  <p>Enter your email address and we'll send you a link to sign in.</p>
+  <p><%= t('.intro') %></p>
 <% end %>
 
 <%= form_with url: create_url, data: { turbo: false } do |f| %>
   <div>
-    <%= f.label :email, "Email address" %>
+    <%= f.label :email, t('.email_label') %>
     <%= f.email_field :email, name: "nopassword_email_authentication[email]", value: @authentication.email, autofocus: true, autocomplete: "email" %>
   </div>
 
@@ -16,5 +16,5 @@
     <p><%= @authentication.errors[:email].to_sentence %></p>
   <% end %>
 
-  <%= f.submit "Continue" %>
+  <%= f.submit t('.submit') %>
 <% end %>

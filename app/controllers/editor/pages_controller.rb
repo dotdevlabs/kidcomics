@@ -10,7 +10,7 @@ module Editor
       # Check onboarding book page limit
       if @book.is_onboarding_book && @book.drawings.count >= 5
         redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                    alert: "Onboarding books are limited to 5 pages."
+                    alert: t("flash.editor.pages.onboarding_limit")
         return
       end
 
@@ -19,10 +19,10 @@ module Editor
       if @page.save
         @book.update_last_edited!
         redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                    notice: "Page added successfully."
+                    notice: t("flash.editor.pages.added")
       else
         redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                    alert: "Failed to add page: #{@page.errors.full_messages.join(', ')}"
+                    alert: t("flash.editor.pages.add_failed", errors: @page.errors.full_messages.join(", "))
       end
     end
 
@@ -32,7 +32,7 @@ module Editor
         respond_to do |format|
           format.html do
             redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                        notice: "Page updated successfully."
+                        notice: t("flash.editor.pages.updated")
           end
           format.json do
             render json: {
@@ -46,7 +46,7 @@ module Editor
         respond_to do |format|
           format.html do
             redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                        alert: "Failed to update page."
+                        alert: t("flash.editor.pages.update_failed")
           end
           format.json do
             render json: {
@@ -62,7 +62,7 @@ module Editor
       @page.destroy
       @book.update_last_edited!
       redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                  notice: "Page deleted successfully."
+                  notice: t("flash.editor.pages.deleted")
     end
 
     private
@@ -70,26 +70,26 @@ module Editor
     def set_child_profile
       @child_profile = ChildProfile.find(params[:child_profile_id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to dashboard_path, alert: "Child profile not found."
+      redirect_to dashboard_path, alert: t("flash.editor.books.child_not_found")
     end
 
     def set_book
       @book = @child_profile.books.find(params[:book_id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to child_profile_books_path(@child_profile), alert: "Book not found."
+      redirect_to child_profile_books_path(@child_profile), alert: t("flash.editor.books.book_not_found")
     end
 
     def set_page
       @page = @book.drawings.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to edit_editor_child_profile_book_path(@child_profile, @book),
-                  alert: "Page not found."
+                  alert: t("flash.editor.pages.not_found")
     end
 
     def authorize_editor_access
       unless @book.editable_by?(current_user)
         redirect_to child_profile_book_path(@child_profile, @book),
-                    alert: "You don't have permission to edit this book."
+                    alert: t("flash.editor.pages.no_permission")
       end
     end
 

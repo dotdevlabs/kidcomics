@@ -5,16 +5,14 @@
         <%= icon "sparkles", class: "w-20 h-20 mx-auto text-purple-600" %>
       </div>
 
-      <h1 class="text-3xl font-bold text-gray-800 mb-4">Opening Interactive Editor</h1>
+      <h1 class="text-3xl font-bold text-gray-800 mb-4"><%= t('books_views.edit.title') %></h1>
 
       <p class="text-lg text-gray-600 mb-6">
-        We're taking you to the new AI-powered book editor where you can refine your story
-        through conversation and image uploads.
+        <%= t('books_views.edit.body') %>
       </p>
 
       <p class="text-gray-500">
-        If you're not redirected automatically,
-        <%= link_to "click here", edit_editor_child_profile_book_path(@child_profile, @book), class: "text-purple-600 hover:text-purple-700 underline" %>.
+        <%= t('books_views.edit.redirect_html', link: link_to(t('books_views.edit.redirect_link'), edit_editor_child_profile_book_path(@child_profile, @book), class: "text-purple-600 hover:text-purple-700 underline")).html_safe %>
       </p>
     </div>
   </div>

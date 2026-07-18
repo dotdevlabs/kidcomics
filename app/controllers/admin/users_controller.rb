@@ -37,10 +37,10 @@ module Admin
           log_admin_action("user_updated", @user)
         end
 
-        flash[:notice] = "User updated successfully."
+        flash[:notice] = t("flash.admin.users.updated")
         redirect_to admin_user_path(@user)
       else
-        flash.now[:alert] = "Failed to update user: #{@user.errors.full_messages.join(', ')}"
+        flash.now[:alert] = t("flash.admin.users.update_failed", errors: @user.errors.full_messages.join(", "))
         render :show, status: :unprocessable_entity
       end
     end

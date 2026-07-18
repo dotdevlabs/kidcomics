@@ -19,15 +19,15 @@ class RegistrationsController < ApplicationController
       if family_account.save
         reset_session
         session[:user_id] = @user.id
-        flash[:notice] = "Welcome to KidComics, #{@user.name}! Your family account has been created."
+        flash[:notice] = t("flash.registrations.welcome", name: @user.name)
         redirect_to dashboard_path
       else
         @user.destroy
-        flash.now[:alert] = "Failed to create family account: #{family_account.errors.full_messages.join(', ')}"
+        flash.now[:alert] = t("flash.registrations.family_account_failed", errors: family_account.errors.full_messages.join(", "))
         render :new, status: :unprocessable_entity
       end
     else
-      flash.now[:alert] = "Registration failed: #{@user.errors.full_messages.join(', ')}"
+      flash.now[:alert] = t("flash.registrations.failed", errors: @user.errors.full_messages.join(", "))
       render :new, status: :unprocessable_entity
     end
   end

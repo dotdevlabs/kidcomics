@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Verify your KidComics account"
+      subject: t("user_mailer.verification_email.subject")
     )
   end
 
@@ -16,7 +16,7 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Welcome to KidComics!"
+      subject: t("user_mailer.welcome_email.subject")
     )
   end
 
@@ -26,7 +26,7 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "Continue your KidComics registration"
+      subject: t("user_mailer.magic_link_email.subject")
     )
   end
 end

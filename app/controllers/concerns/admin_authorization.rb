@@ -12,7 +12,7 @@ module AdminAuthorization
       # Log unauthorized access attempt
       Rails.logger.warn("Unauthorized admin access attempt by user #{current_user&.id || 'unknown'} from IP #{request.remote_ip}")
 
-      flash[:alert] = "You must be an administrator to access this page."
+      flash[:alert] = t("flash.admin.authorization.not_admin")
       redirect_to root_path
     end
   end

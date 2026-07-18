@@ -29,7 +29,7 @@ class LibraryController < ApplicationController
   def set_family_account
     @family_account = current_user.family_account
     unless @family_account
-      flash[:alert] = "You must have a family account to access the library."
+      flash[:alert] = t("flash.library.no_family_account")
       redirect_to root_path
     end
   end

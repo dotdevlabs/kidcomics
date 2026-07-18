@@ -15,7 +15,7 @@ module AI
     def update
       if @page_generation.update(page_generation_params)
         redirect_to ai_child_profile_book_story_generation_path(@child_profile, @book, @story_generation),
-                    notice: "Page updated successfully."
+                    notice: t("flash.ai.page_generations.updated")
       else
         render :show, status: :unprocessable_entity
       end

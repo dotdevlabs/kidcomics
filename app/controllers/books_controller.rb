@@ -38,7 +38,7 @@ class BooksController < ApplicationController
 
     # Redirect directly to photo upload (creative first, not administrative)
     redirect_to new_child_profile_book_drawing_path(@child_profile, @book),
-      notice: "Let's start by adding your first drawing!"
+      notice: t("flash.books.first_drawing")
   end
 
   def create
@@ -47,7 +47,7 @@ class BooksController < ApplicationController
 
     if @book.save
       redirect_to new_child_profile_book_drawing_path(@child_profile, @book),
-        notice: "Book created successfully! Let's start by adding your first drawing!"
+        notice: t("flash.books.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -59,7 +59,7 @@ class BooksController < ApplicationController
   def update
     if @book.update(book_params)
       redirect_to child_profile_book_path(@child_profile, @book),
-        notice: "Book was successfully updated."
+        notice: t("flash.books.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -67,7 +67,7 @@ class BooksController < ApplicationController
 
   def destroy
     @book.destroy
-    redirect_to child_profile_books_path(@child_profile), notice: "Book was successfully deleted."
+    redirect_to child_profile_books_path(@child_profile), notice: t("flash.books.deleted")
   end
 
   private

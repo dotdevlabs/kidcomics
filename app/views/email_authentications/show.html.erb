@@ -1,9 +1,9 @@
-<h1>Confirm sign in</h1>
+<h1><%= t('.title') %></h1>
 
-<p>Click the button below to sign in as <strong><%= @authentication.email %></strong>.</p>
+<p><%= t('.body', email: @authentication.email) %></p>
 
 <%= form_with url: show_url, method: :patch, data: { turbo: false } do |f| %>
-  <%= f.submit "Sign in" %>
+  <%= f.submit t('.submit') %>
 <% end %>
 
 <% if @verification&.errors&.any? %>
@@ -11,5 +11,5 @@
 <% end %>
 
 <p>
-  <%= link_to "Cancel", url_for(action: :destroy), data: { turbo_method: :delete } %>
+  <%= link_to t('.cancel'), url_for(action: :destroy), data: { turbo_method: :delete } %>
 </p>

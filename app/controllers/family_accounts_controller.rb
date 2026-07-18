@@ -4,7 +4,7 @@ class FamilyAccountsController < ApplicationController
   def show
     @family_account = current_user.family_account
     unless @family_account
-      flash[:alert] = "You don't have a family account yet."
+      flash[:alert] = t("flash.family_accounts.not_found")
       redirect_to root_path
     end
   end

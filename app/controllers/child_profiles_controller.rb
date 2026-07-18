@@ -15,10 +15,10 @@ class ChildProfilesController < ApplicationController
     @child_profile = @family_account.child_profiles.build(child_profile_params)
 
     if @child_profile.save
-      flash[:notice] = "Child profile created successfully!"
+      flash[:notice] = t("flash.child_profiles.created")
       redirect_to dashboard_path
     else
-      flash.now[:alert] = "Failed to create child profile: #{@child_profile.errors.full_messages.join(', ')}"
+      flash.now[:alert] = t("flash.child_profiles.create_failed", errors: @child_profile.errors.full_messages.join(", "))
       render :new, status: :unprocessable_entity
     end
   end
@@ -28,17 +28,17 @@ class ChildProfilesController < ApplicationController
 
   def update
     if @child_profile.update(child_profile_params)
-      flash[:notice] = "Child profile updated successfully!"
+      flash[:notice] = t("flash.child_profiles.updated")
       redirect_to dashboard_path
     else
-      flash.now[:alert] = "Failed to update child profile: #{@child_profile.errors.full_messages.join(', ')}"
+      flash.now[:alert] = t("flash.child_profiles.update_failed", errors: @child_profile.errors.full_messages.join(", "))
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @child_profile.destroy
-    flash[:notice] = "Child profile deleted successfully."
+    flash[:notice] = t("flash.child_profiles.deleted")
     redirect_to dashboard_path
   end
 
@@ -47,7 +47,7 @@ class ChildProfilesController < ApplicationController
   def set_family_account
     @family_account = current_user.family_account
     unless @family_account
-      flash[:alert] = "You must have a family account to manage child profiles."
+      flash[:alert] = t("flash.child_profiles.no_family_account")
       redirect_to root_path
     end
   end
@@ -55,7 +55,7 @@ class ChildProfilesController < ApplicationController
   def set_child_profile
     @child_profile = @family_account.child_profiles.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    flash[:alert] = "Child profile not found."
+    flash[:alert] = t("flash.child_profiles.not_found")
     redirect_to dashboard_path
   end
 

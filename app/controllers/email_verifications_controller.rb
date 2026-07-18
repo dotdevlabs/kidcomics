@@ -6,19 +6,19 @@ class EmailVerificationsController < ApplicationController
     @user = User.find_by(verification_token: token)
 
     if @user.nil?
-      flash[:alert] = "Invalid verification link."
+      flash[:alert] = t("flash.email_verifications.invalid")
       redirect_to root_path
       return
     end
 
     if @user.email_verified?
-      flash[:notice] = "Your email is already verified. Please log in."
+      flash[:notice] = t("flash.email_verifications.already_verified")
       redirect_to login_path
       return
     end
 
     if @user.verification_token_expired?
-      flash[:alert] = "Verification link has expired. Please request a new one."
+      flash[:alert] = t("flash.email_verifications.expired")
       redirect_to root_path
       return
     end
@@ -39,7 +39,7 @@ class EmailVerificationsController < ApplicationController
     reset_session
     session[:user_id] = @user.id
 
-    flash[:notice] = "Email verified successfully! Welcome to KidComics. You can now set your password in your account settings."
+    flash[:notice] = t("flash.email_verifications.success")
     redirect_to dashboard_path
   end
 end
