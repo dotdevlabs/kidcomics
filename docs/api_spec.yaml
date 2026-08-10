@@ -1,0 +1,91 @@
+openapi: 3.0.3
+info:
+  title: KidComics API
+  version: '1'
+  description: JSON:API endpoints. All responses use Content-Type application/vnd.api+json.
+
+components:
+  schemas:
+    JsonApiData:
+      type: object
+      required: [type, id]
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          type: object
+          additionalProperties: true
+        relationships:
+          type: object
+          additionalProperties: true
+
+    JsonApiDocument:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/JsonApiData'
+
+    JsonApiErrors:
+      type: object
+      required: [errors]
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+              title:
+                type: string
+              detail:
+                type: string
+
+    StatusAttributes:
+      type: object
+      properties:
+        version:
+          type: string
+          nullable: true
+          description: Build version baked at image build time (BUILD_VERSION env var)
+        sha:
+          type: string
+          nullable: true
+          description: Git commit SHA baked at image build time (COMMIT_SHA env var)
+        db_version:
+          type: string
+          nullable: true
+          description: Latest applied schema migration version from schema_migrations
+
+paths:
+  /status:
+    get:
+      summary: Application deploy status
+      operationId: getStatus
+      tags: [status]
+      responses:
+        '200':
+          description: Current deploy status
+          content:
+            application/vnd.api+json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/JsonApiDocument'
+                  - type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: '#/components/schemas/JsonApiData'
+                          - type: object
+                            properties:
+                              type:
+                                type: string
+                                enum: [status]
+                              id:
+                                type: string
+                                enum: [current]
+                              attributes:
+                                $ref: '#/components/schemas/StatusAttributes'

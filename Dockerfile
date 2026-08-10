@@ -20,12 +20,18 @@ RUN apt-get update -qq && \
     ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Bake deploy metadata into the image (values injected at build time)
+ARG COMMIT_SHA=""
+ARG BUILD_VERSION=""
+
 # Set production environment variables and enable jemalloc for reduced memory usage and latency.
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
-    LD_PRELOAD="/usr/local/lib/libjemalloc.so"
+    LD_PRELOAD="/usr/local/lib/libjemalloc.so" \
+    COMMIT_SHA=$COMMIT_SHA \
+    BUILD_VERSION=$BUILD_VERSION
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build

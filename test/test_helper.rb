@@ -1,3 +1,12 @@
+require "simplecov"
+SimpleCov.start "rails" do
+  minimum_coverage 50
+  skip "/test/"
+  skip "/config/"
+  skip "/db/"
+  skip "/vendor/"
+end
+
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
