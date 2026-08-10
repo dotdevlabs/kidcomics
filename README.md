@@ -146,6 +146,36 @@ Returns the current deploy state. All attributes are `null` when not set (e.g. i
 3. Document the path in `docs/api_spec.yaml`
 4. The contract test (`test/contracts/api_contract_test.rb`) enforces a two-way bijection between routes and the spec — it will fail if either side is missing
 
+## Error Tracking
+
+The application uses [Sentry](https://sentry.io) for error tracking. Sentry is **inert by default** — the app boots and runs normally without any Sentry configuration.
+
+### Enabling Sentry
+
+Set the `SENTRY_DSN` environment variable to your project's DSN:
+
+```bash
+SENTRY_DSN=https://<key>@<org>.ingest.sentry.io/<project-id>
+```
+
+When `SENTRY_DSN` is present, `Sentry.init` is called automatically via `config/initializers/sentry.rb`. When it is absent or blank, Sentry is never initialized.
+
+### Release Tracking
+
+The initializer reads `COMMIT_SHA` to tag each Sentry event with the deployed commit. This variable is already injected at Docker build time (see the `ARG COMMIT_SHA` / `ENV COMMIT_SHA` lines in the Dockerfile) and is also surfaced by the `/status` JSON:API endpoint.
+
+### Configuration Defaults
+
+| Setting | Value | Notes |
+|---|---|---|
+| `send_default_pii` | `false` | PII fields are not attached to events |
+| `sample_rate` | `1.0` | All errors are captured |
+| `traces_sample_rate` | `0.1` | 10% of transactions are traced |
+
+A `before_send` callback strips `Authorization` headers, clears cookies, and removes `password`/`token`/`secret` keys from request params before any event is transmitted.
+
+**Never commit a DSN or Sentry auth token.** All Sentry secrets must come from environment variables only.
+
 ## Testing
 
 Run the test suite:
