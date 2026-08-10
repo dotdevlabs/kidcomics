@@ -107,6 +107,45 @@ The file `/workspace/.i18n-tasks.yml` defines:
 - Available locales: all 7 supported languages
 - Ignored keys that are dynamically looked up (e.g., `books.statuses.{draft,published}`)
 
+## JSON:API
+
+The application exposes a small JSON:API surface for machine-readable deploy metadata. All JSON:API responses use `Content-Type: application/vnd.api+json`.
+
+The full API spec lives at [`docs/api_spec.yaml`](docs/api_spec.yaml) (OpenAPI 3.0.3). Add new `Api::` endpoints there before shipping them.
+
+### Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `GET` | `/status` | Deploy status: build version, commit SHA, DB migration version |
+
+#### `GET /status`
+
+Returns the current deploy state. All attributes are `null` when not set (e.g. in local dev without build args).
+
+```json
+{
+  "data": {
+    "type": "status",
+    "id": "current",
+    "attributes": {
+      "version": "1.2.3",
+      "sha": "abc1234",
+      "db_version": "20240101120000"
+    }
+  }
+}
+```
+
+`version` and `sha` are baked into the Docker image at build time via `BUILD_VERSION` and `COMMIT_SHA` build args. `db_version` is the latest applied schema migration version read at request time.
+
+### Adding New API Endpoints
+
+1. Create a controller under `app/controllers/api/` inheriting from `Api::BaseController`
+2. Add the route in `config/routes.rb` inside the `scope module: :api` block
+3. Document the path in `docs/api_spec.yaml`
+4. The contract test (`test/contracts/api_contract_test.rb`) enforces a two-way bijection between routes and the spec — it will fail if either side is missing
+
 ## Testing
 
 Run the test suite:
@@ -114,7 +153,7 @@ Run the test suite:
 bin/rails test
 ```
 
-This runs all unit and integration tests.
+This runs all unit, integration, and contract tests. A SimpleCov coverage gate enforces minimum 80% coverage — the report is written to `coverage/` after each run.
 
 Run tests for a specific file:
 ```bash
@@ -146,12 +185,15 @@ All checks must pass before merging a PR. The i18n checks ensure translations st
 ## Project Structure
 
 - `/app/controllers` — request handlers and locale resolution logic
+- `/app/controllers/api/` — JSON:API controllers (`Api::BaseController`, `Api::StatusController`)
 - `/app/models` — data models (User, ChildProfile, Book, etc.)
 - `/app/views` — ERB templates with i18n integration
 - `/app/mailers` — email templates (UserMailer)
 - `/config/locales` — translation files for all 7 languages
 - `/db/migrate` — database schema changes
+- `/docs/api_spec.yaml` — OpenAPI 3.0.3 spec for all JSON:API endpoints
 - `/test` — unit, integration, and system tests
+- `/test/contracts/` — spec-driven contract tests enforcing route↔spec bijection
 
 ## Development Workflow
 
