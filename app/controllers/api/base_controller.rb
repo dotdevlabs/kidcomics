@@ -21,7 +21,7 @@ module Api
     def render_json_api_error(http_status, code, title, detail = nil)
       error = { status: Rack::Utils.status_code(http_status).to_s, code: code, title: title }
       error[:detail] = detail if detail.present?
-      render json: { errors: [error] },
+      render json: { errors: [ error ] },
              status: http_status,
              content_type: "application/vnd.api+json"
     end
