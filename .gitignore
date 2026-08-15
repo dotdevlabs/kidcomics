@@ -39,3 +39,6 @@
 
 # Ignore container-specific Procfile
 Procfile.container
+
+# Ignore test coverage reports
+/coverage
