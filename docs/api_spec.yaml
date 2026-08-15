@@ -4,6 +4,10 @@ info:
   version: '1'
   description: JSON:API endpoints. All responses use Content-Type application/vnd.api+json.
 
+servers:
+  - url: /
+    description: Current server (relative URL)
+
 components:
   schemas:
     JsonApiData:
@@ -28,6 +32,20 @@ components:
         data:
           $ref: '#/components/schemas/JsonApiData'
 
+    JsonApiError:
+      type: object
+      required: [status, code, title]
+      properties:
+        status:
+          type: string
+          description: HTTP status code as a string
+        code:
+          type: string
+        title:
+          type: string
+        detail:
+          type: string
+
     JsonApiErrors:
       type: object
       required: [errors]
@@ -35,14 +53,7 @@ components:
         errors:
           type: array
           items:
-            type: object
-            properties:
-              status:
-                type: string
-              title:
-                type: string
-              detail:
-                type: string
+            $ref: '#/components/schemas/JsonApiError'
 
     StatusAttributes:
       type: object
@@ -59,6 +70,26 @@ components:
           type: string
           nullable: true
           description: Latest applied schema migration version from schema_migrations
+
+  responses:
+    NotFound:
+      description: Record not found
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/JsonApiErrors'
+    UnprocessableContent:
+      description: Parameter missing or invalid
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/JsonApiErrors'
+    InternalServerError:
+      description: Unexpected server error
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/JsonApiErrors'
 
 paths:
   /status:
@@ -89,3 +120,5 @@ paths:
                                 enum: [current]
                               attributes:
                                 $ref: '#/components/schemas/StatusAttributes'
+        '500':
+          $ref: '#/components/responses/InternalServerError'

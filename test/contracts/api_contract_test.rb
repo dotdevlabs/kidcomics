@@ -1,5 +1,6 @@
 require "test_helper"
 require "yaml"
+require "support/api/error_triggers_controller"
 
 class ApiContractTest < ActionDispatch::IntegrationTest
   SPEC = YAML.safe_load_file(Rails.root.join("docs", "api_spec.yaml"))
@@ -86,6 +87,35 @@ class ApiContractTest < ActionDispatch::IntegrationTest
     get "/status"
     value = JSON.parse(response.body).dig("data", "attributes", "db_version")
     assert(value.nil? || value.is_a?(String), "db_version must be String or null, got #{value.class}")
+  end
+
+  # -------------------------------------------------------------------
+  # Error format conformance: error responses must match JsonApiErrors schema
+  # -------------------------------------------------------------------
+  test "error responses match the JsonApiErrors schema in the spec" do
+    error_schema = SPEC.dig("components", "schemas", "JsonApiError")
+    required_keys = error_schema.fetch("required", [])
+
+    Rails.application.routes.draw do
+      get "/api/contract_test/not_found", to: "api/error_triggers#trigger_not_found"
+    end
+
+    begin
+      get "/api/contract_test/not_found"
+      body = JSON.parse(response.body)
+      assert body.key?("errors"), "Error response must have top-level 'errors' key per JsonApiErrors schema"
+      assert_kind_of Array, body["errors"]
+
+      error_object = body["errors"].first
+      assert_kind_of Hash, error_object
+
+      required_keys.each do |key|
+        assert error_object.key?(key),
+               "Error object is missing required field '#{key}' defined in JsonApiError schema"
+      end
+    ensure
+      Rails.application.reload_routes!
+    end
   end
 
   private
